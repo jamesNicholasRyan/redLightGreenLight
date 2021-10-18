@@ -1,0 +1,31 @@
+{
+  "name": "red_light_green_light",
+  "version": "1.0.0",
+  "description": "Game, inspired by Squid Game",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesNicholasRyan/redLightGreenLight.git"
+  },
+  "author": "James Ryan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesNicholasRyan/redLightGreenLight/issues"
+  },
+  "homepage": "https://github.com/jamesNicholasRyan/redLightGreenLight#readme",
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^5.3.2",
+    "pixi.js": "^6.1.3"
+  }
+}
