@@ -7,7 +7,7 @@ import * as PIXI from 'pixi.js'
 
 function gameRender( engine ) {
     const fps = 30
-    // seetup globals
+    // setup globals
     const w = engine.width,
           h = engine.height
 

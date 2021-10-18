@@ -12,7 +12,7 @@ export default class MouseController {
     }
 
     init() {
-        this.arrowKeys()
+        // this.arrowKeys()
     }
 
     mouseOver(object) {
@@ -29,24 +29,4 @@ export default class MouseController {
         }
         return false
     }
-
-    arrowKeys() {
-        // checks wether a arrow key has been pressed
-        document.addEventListener('keydown', keyPress)
-
-        function keyPress(e) {
-            const key = e.key
-            if (key === 'ArrowRight') {
-                gameEngine.moveStage('right')
-            } else if (key === 'ArrowLeft') {
-                gameEngine.moveStage('left')
-            } else if (key === 'ArrowUp') {
-                gameEngine.moveStage('up')
-            } else if (key === 'ArrowDown') {
-                gameEngine.moveStage('down')
-            }
-        }
-    }
-
-
 }

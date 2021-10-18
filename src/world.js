@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js'
 import MouseController from '../engine/inputOuput/mouseController'
+import initializeGame from '../engine/init.js'
 
-// import Unit from './gameObjects/Unit'
+import Man from '../engine/entities/Man'
 
 
 
@@ -15,17 +16,19 @@ export default class World {
         this.tiles = []
     }
 
-    runGame() {
-        console.log('game engine: ', gameEngine)
+    init() {
+        const initializedGame = initializeGame(this.worldWidth, this.worldHeight, 30, true)
+        document.body.appendChild(initializedGame)
+    }
 
-        // const man = new Unit(gameEngine.width/2, gameEngine.height/2, 30, 30, 0, 0, 0x025666)
-        // const man2 = new Unit(gameEngine.width/3, gameEngine.height/2, 30, 30, 0, 0, 0x025666)
-        
-        // gameEngine.createGameObject(man)
-        // gameEngine.createGameObject(man2)
-    
-        console.log(gameEngine.state)
+    runGame() {
         gameEngine.loop()
+
+        const man1 = new Man(this.worldWidth/2, this.worldHeight/2, 30, 30, 0, 0)
+
+        gameEngine.addToStage(man1)
+        gameEngine.addToState(man1)
+        // man1.display()
     
         const listener = window.addEventListener('click', function(event) {  
             console.log('************ incrementing loop ************')                        
@@ -33,28 +36,8 @@ export default class World {
             console.log(gameEngine.state.gameObjects[0])
             window.cancelAnimationFrame( gameEngine.loop.stopLoop )   
         })
-
-        // this.tileMap()
     }
 
-    // tileMap() {
-    //     // builds the tile map of the world
-    //     // const texture = gameEngine.createTexture('./sprites/theman.png')
-    //     // const sprite = gameEngine.createSprite('./sprites/theman.png')
-    //     const tileContainer = gameEngine.createContainer()
-    //     window.mouseController.backgroundContainers.push(tileContainer)
-    //     console.log(window.mouseController.backgroundContainers)
-
-    //     for (let i=0; i<this.worldWidth; i=i+this.tileWidth) {
-    //         for (let j=0; j<this.worldHeight; j=j+this.tileWidth) {
-    //             console.log(`creating a tile at ${i}, ${j}`)
-    //             const tile = gameEngine.drawTile(i, j, this.tileWidth)
-    //             tileContainer.addChild(tile)
-    //         }
-    //     }
-
-    //     gameEngine.addToStage(tileContainer)
-    // }
 
 }
 
