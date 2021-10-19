@@ -27,6 +27,7 @@ export default class Engine {
         this.keyA = false
         this.keyS = false
         this.keyD = false
+        this.spaceBar = false
     }
 
     buildRenderer() {

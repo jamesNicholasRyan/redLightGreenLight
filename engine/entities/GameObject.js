@@ -12,6 +12,7 @@ export default class GameObject {
         this.b = b,
         this.acceleration = new Vector(0,0)
         this.velocity = new Vector(0,0)
+        this.topSpeed = 10
         this.graphics = new PIXI.Graphics()
         this.fill = fill
         this.originalFill = this.fill
@@ -31,6 +32,7 @@ export default class GameObject {
 
     move() {
         this.velocity.add(this.acceleration)
+        this.velocity.limit(this.topSpeed)
         this.location.add(this.velocity)
         this.acceleration.multiply(0)
       }

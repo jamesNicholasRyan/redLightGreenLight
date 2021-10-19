@@ -45,7 +45,9 @@ export default class KeyboardController {
                 window.gameEngine.keyW = true
             } else if (keyCode === 83) {      // s
                 window.gameEngine.keyS = true
-            }
+            } else if (keyCode === 32) {      // SPACEBAR
+                window.gameEngine.spaceBar = true
+            }   
         }
 
         function onKeyUp(e) {
@@ -58,7 +60,9 @@ export default class KeyboardController {
                 window.gameEngine.keyW = false
             } else if (keyCode === 83) {      // s
                 window.gameEngine.keyS = false
-            }
+            } else if (keyCode === 32) {      // SPACEBAR
+                window.gameEngine.spaceBar = false
+            }   
         }
 
     }

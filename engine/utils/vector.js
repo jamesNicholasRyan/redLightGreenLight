@@ -95,6 +95,13 @@ Vector.prototype = {
 	set: function(x, y) {
 		this.x = x; this.y = y;
 		return this;
+	},
+	limit: function(l) {
+		if (this.x > l) this.x = l
+		if (this.y > l) this.y = l
+		if (this.x < -l) this.x = -l
+		if (this.y < -l) this.y = -l
+		return this;
 	}
 };
 
