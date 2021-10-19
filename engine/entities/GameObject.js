@@ -2,17 +2,16 @@
 // except for the UI/menu elements. 
 
 import * as PIXI from 'pixi.js'
-
 import Vector from '../utils/vector'
 
 export default class GameObject {
 
-    constructor(x, y, a, b, v1, v2, fill) {
+    constructor(x, y, a, b, fill) {
         this.location = new Vector(x,y)
         this.a = a,
         this.b = b,
         this.acceleration = new Vector(0,0)
-        this.velocity = new Vector(v1,v2)
+        this.velocity = new Vector(0,0)
         this.graphics = new PIXI.Graphics()
         this.fill = fill
         this.originalFill = this.fill

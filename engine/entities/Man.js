@@ -1,24 +1,24 @@
 import * as PIXI from 'pixi.js'
-import KeyboardController from '../inputOuput/keyboardController'
 import Vector from '../utils/vector'
 import GameObject from './GameObject'
 
 
 export default class Man extends GameObject {
 
-    constructor(x, y, a, b, v1, v2) {
-        super(x, y, a, b, v1, v2)
+    constructor(x, y, a, b) {
+        super(x, y, a, b)
+        this.speed = 0.25
     }
 
     update(){
-        if (KeyboardController.keyW) {
-            this.applyForce(0,-5)
-        } else if (KeyboardController.keyA) {
-            this.applyForce(-5,0)
-        } else if (KeyboardController.keyS) {
-            this.applyForce(0,5)
-        } else if (KeyboardController.keyD) {
-            this.applyForce(5,0)
+        if (window.gameEngine.keyW) {
+            this.applyForce(new Vector(0,-this.speed))
+        } else if (window.gameEngine.keyA) {
+            this.applyForce(new Vector(-this.speed,0))
+        } else if (window.gameEngine.keyS) {
+            this.applyForce(new Vector(0,this.speed))
+        } else if (window.gameEngine.keyD) {
+            this.applyForce(new Vector(this.speed,0))
         }
         super.update()
     }

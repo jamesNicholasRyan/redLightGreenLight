@@ -5,7 +5,6 @@ import * as PIXI from 'pixi.js'
 import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
-import Global from './utils/globals.js'
 
 const gameEngine = window.gameEngine
 
@@ -22,6 +21,12 @@ export default class Engine {
         this.containers = []
         this.state = {}
         this.renderer = this.buildRenderer()
+
+        // keyboard Controller
+        this.keyW = false
+        this.keyA = false
+        this.keyS = false
+        this.keyD = false
     }
 
     buildRenderer() {
@@ -58,6 +63,13 @@ export default class Engine {
         }
     }
 
+    createGameObject(object) {
+        console.log('adding game object')
+        const graphics = object.display()
+        this.addToStage(graphics)
+        this.addToState(object, 'gameObject')
+    }
+
     update() {
         // console.log('update method state: ', window.gameEngine.state)
         gameUpdate()
@@ -68,13 +80,6 @@ export default class Engine {
     render = gameRender(this)
 
     loop = gameLoop(this)
-
-    // createGameObject(object) {
-    //     console.log('adding game object')
-    //     const graphics = object.display()
-    //     this.addToStage(graphics)
-    //     this.addToState(object, 'gameObject')
-    // }
 
     // // STATIC
     // createContainer() {

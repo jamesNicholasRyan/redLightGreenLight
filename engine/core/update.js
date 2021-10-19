@@ -1,6 +1,7 @@
 // Called by the game loop, this module will perform any state 
 // calculations / updates to properly render the next frame
 
+
 // function gameUpdate( s ) {
 
 //     return function update( tFrame ) {
@@ -29,7 +30,7 @@ function gameUpdate() {
     if (!state.hasOwnProperty('gameObjects')) { 
         // console.log('no game objects to update')
         return 
-    } 
+    }
 
     // console.log('updating game objects!')
     const gameObjects = state.gameObjects

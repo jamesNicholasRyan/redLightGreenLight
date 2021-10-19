@@ -3,6 +3,7 @@ import MouseController from '../engine/inputOuput/mouseController'
 import initializeGame from '../engine/init.js'
 
 import Man from '../engine/entities/Man'
+import KeyboardController from '../engine/inputOuput/keyboardController'
 
 
 
@@ -24,11 +25,9 @@ export default class World {
     runGame() {
         gameEngine.loop()
 
-        const man1 = new Man(this.worldWidth/2, this.worldHeight/2, 30, 30, 0, 0)
+        const man1 = new Man(this.worldWidth/2, this.worldHeight/2, 30, 30, 0, 0, 0x025666)
 
-        gameEngine.addToStage(man1)
-        gameEngine.addToState(man1)
-        // man1.display()
+        gameEngine.createGameObject(man1)
     
         const listener = window.addEventListener('click', function(event) {  
             console.log('************ incrementing loop ************')                        

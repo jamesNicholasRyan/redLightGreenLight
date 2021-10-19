@@ -3,10 +3,7 @@
 export default class KeyboardController {
 
     constructor() {
-        this.keyW = false;
-        this.keyA = false;
-        this.keyS = false;
-        this.keyD = false;
+
     }
 
     init() {
@@ -35,32 +32,32 @@ export default class KeyboardController {
 
     wAsD() {
         // checks wether either of the W, A, S, D keys have been pressed
-        document.addEventListener('keydown', onKeyDown, false)
+        document.addEventListener('keydown', onKeyDown)
         document.addEventListener('keyup', onKeyUp, false)
 
         function onKeyDown(e) {
             const keyCode = e.keyCode
             if (keyCode === 68) {             // d
-                this.keyD = true
+                window.gameEngine.keyD = true
             } else if (keyCode === 65) {      // a
-                this.keyA = true
+                window.gameEngine.keyA = true
             } else if (keyCode === 87) {      // w
-                this.keyW = true
+                window.gameEngine.keyW = true
             } else if (keyCode === 83) {      // s
-                this.keyS = true
+                window.gameEngine.keyS = true
             }
         }
 
         function onKeyUp(e) {
             const keyCode = e.keyCode
             if (keyCode === 68) {             // d
-                this.keyD = false
+                window.gameEngine.keyD = false
             } else if (keyCode === 65) {      // a
-                this.keyA = false
+                window.gameEngine.keyA = false
             } else if (keyCode === 87) {      // w
-                this.keyW = false
+                window.gameEngine.keyW = false
             } else if (keyCode === 83) {      // s
-                this.keyS = false
+                window.gameEngine.keyS = false
             }
         }
 
