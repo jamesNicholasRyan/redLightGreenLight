@@ -33,9 +33,9 @@ export default class KeyboardController {
     wAsD() {
         // checks wether either of the W, A, S, D keys have been pressed
         document.addEventListener('keydown', onKeyDown)
-        document.addEventListener('keyup', onKeyUp, false)
 
         function onKeyDown(e) {
+            e.preventDefault()
             const keyCode = e.keyCode
             if (keyCode === 68) {             // d
                 window.gameEngine.keyD = true
@@ -49,6 +49,8 @@ export default class KeyboardController {
                 window.gameEngine.spaceBar = true
             }   
         }
+
+        document.addEventListener('keyup', onKeyUp, false)
 
         function onKeyUp(e) {
             const keyCode = e.keyCode

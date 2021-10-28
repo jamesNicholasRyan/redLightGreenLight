@@ -6,6 +6,8 @@ import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
 
+import spriteSheet from './assets/man.png'
+
 const gameEngine = window.gameEngine
 
 
@@ -21,6 +23,7 @@ export default class Engine {
         this.containers = []
         this.state = {}
         this.renderer = this.buildRenderer()
+        this.loader = new PIXI.Loader
 
         // keyboard Controller
         this.keyW = false
@@ -28,6 +31,15 @@ export default class Engine {
         this.keyS = false
         this.keyD = false
         this.spaceBar = false
+
+        // GAMEPLAY VARIABLES
+        this.redLight = false
+        this.successLine = 0.05
+        this.lose = false
+        this.win = false
+
+        //spriteSheets
+        this.playerSheet = {}
     }
 
     buildRenderer() {
@@ -44,6 +56,31 @@ export default class Engine {
     pixiRender() {
         this.renderer.render(this.stage)
         return this.renderer.view
+    }
+
+    loadSprites() {
+        this.loader.add('sheet', spriteSheet)
+        this.loader.load(this.setupSpriteSheets())
+    }
+
+    setupSpriteSheets() {
+        let sSheet = new PIXI.BaseTexture.from(this.loader.resources['sheet'].url)
+        let w = 26
+        let h = 36
+        
+        this.playerSheet["standSouth"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(1*w, 0, w, h))
+        ]
+        this.playerSheet["south"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(0*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(1*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(2*w, 0, w, h))
+        ]
+        this.playerSheet["north"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(3*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(4*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(5*w, 0, w, h))
+        ]
     }
 
     addToStage(child) {
@@ -65,8 +102,8 @@ export default class Engine {
     }
 
     createGameObject(object) {
-        console.log('adding game object')
-        const graphics = object.display()
+        // console.log('adding game object')
+        const graphics = object.createDisplay()
         this.addToStage(graphics)
         this.addToState(object, 'gameObject')
     }
@@ -81,46 +118,5 @@ export default class Engine {
     render = gameRender(this)
 
     loop = gameLoop(this)
-
-    // // STATIC
-    // createContainer() {
-    //     // create a new container
-    //     const newContainer = new PIXI.Container()
-    //     return newContainer
-    // }
-
-    // // createSprite(path) {
-    // //     // create a new PIXI Sprite
-    // //     const sprite
-    // //     sprite = new PIXI.Sprite.from(path)
-    // //     return sprite
-    // // }
-
-    // createTexture(path) {
-    //     // create a new PIXI texture from a string path to a PNG
-    //     const newTexture = new PIXI.Texture.fromImage(path)
-    //     return newTexture
-    // }
-
-    // drawTile(x, y, w) {
-    //     // temp function that draws tiles
-    //     const graphics = new PIXI.Graphics()
-    //     graphics.beginFill(0xFFFF00)
-    //     graphics.lineStyle(5, 0xFF0000)
-    //     graphics.drawRect(x, y, w, w)
-    //     return graphics
-    // }
-
-    // moveStage(direction) {
-    //     if (direction === 'right'){
-    //         this.stage.position.x -=10
-    //     } else if (direction === 'down') {
-    //         this.stage.position.y -=10
-    //     } else if (direction === 'left') {
-    //         this.stage.position.x +=10
-    //     } else if (direction === 'up') {
-    //         this.stage.position.y +=10
-    //     }
-    // }
 
 }

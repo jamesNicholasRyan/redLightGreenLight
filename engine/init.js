@@ -26,12 +26,6 @@ export default function initializeGame(width, height, targetFps, showFps) {
         window.keyboardController = new KeyboardController()
         mouseController.init()
         keyboardController.init()
-        // gameEngine.setAttribute('style', `
-        //                         background-color: grey;
-        //                         margin: 0 auto;
-        //                         width: ${width * 0.9}px;
-        //                         height: ${height * 0.8}px;
-        //                         `)
     
         gameViewport.appendChild(gameEngine.pixiRender())
         return gameViewport

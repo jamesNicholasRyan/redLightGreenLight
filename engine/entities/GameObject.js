@@ -8,8 +8,8 @@ export default class GameObject {
 
     constructor(x, y, a, b, fill) {
         this.location = new Vector(x,y)
-        this.a = a,
-        this.b = b,
+        this.a = a
+        this.b = b
         this.acceleration = new Vector(0,0)
         this.velocity = new Vector(0,0)
         this.topSpeed = 10
@@ -18,12 +18,20 @@ export default class GameObject {
         this.originalFill = this.fill
     }
 
-    // displays the gameobject
-    display() {
+    // Initialises the graphics of the object when added to engine
+    createDisplay() {
         this.graphics.beginFill(this.fill)
         this.graphics.drawCircle(this.location.x, this.location.y, this.a)
         this.graphics.endFill()
         return this.graphics
+    }
+
+    // updates game object graphics
+    display() {
+        this.graphics.beginFill(this.fill)
+        this.graphics.drawCircle(this.location.x, this.location.y, this.a)
+        this.graphics.endFill()
+        // return this.graphics
     }
 
     update() {
@@ -39,5 +47,13 @@ export default class GameObject {
 
     applyForce(force) {
         this.acceleration.add(force)
+    }
+
+    reset() {
+        // resets the object
+        this.location.x = this.startingLocationX
+        this.location.y = this.startingLocationY
+        this.acceleration = new Vector(0,0)
+        this.velocity = new Vector(0,0)
     }
 }

@@ -1,0 +1,35 @@
+// This class prepresents the important victory line that the 
+// player must cross to win the game
+
+// crimson - #DC143C
+
+import * as PIXI from 'pixi.js'
+  
+export default class SuccessLine {
+
+    constructor(x, y, l, h) {
+        this.x = x
+        this.y = y
+        this.l = l 
+        this.h = h
+        this.graphics = new PIXI.Graphics()
+    }
+
+    createDisplay() {
+        this.graphics.beginFill(0x990000)
+        this.graphics.drawRect(this.x, this.y, this.l, this.h)
+        this.graphics.endFill()
+        return this.graphics
+    }
+
+    display() {
+        this.graphics.beginFill(0x990000)
+        this.graphics.drawRect(this.x, this.y, this.l, this.h)
+        this.graphics.endFill()
+        // return this.graphics
+    }
+
+    update() {
+
+    }
+}
