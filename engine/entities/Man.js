@@ -30,7 +30,7 @@ export default class Man extends GameObject {
     createDisplay() {
         this.animation = new PIXI.AnimatedSprite(gameEngine.playerSheet.standSouth)
         this.animation.anchor.set(0.5)
-        this.animation.animationSpeed = .25
+        this.animation.animationSpeed = .1
         this.animation.loop = false
         this.animation.width = 52
         this.animation.height = 72
@@ -119,16 +119,16 @@ export default class Man extends GameObject {
     checkKeyPresses() {
         if (window.gameEngine.keyW) {                        // UP
             this.applyForce(new Vector(0,-this.speed))
-            this.lastKeyPress = 'south'
+            this.lastKeyPress = 'north'
         } else if (window.gameEngine.keyA) {                 // LEFT
             this.applyForce(new Vector(-this.speed,0))
-            this.lastKeyPress = 'south'
+            this.lastKeyPress = 'west'
         } else if (window.gameEngine.keyS) {                 // DOWN
             this.applyForce(new Vector(0,this.speed))
             this.lastKeyPress = 'south'
         } else if (window.gameEngine.keyD) {                 // RIGHT
             this.applyForce(new Vector(this.speed,0))
-            this.lastKeyPress = 'south'
+            this.lastKeyPress = 'east'
         } else if (window.gameEngine.spaceBar) {             // SPACE
             this.lastKeyPress = 'south'
             this.breakMan()

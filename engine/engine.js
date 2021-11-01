@@ -76,10 +76,20 @@ export default class Engine {
             new PIXI.Texture(sSheet, new PIXI.Rectangle(1*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(2*w, 0, w, h))
         ]
-        this.playerSheet["north"] = [
+        this.playerSheet["west"] = [
             new PIXI.Texture(sSheet, new PIXI.Rectangle(3*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(4*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(5*w, 0, w, h))
+        ]
+        this.playerSheet["north"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(6*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(7*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(8*w, 0, w, h))
+        ]
+        this.playerSheet["east"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(9*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(10*w, 0, w, h)),
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(11*w, 0, w, h))
         ]
     }
 
