@@ -22,6 +22,7 @@ export default class Engine {
         this.stage = new PIXI.Container()
         this.containers = []
         this.state = {}
+        this.worldState = []
         this.renderer = this.buildRenderer()
         this.loader = new PIXI.Loader
 

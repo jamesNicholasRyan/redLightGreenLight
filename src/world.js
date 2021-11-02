@@ -20,7 +20,13 @@ export default class World {
         const initializedGame = initializeGame(this.worldWidth, this.worldHeight, 30, true)
         document.body.appendChild(initializedGame)
 
+        // Loading the sprites and adding world data to the engine
         gameEngine.loadSprites()
+        gameEngine.worldState.push(this)
+    }
+
+    update() {
+        // This update function, updates the whole game / world data! 
     }
 
     runGame() {
@@ -29,7 +35,7 @@ export default class World {
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
         gameEngine.createGameObject(successLine)
 
-        const man1 = new Man(this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
+        window.man1 = new Man(this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
         gameEngine.createGameObject(man1)
 
         
