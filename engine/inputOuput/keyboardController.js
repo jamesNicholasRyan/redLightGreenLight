@@ -7,25 +7,40 @@ export default class KeyboardController {
     }
 
     init() {
-        // this.arrowKeys()
+        this.arrowKeys()
         this.wAsD()
     }
 
     arrowKeys() {
         // checks wether a arrow key has been pressed
 
-        document.addEventListener('keydown', keyPress)
+        document.addEventListener('keydown', onKeyDown)
 
-        function keyPress(e) {
+        function onKeyDown(e) {
             const key = e.key
             if (key === 'ArrowRight') {
-                gameEngine.moveStage('right')
+                gameEngine.arrowRight = true
             } else if (key === 'ArrowLeft') {
-                gameEngine.moveStage('left')
+                gameEngine.arrowLeft = true
             } else if (key === 'ArrowUp') {
-                gameEngine.moveStage('up')
+                gameEngine.arrowUp = true
             } else if (key === 'ArrowDown') {
-                gameEngine.moveStage('down')
+                gameEngine.arrowDown = true
+            }
+        }
+
+        document.addEventListener('keyup', onKeyUp, false)
+
+        function onKeyUp(e) {
+            const key = e.key
+            if (key === 'ArrowRight') {
+                gameEngine.arrowRight = false
+            } else if (key === 'ArrowLeft') {
+                gameEngine.arrowLeft = false
+            } else if (key === 'ArrowUp') {
+                gameEngine.arrowUp = false
+            } else if (key === 'ArrowDown') {
+                gameEngine.arrowDown = false
             }
         }
     }

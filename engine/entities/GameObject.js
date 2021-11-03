@@ -49,11 +49,4 @@ export default class GameObject {
         this.acceleration.add(force)
     }
 
-    reset() {
-        // resets the object
-        this.location.x = this.startingLocationX
-        this.location.y = this.startingLocationY
-        this.acceleration = new Vector(0,0)
-        this.velocity = new Vector(0,0)
-    }
 }

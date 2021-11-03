@@ -4,6 +4,7 @@ import Man from '../engine/entities/Man'
 import SuccessLine from '../engine/entities/SuccessLine.js'
 import Lights from '../engine/ui/Lights'
 import Girl from '../engine/logic/Girl'
+import BalanceBall from '../engine/logic/BalanceBall.js'
 
 
 export default class World {
@@ -14,6 +15,12 @@ export default class World {
         this.worldHeight = height
         this.tileWidth = tileWidth
         this.tiles = []
+        
+        // UTILS
+        this.gameStarted = false
+
+        // GAMEPLAY
+        this.balancing = false
     }
 
     init() {
@@ -26,10 +33,19 @@ export default class World {
     }
 
     update() {
+        if (!this.gameStarted) return
         // This update function, updates the whole game / world data! 
+        this.checkManBalance()
+        if (this.balancing) {
+            this.checkLostBalance()
+            if (!window.balanceBall.active) window.balanceBall.activate()
+        } else {
+            window.balanceBall.deactivate()
+        }
     }
 
     runGame() {
+        this.gameStarted = true
         gameEngine.loop()
 
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
@@ -46,16 +62,31 @@ export default class World {
         const girl = new Girl()
         girl.randomTimer()
         
-        console.log(gameEngine.playerSheet)
+        window.balanceBall = new BalanceBall(500, 0)
+        window.gameEngine.worldState.push(window.balanceBall)
     
         const listener = window.addEventListener('click', function(event) {  
             console.log('************ incrementing loop ************')                        
             gameEngine.loop()
-            console.log(gameEngine.state.gameObjects[0])
+            // console.log(gameEngine.state.gameObjects[0])
+            // balanceBall.activate()
             window.cancelAnimationFrame( gameEngine.loop.stopLoop )   
         })
     }
 
+    checkManBalance() {
+        // Activates the balance mini game if the man has started 'balancing'
+        if (window.man1.balancing) return this.balancing = true
+        return this.balancing = false
+    }
+
+    checkLostBalance() {
+        console.log(window.balanceBall.lostBalance)
+        // If the blanacing mini game is lost, the man is reset
+        if (window.balanceBall.lostBalance) {
+            window.man1.dead = true
+        }
+    }
 
 }
 

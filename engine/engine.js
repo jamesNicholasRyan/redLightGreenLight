@@ -32,6 +32,10 @@ export default class Engine {
         this.keyS = false
         this.keyD = false
         this.spaceBar = false
+        this.arrowLeft = false
+        this.arrowUp = false
+        this.arrowRight = false
+        this.arrowDown = false
 
         // GAMEPLAY VARIABLES
         this.redLight = false

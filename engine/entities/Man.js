@@ -16,12 +16,14 @@ export default class Man extends GameObject {
 
         this.lives = 3
 
+        this.dead = false
         this.deathCount = 0
         this.deathTolerance = 75
         this.hasWon = false
 
         // ANIMATION VARIABLES
         this.breaking = false
+        this.balancing = false
         this.animation = ''
         this.lastKeyPress = ''
     }
@@ -45,7 +47,7 @@ export default class Man extends GameObject {
         this.animation.play()
     }
 
-    update(){
+    update() {
         this.checkKeyPresses()
         this.checkEdges()
         this.checkAnimation()
@@ -53,10 +55,11 @@ export default class Man extends GameObject {
         // this.friction()
         if (!this.hasWon) {
             this.isDying()
-            this.checkDeath()
+            this.checkDeathTimer()
+            this.checkDead()
+            this.checkBalance()
             this.checkWin()
         }
-
 
         super.update()
     }
@@ -74,7 +77,7 @@ export default class Man extends GameObject {
     isDying() {
         // this method checks whether the player is moving and redLight light is showing
         if (this.isMoving() && window.gameEngine.redLight) {
-            console.log('DEATH COUNT:', this.deathCount)
+            // console.log('DEATH COUNT:', this.deathCount)
             this.deathCount ++
         } else {
             this.deathCount = 0
@@ -98,13 +101,22 @@ export default class Man extends GameObject {
         }
     }
 
-    checkDeath() {
+    checkDeathTimer() {
         // Checks whether the player has moved enough during redlight, to be noticed / killed
         if (this.deathCount > this.deathTolerance) {
-            this.lives --
-            this.reset()
+            this.dead = true
         }
         if (this.lives <= 0) gameEngine.lose = true
+    }
+
+    checkDead() {
+        // checks dead boolean to see if man has died yet.
+        // This is here becuase there may be multiple ways to die!!
+        if (this.dead) {
+            this.reset()
+            this.lives --
+            console.log("*********DEEEEAD**********")
+        }
     }
 
     checkWin() {
@@ -114,6 +126,13 @@ export default class Man extends GameObject {
             gameEngine.win = true
             console.log('YOU WIN!!!!!!')
         }
+    }
+
+    checkBalance() {
+        // This method checks wether the man is alive, stationary and the 
+        // red light is on, and returns this.blance as true
+        if (this.isMoving() && !window.gameEngine.redLight) return this.balancing = false
+        return this.balancing = true
     }
 
     checkKeyPresses() {
@@ -176,4 +195,15 @@ export default class Man extends GameObject {
 
         this.applyForce(friction)
     }
+
+    reset() {
+        // resets the object
+        console.log('RESETTING MAN')
+        this.location.x = this.startingLocationX
+        this.location.y = this.startingLocationY
+        this.acceleration = new Vector(0,0)
+        this.velocity = new Vector(0,0)
+        this.dead = false
+    }
+    
 }
