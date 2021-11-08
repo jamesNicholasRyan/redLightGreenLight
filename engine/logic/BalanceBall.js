@@ -75,4 +75,18 @@ export default class BalanceBall {
             this.applyForce(this.forceStrength)
         }
     }
+
+    checkManBalance() {
+        // Activates the balance mini game if the man has started 'balancing'
+        if (window.man1.balancing) return true
+        return false
+    }
+
+    checkLostBalance() {
+        // If the blanacing mini game is lost, the man is reset
+        console.log(window.balanceBall.lostBalance)
+        if (window.balanceBall.lostBalance) {
+            window.man1.dead = true
+        }
+    }
 }

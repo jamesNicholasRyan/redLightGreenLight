@@ -33,20 +33,21 @@ export default class World {
     }
 
     update() {
-        if (!this.gameStarted) return
-        // This update function, updates the whole game / world data! 
-        this.checkManBalance()
-        if (this.balancing) {
-            this.checkLostBalance()
-            if (!window.balanceBall.active) window.balanceBall.activate()
+        // This update function, updates the whole game / world data!
+        if (!this.gameStarted) return           // wait for the game tp initialize first
+        
+        this.balancing = window.balanceBall.checkManBalance()
+        // this.checkManBalance()
+        if (this.balancing) {                    // If the man is balancing
+            balanceBall.checkLostBalance()       // check if he has lost his balance...
+            if (!window.balanceBall.active) window.balanceBall.activate()   // if the balance mini game isn't active, activate it
         } else {
-            window.balanceBall.deactivate()
+            window.balanceBall.deactivate()       // else, de-activate it
         }
     }
 
-    runGame() {
-        this.gameStarted = true
-        gameEngine.loop()
+    runGame() {   
+        // create game data
 
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
         gameEngine.createGameObject(successLine)
@@ -54,16 +55,17 @@ export default class World {
         window.man1 = new Man(this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
         gameEngine.createGameObject(man1)
 
-        
         const lights = new Lights(10, 10, 80, 200, 0x025666)
         gameEngine.createGameObject(lights)
-
 
         const girl = new Girl()
         girl.randomTimer()
         
         window.balanceBall = new BalanceBall(500, 0)
         window.gameEngine.worldState.push(window.balanceBall)
+
+        gameEngine.loop()
+        this.gameStarted = true
     
         const listener = window.addEventListener('click', function(event) {  
             console.log('************ incrementing loop ************')                        
@@ -72,20 +74,6 @@ export default class World {
             // balanceBall.activate()
             window.cancelAnimationFrame( gameEngine.loop.stopLoop )   
         })
-    }
-
-    checkManBalance() {
-        // Activates the balance mini game if the man has started 'balancing'
-        if (window.man1.balancing) return this.balancing = true
-        return this.balancing = false
-    }
-
-    checkLostBalance() {
-        console.log(window.balanceBall.lostBalance)
-        // If the blanacing mini game is lost, the man is reset
-        if (window.balanceBall.lostBalance) {
-            window.man1.dead = true
-        }
     }
 
 }

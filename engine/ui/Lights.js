@@ -6,26 +6,15 @@ import UiElement from "./UiElement.js"
 export default class Lights extends UiElement {
     constructor(x, y, w, h, fill) {
         super(x, y, w, h, fill)
+        this.offsetX = this.x + this.w/2
+        this.offsetY1 = this.y + (this.h * 0.25)
+        this.offsetY2 = this.y + (this.h * 0.75)
+        this.red = 0xFF0000
+        this.green = 0x00FF00
     }
 
     createDisplay() {
-        this.graphics.beginFill(this.fill)
-        this.graphics.drawRect(this.x, this.y, this.w, this.h)
-        this.graphics.endFill()
-
-
-        const offsetX = this.x + this.w/2
-        const offsetY1 = this.y + (this.h * 0.25)
-        const offsetY2 = this.y + (this.h * 0.75)
-        const red = 0xFF0000
-        const green = 0x00FF00
-        if (window.gameEngine.redLight) {
-            this.drawLight(offsetX, offsetY1, red)
-        } else {
-            this.drawLight(offsetX, offsetY2, green)
-        }
-        
-        // super.display()
+        this.display()
         return this.graphics 
     }
 
@@ -34,20 +23,12 @@ export default class Lights extends UiElement {
         this.graphics.drawRect(this.x, this.y, this.w, this.h)
         this.graphics.endFill()
 
-
-        const offsetX = this.x + this.w/2
-        const offsetY1 = this.y + (this.h * 0.25)
-        const offsetY2 = this.y + (this.h * 0.75)
-        const red = 0xFF0000
-        const green = 0x00FF00
         if (window.gameEngine.redLight) {
-            this.drawLight(offsetX, offsetY1, red)
+            this.drawLight(this.offsetX, this.offsetY1, this.red)
         } else {
-            this.drawLight(offsetX, offsetY2, green)
+            this.drawLight(this.offsetX, this.offsetY2, this.green)
         }
-        
-        // super.display()
-        // return this.graphics 
+
     }
 
     drawLight(x, y, color) {
