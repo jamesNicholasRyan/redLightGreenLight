@@ -5,6 +5,7 @@ import SuccessLine from '../engine/entities/SuccessLine.js'
 import Lights from '../engine/ui/Lights'
 import Girl from '../engine/logic/Girl'
 import BalanceBall from '../engine/logic/BalanceBall.js'
+import BalanceUI from '../engine/ui/BalanceUI.js'
 
 
 export default class World {
@@ -19,8 +20,16 @@ export default class World {
         // UTILS
         this.gameStarted = false
 
+        // POSITIONS
+        this.balanceX = this.worldWidth * 0.6
+        this.balanceY = this.worldHeight * 0.9
+        this.balanceWidth = 400
+
         // GAMEPLAY
         this.balancing = false
+        this.balanceMin = (this.worldWidth * 0.6)
+        this.balanceMax = (this.worldWidth * 0.6) + this.balanceWidth
+        this.balanceMed = (this.worldWidth * 0.6) + (this.balanceWidth/2)
     }
 
     init() {
@@ -36,18 +45,20 @@ export default class World {
         // This update function, updates the whole game / world data!
         if (!this.gameStarted) return           // wait for the game tp initialize first
         
-        this.balancing = window.balanceBall.checkManBalance()
+        this.balancing = window.balanceUI.checkManBalance()
         // this.checkManBalance()
-        if (this.balancing) {                    // If the man is balancing
-            balanceBall.checkLostBalance()       // check if he has lost his balance...
-            if (!window.balanceBall.active) window.balanceBall.activate()   // if the balance mini game isn't active, activate it
+        if (this.balancing) {                   // If the man is balancing
+            balanceUI.checkLostBalance()        // check if he has lost his balance...
+            if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
         } else {
-            window.balanceBall.deactivate()       // else, de-activate it
+            window.balanceUI.deactivate()       // else, de-activate it
         }
     }
 
     runGame() {   
         // create game data
+        // window.balanceBall = new BalanceBall(this.balanceMed, 0, this.balanceMin, this.balanceMax)
+        // window.gameEngine.worldState.push(window.balanceBall)
 
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
         gameEngine.createGameObject(successLine)
@@ -56,13 +67,14 @@ export default class World {
         gameEngine.createGameObject(man1)
 
         const lights = new Lights(10, 10, 80, 200, 0x025666)
+        window.balanceUI = new BalanceUI(this.balanceX, this.balanceY, this.balanceWidth, 50, 0x025666, 0xFF0000,
+            this.balanceMed, 0, this.balanceMin, this.balanceMax       
+            )
         gameEngine.createGameObject(lights)
+        gameEngine.createGameObject(balanceUI)
 
         const girl = new Girl()
         girl.randomTimer()
-        
-        window.balanceBall = new BalanceBall(500, 0)
-        window.gameEngine.worldState.push(window.balanceBall)
 
         gameEngine.loop()
         this.gameStarted = true
