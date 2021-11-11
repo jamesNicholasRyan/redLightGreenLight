@@ -52,14 +52,13 @@ export default class BalanceUI extends UiElement {
     }
 
     // LOGIC
-
     update() {
         if (this.active) {
             this.move()
             this.checkKeyPresses()
             this.checkLimits()
-            console.log(this.velocity)
-            console.log(this.position)
+            // console.log(this.velocity)
+            // console.log(this.position)
         } else {
             return
         }
@@ -80,6 +79,11 @@ export default class BalanceUI extends UiElement {
     limitVelocity() {
         if (this.velocity > this.topSpeedMax) this.velocity = this.topSpeedMax
         if (this.velocity < this.topSpeedMin) this.velocity = this.topSpeedMin
+    }
+
+    action() {
+        // what happens when this element is clicked...
+        return
     }
 
     activate() {
@@ -122,7 +126,7 @@ export default class BalanceUI extends UiElement {
 
     checkLostBalance() {
         // If the blanacing mini game is lost, the man is reset
-        console.log(this.lostBalance)
+        // console.log(this.lostBalance)
         if (this.lostBalance) {
             window.man1.dead = true
         }

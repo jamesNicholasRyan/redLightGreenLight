@@ -29,6 +29,11 @@ function gameRender( engine ) {
                 obj.graphics.clear()
                 obj.display()
             })
+            const uiObjects = engine.state.ui
+            uiObjects.forEach((obj) => {
+                obj.graphics.clear()
+                obj.display()
+            })
         }
         engine.renderer.render(engine.stage)
     }

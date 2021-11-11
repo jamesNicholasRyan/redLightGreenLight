@@ -36,4 +36,5 @@ export default class Lights extends UiElement {
         this.graphics.drawCircle(x, y, 30)
         this.graphics.endFill()
     }
+
 }

@@ -37,6 +37,9 @@ export default class Engine {
         this.arrowRight = false
         this.arrowDown = false
 
+        // Mouse Controller
+        // this.mouseClick = false     // NOT NEEDED??
+
         // GAMEPLAY VARIABLES
         this.redLight = false
         this.successLine = 0.05
@@ -113,14 +116,53 @@ export default class Engine {
             } else {
                 this.state.gameObjects.push(object)
             }
+        } else if (type === 'UI') {
+            if (!this.state.ui) {
+                this.state = {
+                    ...this.state,
+                    ui: [object]
+                }
+            } else {
+                this.state.ui.push(object)
+            }
         }
+        // if (!this.state.hasOwnProperty(type)) {
+        //     this.state = {
+        //         ...this.state,
+        //         [type]: [object]
+        //     }
+        // }
     }
 
-    createGameObject(object) {
+    createGameObject(object, type) {
         // console.log('adding game object')
         const graphics = object.createDisplay()
         this.addToStage(graphics)
-        this.addToState(object, 'gameObject')
+        this.addToState(object, type)
+    }
+
+    mouseClicked(mousePosition) {
+        // loop UI elements
+        // check if mouse is over any of them?
+        const UIelements = this.state.ui
+        for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...
+            const element = UIelements[i]
+            if (!element.active) return
+            if (element.checkMouseOver(mousePosition)) {
+                element.action()
+                return
+            }    
+        }
+    }
+
+    resetEngine() {
+        this.redLight = false
+        this.clearState()
+    }
+
+    clearState() {
+        this.state = {}
+        this.stage = new PIXI.Container()
     }
 
     update() {

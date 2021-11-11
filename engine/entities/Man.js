@@ -56,7 +56,7 @@ export default class Man extends GameObject {
         if (!this.hasWon) {
             this.isDying()
             this.checkDeathTimer()
-            this.checkDead()
+            // this.checkDead()
             this.checkBalance()
             this.checkWin()
         }

@@ -22,11 +22,12 @@ export default function initializeGame(width, height, targetFps, showFps) {
         // initialise game engine
         window.gameEngine = new Engine(canvasHTML, width, height, targetFps, showFps)
         // initialise game input & output
+        
+        gameViewport.appendChild(gameEngine.pixiRender())
+        
         window.mouseController = new MouseController()
         window.keyboardController = new KeyboardController()
-        mouseController.init()
         keyboardController.init()
-    
-        gameViewport.appendChild(gameEngine.pixiRender())
+        mouseController.init()
         return gameViewport
 }

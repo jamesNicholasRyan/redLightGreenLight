@@ -6,6 +6,7 @@ import Lights from '../engine/ui/Lights'
 import Girl from '../engine/logic/Girl'
 import BalanceBall from '../engine/logic/BalanceBall.js'
 import BalanceUI from '../engine/ui/BalanceUI.js'
+import GameOverPopUp from '../engine/ui/GameOverPopUp.js'
 
 
 export default class World {
@@ -26,6 +27,8 @@ export default class World {
         this.balanceWidth = 400
 
         // GAMEPLAY
+        this.paused = false
+        this.gameOver = false
         this.balancing = false
         this.balanceMin = (this.worldWidth * 0.6)
         this.balanceMax = (this.worldWidth * 0.6) + this.balanceWidth
@@ -47,46 +50,71 @@ export default class World {
         
         this.balancing = window.balanceUI.checkManBalance()
         // this.checkManBalance()
-        if (this.balancing) {                   // If the man is balancing
+        if (this.balancing && gameEngine.redLight) {                   // If the man is balancing
             balanceUI.checkLostBalance()        // check if he has lost his balance...
             if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
         } else {
             window.balanceUI.deactivate()       // else, de-activate it
         }
+        
+        this.checkManDead()
+        if (this.paused) {
+            this.pauseGame()
+        }
     }
 
     runGame() {   
+        this.createGameObjects()
+        gameEngine.loop()
+        this.gameStarted = true
+    }
+    
+    createGameObjects() {
         // create game data
-        // window.balanceBall = new BalanceBall(this.balanceMed, 0, this.balanceMin, this.balanceMax)
-        // window.gameEngine.worldState.push(window.balanceBall)
-
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
-        gameEngine.createGameObject(successLine)
+        gameEngine.createGameObject(successLine, 'gameObject')
 
         window.man1 = new Man(this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
-        gameEngine.createGameObject(man1)
+        gameEngine.createGameObject(man1, 'gameObject')
 
         const lights = new Lights(10, 10, 80, 200, 0x025666)
+        const gameOverPopUp = new GameOverPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
         window.balanceUI = new BalanceUI(this.balanceX, this.balanceY, this.balanceWidth, 50, 0x025666, 0xFF0000,
-            this.balanceMed, 0, this.balanceMin, this.balanceMax       
-            )
-        gameEngine.createGameObject(lights)
-        gameEngine.createGameObject(balanceUI)
+                                        this.balanceMed, 0, this.balanceMin, this.balanceMax)
+        gameEngine.createGameObject(lights, 'UI')
+        gameEngine.createGameObject(gameOverPopUp, 'UI')
+        gameEngine.createGameObject(balanceUI, 'UI')
 
         const girl = new Girl()
         girl.randomTimer()
-
-        gameEngine.loop()
-        this.gameStarted = true
-    
-        const listener = window.addEventListener('click', function(event) {  
-            console.log('************ incrementing loop ************')                        
-            gameEngine.loop()
-            // console.log(gameEngine.state.gameObjects[0])
-            // balanceBall.activate()
-            window.cancelAnimationFrame( gameEngine.loop.stopLoop )   
-        })
     }
 
+    resetGame() {
+        window.gameEngine.resetEngine()
+        this.createGameObjects()
+        window.man1.reset()
+        this.gameOver = false
+        this.paused = false
+        this.unPauseGame()
+    }
+    
+    pauseGame() {
+        setTimeout(() => {
+            window.cancelAnimationFrame( gameEngine.loop.stopLoop ) 
+        }, 50)
+    }
+    
+    unPauseGame() {
+        setTimeout(() => {
+            gameEngine.loop()
+        }, 50)
+    }
+    
+    checkManDead() {
+        if (window.man1.dead) {
+            this.paused = true
+            this.gameOver = true
+        }
+    }
 }
 

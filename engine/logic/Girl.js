@@ -8,13 +8,13 @@ export default class Girl {
 
     randomTimer() {
         // This function returns either GREEN or RED
-        // setTimeout(() => {
-        //     window.gameEngine.redLight = false
-        //     green()
-        // }, 7000)
-        // const green = () => setTimeout(() => {
-        //     window.gameEngine.redLight = true
-        //     this.randomTimer()
-        // }, 1000)
+        setTimeout(() => {
+            window.gameEngine.redLight = false
+            green()
+        }, 7000)
+        const green = () => setTimeout(() => {
+            window.gameEngine.redLight = true
+            this.randomTimer()
+        }, 1000)
     }
 }

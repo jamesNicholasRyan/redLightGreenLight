@@ -23,4 +23,25 @@ export default class UiElement {
 
     }
 
+    action() {
+
+    }
+
+    activate() {
+        
+    }
+
+    deactivate() {
+
+    }
+
+    checkMouseOver(mousePosition) {
+        // Checks whether a given mouse position is over the current UI element
+        if ((mousePosition.x > this.x) && (mousePosition.x < this.x+this.w) &&
+            (mousePosition.y > this.y) && (mousePosition.y < this.y+this.h)) {
+            return true
+        }
+        return false
+    }
+
 }
