@@ -48,6 +48,7 @@ export default class Engine {
 
         //spriteSheets
         this.playerSheet = {}
+        this.UIsprite = {}
     }
 
     buildRenderer() {
@@ -99,6 +100,7 @@ export default class Engine {
             new PIXI.Texture(sSheet, new PIXI.Rectangle(10*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(11*w, 0, w, h))
         ]
+
     }
 
     addToStage(child) {

@@ -13,6 +13,7 @@ export default class UiElement {
         this.h = h
         this.fill = fill
         this.graphics = new PIXI.Graphics()
+        this.isSprite = false
     }
 
     display() {
@@ -28,7 +29,7 @@ export default class UiElement {
     }
 
     activate() {
-        
+
     }
 
     deactivate() {
@@ -36,6 +37,9 @@ export default class UiElement {
     }
 
     checkMouseOver(mousePosition) {
+        if (this.isSprite) { // If this element is a sprite, use the Sprite.containsPoint()
+             return this.sprite.containsPoint(mousePosition)
+        }
         // Checks whether a given mouse position is over the current UI element
         if ((mousePosition.x > this.x) && (mousePosition.x < this.x+this.w) &&
             (mousePosition.y > this.y) && (mousePosition.y < this.y+this.h)) {

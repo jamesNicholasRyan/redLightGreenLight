@@ -1,5 +1,8 @@
 // This file contains all logic for the Game Over Pop Up
 import UiElement from "./UiElement.js"
+import * as PIXI from 'pixi.js'
+
+import gameOverButton from '../assets/game_over_button.png'
 
 
 export default class GameOverPopUp extends UiElement {
@@ -10,27 +13,36 @@ export default class GameOverPopUp extends UiElement {
         this.y = y
         this.fill = fill
         this.active = false
+        this.sprite = ''
+        this.texture = new PIXI.Texture.from(gameOverButton)
     }
 
     createDisplay() {
+        this.sprite = new PIXI.Sprite(this.texture)
         this.fullDisplay()
-        return this.graphics
+        this.isSprite = true
+        return this.sprite
     }
 
     display() {
-        if (!this.active) return
+        if (!this.active) return this.sprite.alpha = 0
+        console.log('DISPLAYING GAME OVER BOX')
         this.fullDisplay()
     }
 
     fullDisplay() {
-        this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
+        // this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
+        this.sprite.anchor.set(0.5)
+        this.sprite.position.x = this.x
+        this.sprite.position.y = this.y
+        this.sprite.alpha = 1
     }
 
-    drawRectangle(x, y, w, h, color) {
-        this.graphics.beginFill(color)
-        this.graphics.drawRect(x, y, w, h)
-        this.graphics.endFill()
-    }
+    // drawRectangle(x, y, w, h, color) {
+    //     this.graphics.beginFill(color)
+    //     this.graphics.drawRect(x, y, w, h)
+    //     this.graphics.endFill()
+    // }
 
     // LOGIC
     update() {
