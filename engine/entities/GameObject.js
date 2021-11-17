@@ -16,6 +16,7 @@ export default class GameObject {
         this.graphics = new PIXI.Graphics()
         this.fill = fill
         this.originalFill = this.fill
+        this.active = false
     }
 
     // Initialises the graphics of the object when added to engine
@@ -35,6 +36,7 @@ export default class GameObject {
     }
 
     update() {
+        if (!this.active) return
         this.move()
     }
 

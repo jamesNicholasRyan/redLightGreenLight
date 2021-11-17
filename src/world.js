@@ -17,6 +17,7 @@ export default class World {
         this.worldHeight = height
         this.tileWidth = tileWidth
         this.tiles = []
+        this.girl = null
         
         // UTILS
         this.gameStarted = false
@@ -28,6 +29,7 @@ export default class World {
 
         // GAMEPLAY
         this.paused = false
+        this.isLevelActive = false
         this.gameOver = false
         this.balancing = false
         this.balanceMin = (this.worldWidth * 0.6)
@@ -46,15 +48,15 @@ export default class World {
 
     update() {
         // This update function, updates the whole game / world data!
-        if (!this.gameStarted) return           // wait for the game tp initialize first
+        if (!this.gameStarted) return                    // wait for the game to initialize first
         
         this.balancing = window.balanceUI.checkManBalance()
         // this.checkManBalance()
-        if (this.balancing && gameEngine.redLight) {                   // If the man is balancing
+        if (this.balancing && gameEngine.redLight && this.isLevelActive) {                   // If the man is balancing
             balanceUI.checkLostBalance()        // check if he has lost his balance...
             if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
         } else {
-            window.balanceUI.deactivate()       // else, de-activate it
+            window.balanceUI.deactivate()       // else de-activate it
         }
         
         this.checkManDead()
@@ -86,11 +88,18 @@ export default class World {
         gameEngine.createGameObject(balanceUI, 'UI')
 
         const girl = new Girl()
-        girl.randomTimer()
+        this.girl = girl
+        // girl.randomTimer()
+        // setTimeout(() => {
+        //     girl.startCountDown()
+        // },1000)
+        girl.startLevelCountDown()
+
     }
 
     resetGame() {
         window.gameEngine.resetEngine()
+        this.deActivateLevel()
         this.createGameObjects()
         window.man1.reset()
         this.gameOver = false
@@ -108,6 +117,27 @@ export default class World {
         setTimeout(() => {
             gameEngine.loop()
         }, 50)
+    }
+
+    activateLevel() {
+        console.log('GAME LEVEL ACTIVE!')
+        this.isLevelActive = true
+        const gameObjects = window.gameEngine.state.gameObjects
+        gameObjects.forEach((obj) => {
+            obj.active = true
+        })
+        this.girl.levelTimer()
+    }
+
+    deActivateLevel() {
+        console.log('STOPPING GAME LEVEL!')
+        this.isLevelActive = false
+        const gameObjects = window.gameEngine.state.gameObjects
+        console.log(gameObjects)
+        if (!gameObjects) return
+        gameObjects.forEach((obj) => {
+            obj.active = false
+        })
     }
     
     checkManDead() {

@@ -87,9 +87,10 @@ export default class BalanceUI extends UiElement {
     }
 
     activate() {
+        console.log('activaating balance ui!!')
         this.active = true
         this.lostBalance = false
-        // Rnadom velocity between -10 and 10
+        // Random velocity between -10 and 10
         const randForce = Math.random() * (10 - -10) + -10
         this.applyForce(randForce)
     }
@@ -103,6 +104,7 @@ export default class BalanceUI extends UiElement {
 
     checkLimits() {
         if ((this.position > this.maxLimit) || (this.position < this.minLimit)) {
+            console.log('balance lost!')
             this.lostBalance = true
             this.deactivate()
         } else {
