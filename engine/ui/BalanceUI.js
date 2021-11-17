@@ -20,6 +20,7 @@ export default class BalanceUI extends UiElement {
         this.forceStrength = 2
         this.minLimit = min
         this.maxLimit = max
+        this.randomVelChance = 400
         this.lostBalance = false
         this.active = false
     }
@@ -54,6 +55,7 @@ export default class BalanceUI extends UiElement {
     // LOGIC
     update() {
         if (this.active) {
+            this.randomVel()
             this.move()
             this.checkKeyPresses()
             this.checkLimits()
@@ -76,6 +78,15 @@ export default class BalanceUI extends UiElement {
         this.acceleration += force
     }
 
+    randomVel() {   
+        // This function makes the velocity of the ball a but random on random occassions
+        const random = Math.floor(Math.random() * 400)     // if zero - do random vel
+        if (random > 30) return
+        const randNegPos = Math.floor(Math.random() * 1)  // 0 is positive, 1 is negative
+        if (randNegPos > 0) return this.velocity += this.forceStrength
+        this.velocity -= this.forceStrength
+    }
+
     limitVelocity() {
         if (this.velocity > this.topSpeedMax) this.velocity = this.topSpeedMax
         if (this.velocity < this.topSpeedMin) this.velocity = this.topSpeedMin
@@ -91,7 +102,7 @@ export default class BalanceUI extends UiElement {
         this.active = true
         this.lostBalance = false
         // Random velocity between -10 and 10
-        const randForce = Math.random() * (10 - -10) + -10
+        const randForce = Math.random() * (5 - -5) + -5
         this.applyForce(randForce)
     }
 
