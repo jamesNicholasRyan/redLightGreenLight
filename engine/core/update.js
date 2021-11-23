@@ -35,8 +35,10 @@ function gameUpdate() {
     // console.log('updating game objects!')
     const gameObjects = state.gameObjects
     const uiObjects = state.ui
+    const buttonObjects = state.buttons
     gameObjects.forEach((obj) => obj.update())
     uiObjects.forEach((obj) => obj.update())
+    if (buttonObjects) buttonObjects.forEach((obj) => obj.update())
     const worldData = window.gameEngine.worldState
     worldData.forEach((obj) => obj.update())
 }

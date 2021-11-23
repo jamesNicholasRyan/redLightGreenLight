@@ -4,9 +4,9 @@ import Man from '../engine/entities/Man'
 import SuccessLine from '../engine/entities/SuccessLine.js'
 import Lights from '../engine/ui/Lights'
 import Girl from '../engine/logic/Girl'
-import BalanceBall from '../engine/logic/BalanceBall.js'
 import BalanceUI from '../engine/ui/BalanceUI.js'
 import GameOverPopUp from '../engine/ui/GameOverPopUp.js'
+import WinPopUp from '../engine/ui/WinPopUp.js'
 
 
 export default class World {
@@ -31,6 +31,8 @@ export default class World {
         this.paused = false
         this.isLevelActive = false
         this.gameOver = false
+        this.gameWin = false
+
         this.balancing = false
         this.balanceMin = (this.worldWidth * 0.6)
         this.balanceMax = (this.worldWidth * 0.6) + this.balanceWidth
@@ -49,17 +51,18 @@ export default class World {
     update() {
         // This update function, updates the whole game / world data!
         if (!this.gameStarted) return                    // wait for the game to initialize first
-        
         this.balancing = window.balanceUI.checkManBalance()
         // this.checkManBalance()
         if (this.balancing && gameEngine.redLight && this.isLevelActive) {                   // If the man is balancing
-            balanceUI.checkLostBalance()        // check if he has lost his balance...
+            balanceUI.checkLostBalance()           // check if he has lost his balance...
             if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
         } else {
-            window.balanceUI.deactivate()       // else de-activate it
+            window.balanceUI.deactivate()          // else de-activate it
         }
         
+        this.checkTimer()
         this.checkManDead()
+        this.checkWinCondition()
         if (this.paused) {
             this.pauseGame()
         }
@@ -80,20 +83,20 @@ export default class World {
         gameEngine.createGameObject(man1, 'gameObject')
 
         const lights = new Lights(10, 10, 80, 200, 0x025666)
-        const gameOverPopUp = new GameOverPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
         window.balanceUI = new BalanceUI(this.balanceX, this.balanceY, this.balanceWidth, 50, 0x025666, 0xFF0000,
-                                        this.balanceMed, 0, this.balanceMin, this.balanceMax)
+                                         this.balanceMed, 0, this.balanceMin, this.balanceMax)
+        const gameOverPopUp = new GameOverPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
+        const winPopUp = new WinPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
+
         gameEngine.createGameObject(lights, 'UI')
-        gameEngine.createGameObject(gameOverPopUp, 'UI')
         gameEngine.createGameObject(balanceUI, 'UI')
+        gameEngine.createGameObject(gameOverPopUp, 'UI')
+        gameEngine.createGameObject(winPopUp, 'UI')
 
         const girl = new Girl()
         this.girl = girl
-        // girl.randomTimer()
-        // setTimeout(() => {
-        //     girl.startCountDown()
-        // },1000)
-        girl.startLevelCountDown()
+        gameEngine.worldState.push(this.girl)
+        this.girl.startLevelCountDown()
 
     }
 
@@ -103,6 +106,7 @@ export default class World {
         this.createGameObjects()
         window.man1.reset()
         this.gameOver = false
+        this.gameWin = false
         this.paused = false
         this.unPauseGame()
     }
@@ -133,17 +137,39 @@ export default class World {
         console.log('STOPPING GAME LEVEL!')
         this.isLevelActive = false
         const gameObjects = window.gameEngine.state.gameObjects
-        console.log(gameObjects)
-        if (!gameObjects) return
-        gameObjects.forEach((obj) => {
-            obj.active = false
-        })
+        if (gameObjects) {
+            gameObjects.forEach((obj) => {
+                obj.active = false
+            })
+        }
+        const UIobjects = window.gameEngine.state.ui
+        if (UIobjects) {
+            UIobjects.forEach((obj) => {
+                obj.active = false
+            })
+        }
+    }
+
+    checkTimer() {
+        if (this.girl.outOfTime) {
+            console.log('TIMER CHEKED: OUT OF TIME')
+            this.pause = true
+            this.gameOver = true
+        }
     }
     
     checkManDead() {
         if (window.man1.dead) {
             this.paused = true
             this.gameOver = true
+            // this.deActivateLevel()
+        }
+    }
+
+    checkWinCondition() {
+        if (window.man1.hasWon) {
+            this.pause = true
+            this.gameWin = true
         }
     }
 }

@@ -44,7 +44,7 @@ export default class Engine {
         this.redLight = false
         this.successLine = 0.05
         this.lose = false
-        this.win = false
+        // this.win = false
 
         //spriteSheets
         this.playerSheet = {}
@@ -104,7 +104,6 @@ export default class Engine {
     }
 
     addToStage(child) {
-        // console.log('adding to stage')
         this.stage.addChild(child)
     }
 
@@ -127,6 +126,15 @@ export default class Engine {
             } else {
                 this.state.ui.push(object)
             }
+        } else if (type === 'buttons') {
+            if (!this.state.buttons) {
+                this.state = {
+                    ...this.state,
+                    buttons: [object]
+                }
+            } else {
+                this.state.buttons.push(object)
+            }
         }
         // if (!this.state.hasOwnProperty(type)) {
         //     this.state = {
@@ -137,7 +145,6 @@ export default class Engine {
     }
 
     createGameObject(object, type) {
-        // console.log('adding game object')
         const graphics = object.createDisplay()
         this.addToStage(graphics)
         this.addToState(object, type)
@@ -146,15 +153,27 @@ export default class Engine {
     mouseClicked(mousePosition) {
         // loop UI elements
         // check if mouse is over any of them?
+
         const UIelements = this.state.ui
+        if (!UIelements) returnd
         for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...
             const element = UIelements[i]
-            if (!element.active) return
+            if (!element.active) continue
             if (element.checkMouseOver(mousePosition)) {
                 element.action()
                 return
             }    
         }
+        // const UIelements = this.state.buttons
+        // if (!UIelements) return
+        // for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...
+        //     const element = UIelements[i]
+        //     if (!element.active) continue
+        //     if (element.checkMouseOver(mousePosition)) {
+        //         element.action()
+        //         return
+        //     }    
+        // }
     }
 
     resetEngine() {

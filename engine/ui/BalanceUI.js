@@ -82,7 +82,7 @@ export default class BalanceUI extends UiElement {
         // This function makes the velocity of the ball a but random on random occassions
         const random = Math.floor(Math.random() * 400)     // if zero - do random vel
         if (random > 30) return
-        const randNegPos = Math.floor(Math.random() * 1)  // 0 is positive, 1 is negative
+        const randNegPos = Math.floor(Math.random() * 1)   // 0 is positive, 1 is negative
         if (randNegPos > 0) return this.velocity += this.forceStrength
         this.velocity -= this.forceStrength
     }
@@ -98,7 +98,6 @@ export default class BalanceUI extends UiElement {
     }
 
     activate() {
-        console.log('activaating balance ui!!')
         this.active = true
         this.lostBalance = false
         // Random velocity between -10 and 10
@@ -115,7 +114,6 @@ export default class BalanceUI extends UiElement {
 
     checkLimits() {
         if ((this.position > this.maxLimit) || (this.position < this.minLimit)) {
-            console.log('balance lost!')
             this.lostBalance = true
             this.deactivate()
         } else {

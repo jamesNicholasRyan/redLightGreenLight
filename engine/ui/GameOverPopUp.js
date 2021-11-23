@@ -26,7 +26,6 @@ export default class GameOverPopUp extends UiElement {
 
     display() {
         if (!this.active) return this.sprite.alpha = 0
-        console.log('DISPLAYING GAME OVER BOX')
         this.fullDisplay()
     }
 
@@ -37,12 +36,6 @@ export default class GameOverPopUp extends UiElement {
         this.sprite.position.y = this.y
         this.sprite.alpha = 1
     }
-
-    // drawRectangle(x, y, w, h, color) {
-    //     this.graphics.beginFill(color)
-    //     this.graphics.drawRect(x, y, w, h)
-    //     this.graphics.endFill()
-    // }
 
     // LOGIC
     update() {

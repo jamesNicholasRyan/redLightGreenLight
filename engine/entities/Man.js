@@ -123,7 +123,6 @@ export default class Man extends GameObject {
         // checks wether the man has crossed the sucess line
         if (this.location.y < gameEngine.height*gameEngine.successLine) {
             this.hasWon = true
-            gameEngine.win = true
             console.log('YOU WIN!!!!!!')
         }
     }
