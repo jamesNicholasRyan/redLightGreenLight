@@ -15,7 +15,7 @@ export default class Girl {
     }
 
     update() {
-        if ((this.lCounter < 0) || (window.world.gameOver) || (window.world.gameWin)) {
+        if ((this.levelCounter < 0) || (window.world.gameOver) || (window.world.gameWin)) {
             this.stopTimers()
         }
     }
@@ -31,17 +31,18 @@ export default class Girl {
         // Count down for start of game
         window.gameEngine.redLight = true
         this.outOfTime = false
-        let sCounter = this.startCounter
-        const countDown = setInterval(countDownFunc, 1000)
-
-        function countDownFunc() {
-            sCounter --
-            console.log(sCounter)
-            if (sCounter < 0) {
+        const countDown = setInterval(() => {
+            this.startCounter --
+            console.log(this.startCounter)
+            if (this.startCounter < 0) {
                 clearInterval(countDown)
                 window.world.activateLevel()
             }
-        }
+        }, 1000)
+    }
+
+    countDownFunc() {
+
     }
 
 
@@ -50,42 +51,40 @@ export default class Girl {
         // lights as red or green
         window.gameEngine.redLight = false
 
-        let lCounter = this.levelCounter
-        this.minuteTimer = setInterval(countDown, 1000)
-        let rTimer = this.redTimer
-        let gTimer = this.greenTimer
+        this.minuteTimer = setInterval(() => this.countDown(), 1000)
 
-        function countDown() {
-            console.log('time: ', lCounter)
-            lCounter --
-            if (lCounter <= 0) {            // If minute is up, stop
-                clearInterval(minuteTimer)
-                console.log('out of time!!')
-                window.world.gameOver = true
-                this.outOfTime = true
+        this.redLight()
+    }
+
+    countDown() {
+        console.log('time: ', this.levelCounter)
+
+        this.levelCounter = this.levelCounter - 1
+        if (this.levelCounter <= 0) {            // If minute is up, stop
+            clearInterval(this.minuteTimer)
+            console.log('out of time!!')
+            window.world.gameOver = true
+            this.outOfTime = true
+        }
+    }
+
+    redLight() {                                             // GREEN LIGHT ON
+        const rand = Math.floor(Math.random() * (2500 - 1000 + 1) + 1000)
+        console.log(rand)
+        this.redTimer = setTimeout(() => {
+            console.log('GREEN LIGHT')
+            window.gameEngine.redLight = true
+            this.greenLight()
+        }, rand)
+    }
+
+    greenLight() {                                          // RED LIGHT ON!
+        this.greenTimer = setTimeout(() => {
+            if (!window.world.gameOver || window.world.gameWin) {
+                window.gameEngine.redLight = false
+                this.redLight()
             }
-        }
-
-        function redLight() {                                             // GREEN LIGHT ON
-            var rand = Math.floor(Math.random() * (2500 - 1000 + 1) + 1000)
-            console.log(rand)
-            rTimer = setTimeout(() => {
-                console.log('GREEN LIGHT')
-                window.gameEngine.redLight = true
-                greenLight()
-            }, rand)
-        }
-
-        function greenLight() {                                          // RED LIGHT ON!
-            gTimer = setTimeout(function() {
-                if (!window.world.gameOver || window.world.gameWin) {
-                    window.gameEngine.redLight = false
-                    redLight()
-                }
-            }, 4000)
-        }
-
-        redLight()
+        }, 4000)
     }
 
 }

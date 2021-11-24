@@ -7,6 +7,8 @@ import Girl from '../engine/logic/Girl'
 import BalanceUI from '../engine/ui/BalanceUI.js'
 import GameOverPopUp from '../engine/ui/GameOverPopUp.js'
 import WinPopUp from '../engine/ui/WinPopUp.js'
+import LevelTimer from '../engine/ui/LevelTimer.js'
+import StartCountDownTimer from '../engine/ui/StartCountDown.js'
 
 
 export default class World {
@@ -17,7 +19,6 @@ export default class World {
         this.worldHeight = height
         this.tileWidth = tileWidth
         this.tiles = []
-        this.girl = null
         
         // UTILS
         this.gameStarted = false
@@ -83,20 +84,24 @@ export default class World {
         gameEngine.createGameObject(man1, 'gameObject')
 
         const lights = new Lights(10, 10, 80, 200, 0x025666)
+        const levelTimerUI = new LevelTimer(((this.worldWidth/2)-50), 5, 100, 25, 0x025666)
+        const startCountDownTimerUI = new StartCountDownTimer(this.worldWidth/2, this.worldHeight/2, 50, 50, 0x025666)
         window.balanceUI = new BalanceUI(this.balanceX, this.balanceY, this.balanceWidth, 50, 0x025666, 0xFF0000,
                                          this.balanceMed, 0, this.balanceMin, this.balanceMax)
         const gameOverPopUp = new GameOverPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
         const winPopUp = new WinPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
 
         gameEngine.createGameObject(lights, 'UI')
+        gameEngine.createGameObject(levelTimerUI, 'UI')
+        gameEngine.createGameObject(startCountDownTimerUI, 'UI')
         gameEngine.createGameObject(balanceUI, 'UI')
         gameEngine.createGameObject(gameOverPopUp, 'UI')
         gameEngine.createGameObject(winPopUp, 'UI')
 
-        const girl = new Girl()
-        this.girl = girl
-        gameEngine.worldState.push(this.girl)
-        this.girl.startLevelCountDown()
+        window.girl = new Girl()
+
+        gameEngine.worldState.push(window.girl)
+        window.girl.startLevelCountDown()
 
     }
 
@@ -130,7 +135,7 @@ export default class World {
         gameObjects.forEach((obj) => {
             obj.active = true
         })
-        this.girl.levelTimer()
+        window.girl.levelTimer()
     }
 
     deActivateLevel() {
@@ -151,7 +156,7 @@ export default class World {
     }
 
     checkTimer() {
-        if (this.girl.outOfTime) {
+        if (window.girl.outOfTime) {
             console.log('TIMER CHEKED: OUT OF TIME')
             this.pause = true
             this.gameOver = true

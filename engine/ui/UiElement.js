@@ -14,6 +14,7 @@ export default class UiElement {
         this.fill = fill
         this.graphics = new PIXI.Graphics()
         this.isSprite = false
+        this.active = false
     }
 
     display() {
