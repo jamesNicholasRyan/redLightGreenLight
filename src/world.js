@@ -65,7 +65,7 @@ export default class World {
         }
         
         if (this.paused) {
-            console.log('pausing game')
+            // console.log('pausing game')
             this.pauseGame()
             return
         }
@@ -124,6 +124,7 @@ export default class World {
 
 
     resetGame() {
+        this.stopAnimationLoop()
         window.gameEngine.resetEngine()
         this.deActivateLevel()
         this.createGameObjects()
@@ -131,19 +132,33 @@ export default class World {
         this.gameOver = false
         this.gameWin = false
         this.paused = false
-        this.unPauseGame()
+        this.retsartAnimationLoop()
+        // this.togglePauseGame()
     }
     
-    pauseGame() {
+    stopAnimationLoop() {
         setTimeout(() => {
             window.cancelAnimationFrame( gameEngine.loop.stopLoop ) 
         }, 50)
     }
     
-    unPauseGame() {
+    retsartAnimationLoop() {
         setTimeout(() => {
             gameEngine.loop()
         }, 50)
+    }
+
+    pauseGame() {
+        // Loops through all relevant gameObjects and pauses them
+        const objectsToPause = ['gameObjects', 'ui', 'particles']
+        console.log('pausing game')
+        objectsToPause.forEach((type) => {
+            const objects = gameEngine.state[type]
+            if (!objects) return
+            objects.forEach((obj) => {
+                obj.pause = true
+            })
+        })
     }
 
     activateLevel() {
@@ -185,7 +200,7 @@ export default class World {
     checkManDead() {
         if (window.man1.dead) {
             this.activateLoss()
-            // this.paused = true
+            this.paused = true
             // this.gameOver = true
             // this.deActivateLevel()
         }

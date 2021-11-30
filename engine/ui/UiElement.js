@@ -15,6 +15,7 @@ export default class UiElement {
         this.graphics = new PIXI.Graphics()
         this.isSprite = false
         this.active = false
+        this.pause = false
     }
 
     display() {
@@ -22,6 +23,7 @@ export default class UiElement {
     }
 
     update() {
+        if (this.pause) return
 
     }
 

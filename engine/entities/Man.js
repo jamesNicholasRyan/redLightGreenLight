@@ -50,6 +50,8 @@ export default class Man extends GameObject {
     }
 
     update() {
+        super.update()
+        if (this.pause) return
         this.checkKeyPresses()
         this.checkEdges()
         this.checkAnimation()
@@ -63,7 +65,6 @@ export default class Man extends GameObject {
             this.checkWin()
         }
 
-        super.update()
     }
 
     stop() {

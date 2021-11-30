@@ -54,13 +54,13 @@ export default class BalanceUI extends UiElement {
 
     // LOGIC
     update() {
+        super.update()
+        if (this.pause) return
         if (this.active) {
             this.randomVel()
             this.move()
             this.checkKeyPresses()
             this.checkLimits()
-            // console.log(this.velocity)
-            // console.log(this.position)
         } else {
             return
         }
