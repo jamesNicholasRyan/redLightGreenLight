@@ -9,6 +9,9 @@ import GameOverPopUp from '../engine/ui/GameOverPopUp.js'
 import WinPopUp from '../engine/ui/WinPopUp.js'
 import LevelTimer from '../engine/ui/LevelTimer.js'
 import StartCountDownTimer from '../engine/ui/StartCountDown.js'
+import Bullet from '../engine/entities/particles/Bullet.js'
+import IdGenerator from '../engine/utils/idGenerrator.js'
+import Vector from '../engine/utils/vector.js'
 
 
 export default class World {
@@ -61,12 +64,14 @@ export default class World {
             window.balanceUI.deactivate()          // else de-activate it
         }
         
+        if (this.paused) {
+            console.log('pausing game')
+            this.pauseGame()
+            return
+        }
         this.checkTimer()
         this.checkManDead()
         this.checkWinCondition()
-        if (this.paused) {
-            this.pauseGame()
-        }
     }
 
     runGame() {   
@@ -77,10 +82,12 @@ export default class World {
     
     createGameObjects() {
         // create game data
+        const idGenerator = new IdGenerator()
+
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
         gameEngine.createGameObject(successLine, 'gameObject')
 
-        window.man1 = new Man(this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
+        window.man1 = new Man(idGenerator.generateId(), this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
         gameEngine.createGameObject(man1, 'gameObject')
 
         const lights = new Lights(10, 10, 80, 200, 0x025666)
@@ -104,6 +111,17 @@ export default class World {
         window.girl.startLevelCountDown()
 
     }
+
+    shootBullet(targetLocation) {
+        // This method is called when a man dies - creates a bullett object and
+        // initiates its shoot method
+        console.log('SHOOTING BULLET')
+        const rand = Math.floor(Math.random() * (700 - 200 + 1) + 200)
+        const bullet = new Bullet(rand, 0, targetLocation, 5, 10, 0x025666)
+        gameEngine.createGameObject(bullet, 'particles')
+        bullet.init()
+    }
+
 
     resetGame() {
         window.gameEngine.resetEngine()
@@ -158,15 +176,17 @@ export default class World {
     checkTimer() {
         if (window.girl.outOfTime) {
             console.log('TIMER CHEKED: OUT OF TIME')
-            this.pause = true
-            this.gameOver = true
+            this.activateLoss()
+            // this.pause = true
+            // this.gameOver = true
         }
     }
     
     checkManDead() {
         if (window.man1.dead) {
-            this.paused = true
-            this.gameOver = true
+            this.activateLoss()
+            // this.paused = true
+            // this.gameOver = true
             // this.deActivateLevel()
         }
     }
@@ -176,6 +196,15 @@ export default class World {
             this.pause = true
             this.gameWin = true
         }
+    }
+
+    activateLoss() {
+        // This function creates a delay between loosing and the popup
+        window.balanceUI.deactivate() 
+        setTimeout(() => {
+            this.pause = true
+            this.gameOver = true
+        }, 1000)
     }
 }
 

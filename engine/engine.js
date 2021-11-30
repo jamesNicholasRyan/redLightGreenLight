@@ -135,6 +135,15 @@ export default class Engine {
             } else {
                 this.state.buttons.push(object)
             }
+        } else if (type === 'particles') {
+            if (!this.state.particles) {
+                this.state = {
+                    ...this.state,
+                    particles: [object]
+                }
+            } else {
+                this.state.particles.push(object)
+            }
         }
         // if (!this.state.hasOwnProperty(type)) {
         //     this.state = {
@@ -148,6 +157,10 @@ export default class Engine {
         const graphics = object.createDisplay()
         this.addToStage(graphics)
         this.addToState(object, type)
+    }
+
+    removeGameObject(object, type) {
+        const index = this.state[type].findIndex(obj)
     }
 
     mouseClicked(mousePosition) {

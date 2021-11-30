@@ -35,10 +35,19 @@ function gameRender( engine ) {
                 obj.display()
             })
             const buttonObjects = engine.state.buttons
-            uiObjects.forEach((obj) => {
-                obj.graphics.clear()
-                obj.display()
-            })
+            if (buttonObjects) {
+                buttonObjects.forEach((obj) => {
+                    obj.graphics.clear()
+                    obj.display()
+                })
+            }
+            const particleObjects = engine.state.particles
+            if (particleObjects) {
+                particleObjects.forEach((obj) => {
+                    obj.graphics.clear()
+                    obj.display()
+                })
+            }
         }
         engine.renderer.render(engine.stage)
     }

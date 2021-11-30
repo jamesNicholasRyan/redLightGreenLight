@@ -51,4 +51,15 @@ export default class GameObject {
         this.acceleration.add(force)
     }
 
+    gradient(from, to, x1, x2, y1, y2) {
+        const c = document.createElement("canvas")
+        const ctx = c.getContext("2d")
+        const grd = ctx.createLinearGradient(x1,x2,y1,y2)
+        grd.addColorStop(0, 'red')
+        grd.addColorStop(1, 'blue')
+        ctx.fillStyle = grd
+        ctx.fillRect(x1,x2,y1,y2)
+        return new PIXI.Texture.from(c)
+    }
+
 }

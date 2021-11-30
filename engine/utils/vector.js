@@ -134,3 +134,11 @@ Vector.dot = function(a, b) {
 Vector.cross = function(a, b) {
 	return a.x * b.y - a.y * b.x;
 };
+Vector.dist = function(a, b) {
+	return Math.sqrt(Math.pow((a.x - b.x),2)+ Math.pow((a.y - b.y), 2))
+}
+Vector.angle = function(a, b) {
+	return Math.atan2((a.y - b.y), (b.x - a.x)) // radians
+	// return Math.atan2((b.y - a.y), (b.x - a.x)) * 180 / Math.PI  // degrees
+	// return Math.atan2((a.y - b.y), (a.x - b.x)) // radians
+}

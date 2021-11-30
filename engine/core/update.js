@@ -36,9 +36,22 @@ function gameUpdate() {
     const gameObjects = state.gameObjects
     const uiObjects = state.ui
     const buttonObjects = state.buttons
+    const particleObjects = state.particles
     gameObjects.forEach((obj) => obj.update())
     uiObjects.forEach((obj) => obj.update())
     if (buttonObjects) buttonObjects.forEach((obj) => obj.update())
+
+    if (particleObjects && particleObjects.length > 0) { // Garbage collection for particles
+        for (let i=particleObjects.length-1; i>=0; i--) {
+            const obj = particleObjects[i]
+            obj.update()
+            if (obj.garbageCollection()) {
+                const index = particleObjects.indexOf(obj)
+                particleObjects.splice(index, 1)
+            }
+        }
+    }
+
     const worldData = window.gameEngine.worldState
     worldData.forEach((obj) => obj.update())
 }

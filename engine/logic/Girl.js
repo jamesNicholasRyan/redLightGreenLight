@@ -21,7 +21,7 @@ export default class Girl {
     }
 
     stopTimers() {
-        console.log('stopping timers')
+        // console.log('stopping timers')
         clearInterval(this.minuteTimer)
         clearTimeout(this.redTimer)
         clearTimeout(this.greenTimer)

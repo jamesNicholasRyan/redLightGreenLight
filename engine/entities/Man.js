@@ -5,8 +5,9 @@ import GameObject from './GameObject'
 
 export default class Man extends GameObject {
 
-    constructor(x, y, a, b) {
+    constructor(id, x, y, a, b) {
         super(x, y, a, b)
+        this.id = id
         this.startingLocationX = x
         this.startingLocationY = y
         this.speed = 0.08
@@ -26,6 +27,7 @@ export default class Man extends GameObject {
         this.balancing = false
         this.animation = ''
         this.lastKeyPress = ''
+        this.shot = false
     }
 
     // intializes the sprites/graphics when loading into the game engine
@@ -56,7 +58,7 @@ export default class Man extends GameObject {
         if (!this.hasWon) {
             this.isDying()
             this.checkDeathTimer()
-            // this.checkDead()
+            this.checkDead()
             this.checkBalance()
             this.checkWin()
         }
@@ -84,23 +86,6 @@ export default class Man extends GameObject {
         }
     }
 
-    checkAnimation() {
-        // this function checks if the man is moving, and provides the correct texture for the movement
-        // console.log(gameEngine.playerSheet[this.lastKeyPress])
-        if (this.isMoving()) {
-            if (!this.animation.playing) {
-                this.animation.textures = gameEngine.playerSheet[this.lastKeyPress]
-                this.animation.play()
-            }
-        } else {
-            this.lastKeyPress = 'standSouth'
-            if (!this.animation.playing) {
-                this.animation.textures = gameEngine.playerSheet[this.lastKeyPress]
-                this.animation.play()
-            }
-        }
-    }
-
     checkDeathTimer() {
         // Checks whether the player has moved enough during redlight, to be noticed / killed
         if (this.deathCount > this.deathTolerance) {
@@ -111,11 +96,13 @@ export default class Man extends GameObject {
 
     checkDead() {
         // checks dead boolean to see if man has died yet.
-        // This is here becuase there may be multiple ways to die!!
+        // This is here because there may be multiple ways to die!
         if (this.dead) {
-            this.reset()
+            if (this.shot) return
+            this.shot = true
+            // this.reset()
             this.lives --
-            console.log("*********DEEEEAD**********")
+            window.world.shootBullet(this.location)
         }
     }
 
@@ -132,6 +119,23 @@ export default class Man extends GameObject {
         // red light is on, and returns this.blance as true
         if (this.isMoving() && !window.gameEngine.redLight) return this.balancing = false
         return this.balancing = true
+    }
+
+    checkAnimation() {
+        // this function checks if the man is moving, and provides the correct texture for the movement
+        // console.log(gameEngine.playerSheet[this.lastKeyPress])
+        if (this.isMoving()) {
+            if (!this.animation.playing) {
+                this.animation.textures = gameEngine.playerSheet[this.lastKeyPress]
+                this.animation.play()
+            }
+        } else {
+            this.lastKeyPress = 'standSouth'
+            if (!this.animation.playing) {
+                this.animation.textures = gameEngine.playerSheet[this.lastKeyPress]
+                this.animation.play()
+            }
+        }
     }
 
     checkKeyPresses() {
