@@ -6,7 +6,7 @@ import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
 
-import spriteSheet from './assets/man.png'
+import spriteSheet from './assets/man_01.png'
 
 const gameEngine = window.gameEngine
 
@@ -99,6 +99,9 @@ export default class Engine {
             new PIXI.Texture(sSheet, new PIXI.Rectangle(9*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(10*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(11*w, 0, w, h))
+        ]
+        this.playerSheet["dead"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(12*w, 0, w*2, h))
         ]
 
     }

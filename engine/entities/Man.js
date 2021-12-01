@@ -64,7 +64,6 @@ export default class Man extends GameObject {
             this.checkBalance()
             this.checkWin()
         }
-
     }
 
     stop() {
@@ -124,7 +123,11 @@ export default class Man extends GameObject {
 
     checkAnimation() {
         // this function checks if the man is moving, and provides the correct texture for the movement
-        // console.log(gameEngine.playerSheet[this.lastKeyPress])
+        if (this.dead) {
+            this.animation.textures = gameEngine.playerSheet['dead']
+            return
+        }
+
         if (this.isMoving()) {
             if (!this.animation.playing) {
                 this.animation.textures = gameEngine.playerSheet[this.lastKeyPress]

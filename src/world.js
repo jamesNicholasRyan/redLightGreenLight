@@ -12,6 +12,7 @@ import StartCountDownTimer from '../engine/ui/StartCountDown.js'
 import Bullet from '../engine/entities/particles/Bullet.js'
 import IdGenerator from '../engine/utils/idGenerrator.js'
 import Vector from '../engine/utils/vector.js'
+import AIMan from '../engine/entities/AIMan.js'
 
 
 export default class World {
@@ -90,6 +91,8 @@ export default class World {
         window.man1 = new Man(idGenerator.generateId(), this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
         gameEngine.createGameObject(man1, 'gameObject')
 
+        this.createAI(idGenerator)
+
         const lights = new Lights(10, 10, 80, 200, 0x025666)
         const levelTimerUI = new LevelTimer(((this.worldWidth/2)-50), 5, 100, 25, 0x025666)
         const startCountDownTimerUI = new StartCountDownTimer(this.worldWidth/2, this.worldHeight/2, 50, 50, 0x025666)
@@ -120,6 +123,14 @@ export default class World {
         const bullet = new Bullet(rand, 0, targetLocation, 5, 10, 0x025666)
         gameEngine.createGameObject(bullet, 'particles')
         bullet.init()
+    }
+
+    createAI(idGenerator) {
+        // loop through and create AI men
+        for (let i=0; i<1; i++) {
+            const manAI = new AIMan(idGenerator.generateId(), this.worldWidth/3, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
+            gameEngine.createGameObject(manAI, 'gameObject')
+        }
     }
 
 
