@@ -13,6 +13,7 @@ import Bullet from '../engine/entities/particles/Bullet.js'
 import IdGenerator from '../engine/utils/idGenerrator.js'
 import Vector from '../engine/utils/vector.js'
 import AIMan from '../engine/entities/AIMan.js'
+import randomNumGen from '../engine/utils/randomNumberGen.js'
 
 
 export default class World {
@@ -57,7 +58,6 @@ export default class World {
         // This update function, updates the whole game / world data!
         if (!this.gameStarted) return                    // wait for the game to initialize first
         this.balancing = window.balanceUI.checkManBalance()
-        // this.checkManBalance()
         if (this.balancing && gameEngine.redLight && this.isLevelActive) {                   // If the man is balancing
             balanceUI.checkLostBalance()           // check if he has lost his balance...
             if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
@@ -127,8 +127,8 @@ export default class World {
 
     createAI(idGenerator) {
         // loop through and create AI men
-        for (let i=0; i<1; i++) {
-            const manAI = new AIMan(idGenerator.generateId(), this.worldWidth/3, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
+        for (let i=0; i<10; i++) {
+            const manAI = new AIMan(idGenerator.generateId(), randomNumGen(this.worldWidth*0.05, this.worldWidth*0.95), this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
             gameEngine.createGameObject(manAI, 'gameObject')
         }
     }

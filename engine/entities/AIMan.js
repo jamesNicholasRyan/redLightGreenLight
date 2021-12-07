@@ -1,42 +1,64 @@
 import * as PIXI from 'pixi.js'
+import { gameLoop } from '../core/loop'
 import Vector from '../utils/vector'
 import GameObject from './GameObject'
 import Man from './Man'
+import randomNumGen from '../utils/randomNumberGen'
 
 
 export default class AIMan extends Man {
 
     constructor(id, x, y, a, b) {
         super(id, x, y, a, b)
-        this.speed = 0.08
-        this.topSpeed = 3.5
-        this.randX = Math.random() * (this.speed/2 - -(this.speed/2) + 1) + - (this.speed/2)
-        // this.randX = Math.random(-this.speed/2, this.speed/2)
-        this.randY = Math.random(0, this.speed) *-1
+        this.topSpeed = 10000
+        this.speed = randomNumGen(0.02, 0.005)
+        this.randX = ((Math.random() * 1) - 0.5)
+        this.randY = -0.5
+        this.randY = randomNumGen(-1, -0.5)
+
+        this.movmentTolerance = 0.1
+        this.breakPower = randomNumGen(0.025, 0.01)
+
+        this.deathTolerance = 150
     }
 
     update() {
+        this.checkAnimation()
+        if (this.dead) return
         super.update()
         if (this.pause) return
-        this.AImove()
         this.checkEdges()
-        this.checkAnimation()
-        // this.drag()
-        // this.friction()
+        if (gameEngine.redLight) {
+            this.breakMan()
+        } else {
+            this.AImove()
+        }
         if (!this.hasWon) {
             this.isDying()
             this.checkDeathTimer()
             this.checkDead()
-            this.checkBalance()
             this.checkWin()
         }
     }
 
     AImove() {
-        console.log(this.active)
         // Move the AI man in a 'random' direction towards the finish line
         const randomDirection = new Vector(this.randX, this.randY)
-        this.applyForce(randomDirection)
+        const normalised = randomDirection.normalize()
+        const directionSpeed = normalised.multiply(this.speed)
+        this.applyForce(directionSpeed)
+    }
+
+    // empty to cancel these methods out
+    checkAnimation() {
+        if (this.dead) {
+            this.animation.textures = gameEngine.playerSheet['dead']
+            return
+        }
+    }
+    checkKeyPresses() {
+    }
+    checkBalance() {
     }
 
 }
