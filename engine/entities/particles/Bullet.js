@@ -25,8 +25,8 @@ export default class Bullet extends GameObject {
         this.active = true
         this.distanceToTarget = Vector.dist(this.target, this.location)
         this.rotation = Vector.angle(this.location, this.target) *-1
-        console.log('LOCATION: ', this.location)
-        console.log(`Initialising target DISTANCE ${this.distanceToTarget} & ROTATION: ${this.rotation}. TARGET: `, this.target)
+        // console.log('LOCATION: ', this.location)
+        // console.log(`Initialising target DISTANCE ${this.distanceToTarget} & ROTATION: ${this.rotation}. TARGET: `, this.target)
     }
 
     createDisplay() {
@@ -57,7 +57,7 @@ export default class Bullet extends GameObject {
     shoot() {
         // This function rapidly increases the rectangle's
         // height until it reaches the target
-        console.log('HEIGHT: ', this.height + 'DISTANCE: ', this.distanceToTarget)
+        // console.log('HEIGHT: ', this.height + 'DISTANCE: ', this.distanceToTarget)
         if (this.height + this.bulletSpeed >= this.distanceToTarget) {
             this.height = this.distanceToTarget
             return this.shot = true
