@@ -51,12 +51,12 @@ export default class AIMan extends Man {
     }
 
     randomizeVariables() {
-        console.log('RANDOMIZING!')
+        // console.log('RANDOMIZING!')
         this.speed = randomNumGen(this.speedMinMax.min, this.speedMinMax.max)
         this.randX = ((Math.random() * 1) - 0.5)
         this.randY = randomNumGen(-1, -0.5)
         this.breakPower = randomNumGen(this.breakMinMax.min, this.breakMinMax.max)
-        console.log(this.speed)
+        // console.log(this.speed)
     }
 
     AImove() {

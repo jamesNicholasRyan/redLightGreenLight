@@ -7,7 +7,7 @@ export default class Girl {
         this.max = 2500
         this.min = 500
         this.startCounter = 3
-        this.levelCounter = 3
+        this.levelCounter = 300
         this.outOfTime = false
         this.minuteTimer
         this.redTimer
@@ -33,7 +33,7 @@ export default class Girl {
         this.outOfTime = false
         const countDown = setInterval(() => {
             this.startCounter --
-            console.log(this.startCounter)
+            // console.log(this.startCounter)
             if (this.startCounter < 0) {
                 clearInterval(countDown)
                 window.world.activateLevel()
@@ -57,12 +57,12 @@ export default class Girl {
     }
 
     countDown() {
-        console.log('time: ', this.levelCounter)
+        // console.log('time: ', this.levelCounter)
 
         this.levelCounter = this.levelCounter - 1
         if (this.levelCounter <= 0) {            // If minute is up, stop
             clearInterval(this.minuteTimer)
-            console.log('out of time!!')
+            // console.log('out of time!!')
             window.world.gameOver = true
             this.outOfTime = true
         }
@@ -70,9 +70,8 @@ export default class Girl {
 
     redLight() {                                             // GREEN LIGHT ON
         const rand = Math.floor(Math.random() * (2500 - 1000 + 1) + 1000)
-        console.log(rand)
         this.redTimer = setTimeout(() => {
-            console.log('GREEN LIGHT')
+            // console.log('GREEN LIGHT')
             window.gameEngine.redLight = true
             this.greenLight()
         }, rand)

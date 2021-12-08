@@ -73,6 +73,7 @@ export default class World {
         this.checkTimer()
         this.checkManDead()
         this.checkWinCondition()
+        gameEngine.orderObjects()
     }
 
     runGame() {   
@@ -118,7 +119,6 @@ export default class World {
     shootBullet(targetLocation) {
         // This method is called when a man dies - creates a bullett object and
         // initiates its shoot method
-        console.log('SHOOTING BULLET')
         const rand = Math.floor(Math.random() * (700 - 200 + 1) + 200)
         const bullet = new Bullet(rand, 0, targetLocation, 5, 10, 0x025666)
         gameEngine.createGameObject(bullet, 'particles')

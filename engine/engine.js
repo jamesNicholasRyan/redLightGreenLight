@@ -5,6 +5,7 @@ import * as PIXI from 'pixi.js'
 import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
+import sort from '../engine/ui/dataSort.js'
 
 import spriteSheet from './assets/man_01.png'
 
@@ -19,6 +20,8 @@ export default class Engine {
         this.height = height,
         this.targetFps = targetFps,
         this.showFps = showFps,
+        this.gameObjectsStage = new PIXI.Container()
+        this.UIelementsStage = new PIXI.Container()
         this.stage = new PIXI.Container()
         this.containers = []
         this.state = {}
@@ -63,6 +66,8 @@ export default class Engine {
     }
 
     pixiRender() {
+        this.stage.addChild(this.gameObjectsStage)
+        this.stage.addChild(this.UIelementsStage)
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -106,8 +111,9 @@ export default class Engine {
 
     }
 
-    addToStage(child) {
-        this.stage.addChild(child)
+    addToStage(child, type) {
+        if (type === 'gameObject' || type === 'particles') this.gameObjectsStage.addChild(child)
+        if (type === 'UI' || type === 'buttons') this.UIelementsStage.addChild(child)
     }
 
     addToState(object, type) {
@@ -158,7 +164,7 @@ export default class Engine {
 
     createGameObject(object, type) {
         const graphics = object.createDisplay()
-        this.addToStage(graphics)
+        this.addToStage(graphics, type)
         this.addToState(object, type)
     }
 
@@ -200,6 +206,16 @@ export default class Engine {
     clearState() {
         this.state = {}
         this.stage = new PIXI.Container()
+    }
+
+    orderObjects() {
+        // This method orders the game objects
+        const gameObjectsContainer = this.stage.getChildAt(0)
+        gameObjectsContainer.children.sort((a, b) => {
+            const globalPosA = a.toGlobal(new PIXI.Point(0,0))
+            const globalPosB = b.toGlobal(new PIXI.Point(0,0))
+            return globalPosA.y - globalPosB.y
+        })
     }
 
     update() {
