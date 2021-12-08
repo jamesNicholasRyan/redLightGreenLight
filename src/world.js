@@ -167,6 +167,7 @@ export default class World {
             const objects = gameEngine.state[type]
             if (!objects) return
             objects.forEach((obj) => {
+                console.log('pausing objects')
                 obj.pause = true
             })
         })
@@ -203,7 +204,7 @@ export default class World {
         if (window.girl.outOfTime) {
             console.log('TIMER CHEKED: OUT OF TIME')
             this.activateLoss()
-            // this.pause = true
+            this.pause = true
             // this.gameOver = true
         }
     }
@@ -230,7 +231,7 @@ export default class World {
         setTimeout(() => {
             this.pause = true
             this.gameOver = true
-        }, 1000)
+        }, 500)
     }
 }
 

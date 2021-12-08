@@ -10,14 +10,14 @@ export default class AIMan extends Man {
 
     constructor(id, x, y, a, b) {
         super(id, x, y, a, b)
-        this.topSpeed = 100
+        this.topSpeed = 10
         this.speedMinMax = {
             max: 0.02,
             min: 0.005,
         }
         this.breakMinMax = {
             max: 0.03,
-            min: 0.001,
+            min: 0.005,
         }
         this.speed = randomNumGen(this.speedMinMax.min, this.speedMinMax.max)
         this.randX = ((Math.random() * 1) - 0.5)

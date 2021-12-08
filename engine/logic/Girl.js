@@ -7,7 +7,7 @@ export default class Girl {
         this.max = 2500
         this.min = 500
         this.startCounter = 3
-        this.levelCounter = 30
+        this.levelCounter = 3
         this.outOfTime = false
         this.minuteTimer
         this.redTimer
