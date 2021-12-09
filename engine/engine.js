@@ -85,6 +85,9 @@ export default class Engine {
         this.playerSheet["standSouth"] = [
             new PIXI.Texture(sSheet, new PIXI.Rectangle(1*w, 0, w, h))
         ]
+        this.playerSheet["standNorth"] = [
+            new PIXI.Texture(sSheet, new PIXI.Rectangle(7*w, 0, w, h))
+        ]
         this.playerSheet["south"] = [
             new PIXI.Texture(sSheet, new PIXI.Rectangle(0*w, 0, w, h)),
             new PIXI.Texture(sSheet, new PIXI.Rectangle(1*w, 0, w, h)),

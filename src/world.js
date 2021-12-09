@@ -128,7 +128,11 @@ export default class World {
     createAI(idGenerator) {
         // loop through and create AI men
         for (let i=0; i<30; i++) {
-            const manAI = new AIMan(idGenerator.generateId(), randomNumGen(this.worldWidth*0.05, this.worldWidth*0.95), this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
+            const manAI = new AIMan(idGenerator.generateId(), 
+                                    randomNumGen(this.worldWidth*0.05, this.worldWidth*0.95), 
+                                    randomNumGen(this.worldHeight*0.89, this.worldHeight*0.95),
+                                    // this.worldHeight*0.9, 
+                                    30, 30, 0, 0, 0x025666)
             gameEngine.createGameObject(manAI, 'gameObject')
         }
     }

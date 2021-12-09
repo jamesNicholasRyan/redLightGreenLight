@@ -129,6 +129,7 @@ export default class Man extends GameObject {
         }
 
         if (this.isMoving()) {
+            this.animation.animationSpeed = this.animationSpeed()
             if (!this.animation.playing) {
                 this.animation.textures = gameEngine.playerSheet[this.lastKeyPress]
                 this.animation.play()
@@ -140,6 +141,10 @@ export default class Man extends GameObject {
                 this.animation.play()
             }
         }
+    }
+
+    animationSpeed() {
+        return this.velocity.length() * 0.05
     }
 
     checkKeyPresses() {

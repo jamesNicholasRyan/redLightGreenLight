@@ -74,6 +74,15 @@ export default class AIMan extends Man {
             this.animation.textures = gameEngine.playerSheet['dead']
             return
         }
+        if (this.isMoving()) {
+            this.animation.animationSpeed = this.animationSpeed()
+            if (!this.animation.playing) {
+                this.animation.textures = gameEngine.playerSheet['north']
+                this.animation.play()
+            }
+        } else {
+            this.animation.textures = gameEngine.playerSheet['standNorth']
+        }
     }
 
     breakMan() {
