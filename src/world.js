@@ -59,7 +59,7 @@ export default class World {
         if (!this.gameStarted) return                    // wait for the game to initialize first
         this.balancing = window.balanceUI.checkManBalance()
         if (this.balancing && gameEngine.redLight && this.isLevelActive) {                   // If the man is balancing
-            // balanceUI.checkLostBalance()           // check if he has lost his balance...
+            balanceUI.checkLostBalance()           // check if he has lost his balance...
             if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
         } else {
             window.balanceUI.deactivate()          // else de-activate it
@@ -73,6 +73,7 @@ export default class World {
         this.checkTimer()
         this.checkManDead()
         this.checkWinCondition()
+        this.checkManCollision()
         gameEngine.orderObjects()
     }
 
@@ -127,12 +128,11 @@ export default class World {
 
     createAI(idGenerator) {
         // loop through and create AI men
-        for (let i=0; i<30; i++) {
+        for (let i=0; i<40; i++) {
             const manAI = new AIMan(idGenerator.generateId(), 
                                     randomNumGen(this.worldWidth*0.05, this.worldWidth*0.95), 
                                     randomNumGen(this.worldHeight*0.89, this.worldHeight*0.95),
-                                    // this.worldHeight*0.9, 
-                                    30, 30, 0, 0, 0x025666)
+                                    30, 30)
             gameEngine.createGameObject(manAI, 'gameObject')
         }
     }
@@ -227,6 +227,11 @@ export default class World {
             this.pause = true
             this.gameWin = true
         }
+    }
+
+    checkManCollision() {
+        const AIdata = gameEngine.state.gameObjects
+        window.man1.checkCollision(AIdata)
     }
 
     activateLoss() {

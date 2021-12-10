@@ -8,7 +8,7 @@ import randomNumGen from '../utils/randomNumberGen'
 
 export default class AIMan extends Man {
 
-    constructor(id, x, y, a, b) {
+    constructor(id, x, y, a, b, player) {
         super(id, x, y, a, b)
         this.topSpeed = 10
         this.speedMinMax = {
@@ -32,10 +32,10 @@ export default class AIMan extends Man {
     }
 
     update() {
+        if (this.pause) return
         this.checkAnimation()
         if (this.dead) return
         super.update()
-        if (this.pause) return
         this.checkEdges()
         if (gameEngine.redLight) {
             this.breakMan()

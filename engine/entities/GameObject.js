@@ -14,6 +14,7 @@ export default class GameObject {
         this.velocity = new Vector(0,0)
         this.topSpeed = 10
         this.graphics = new PIXI.Graphics()
+        this.container = new PIXI.Container()
         this.fill = fill
         this.originalFill = this.fill
         this.active = false

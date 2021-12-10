@@ -13,6 +13,7 @@ export default class SuccessLine {
         this.l = l 
         this.h = h
         this.graphics = new PIXI.Graphics()
+        this.successLine = true
     }
 
     createDisplay() {

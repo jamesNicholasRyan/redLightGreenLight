@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
 import Vector from '../utils/vector'
 import GameObject from './GameObject'
+import rectanglesCollide from '../utils/rectCollision'
 
 
 export default class Man extends GameObject {
@@ -10,22 +11,34 @@ export default class Man extends GameObject {
         this.id = id
         this.startingLocationX = x
         this.startingLocationY = y
-        this.speed = 0.08
-        this.topSpeed = 3.5
-        this.breakPower = 0.08
+        this.speed = 0.04
+        this.topSpeed = 1.5
+        this.slowTopSpeed = 0.2
+        this.normalTopSpeed = 1.5
+        this.breakPower = 0.04
         this.movmentTolerance = 0.1
+        this.player = true
 
         this.lives = 3
-
         this.dead = false
         this.deathCount = 0
         this.deathTolerance = 75
         this.hasWon = false
 
         // ANIMATION VARIABLES
+        this.showHitBoxes = true
+        this.animationWidth = 52
+        this.animationHeight = 72
+        this.hitBoxData = {
+            x: -this.animationWidth*0.4,
+            y: this.animationHeight*0.2,
+            width: this.animationWidth*0.85,
+            height: this.animationHeight*0.3
+        }
         this.breaking = false
         this.balancing = false
         this.animation = ''
+        this.hitBox = new PIXI.Graphics()
         this.lastKeyPress = ''
         this.shot = false
     }
@@ -36,16 +49,34 @@ export default class Man extends GameObject {
         this.animation.anchor.set(0.5)
         this.animation.animationSpeed = .1
         this.animation.loop = false
-        this.animation.width = 52
-        this.animation.height = 72
-        this.animation.x = this.location.x
-        this.animation.y = this.location.y
-        return this.animation
+        this.animation.width = this.animationWidth
+        this.animation.height = this.animationHeight
+        // this.animation.x = this.location.x
+        // this.animation.y = this.location.y
+
+        this.container.x = this.location.x
+        this.container.y = this.location.y
+
+        if (this.showHitBoxes && this.player) {
+            this.hitBox.beginFill(0xFFFF00, 0)
+            this.hitBox.lineStyle(1, 0xFF0000)
+            this.hitBox.drawRect(this.hitBoxData.x, this.hitBoxData.y, 
+                                  this.hitBoxData.width, this.hitBoxData.height)
+            this.hitBox.endFill()
+        }
+                            
+        this.container.addChild(this.animation)
+        this.container.addChild(this.hitBox)
+        return this.container
     }
 
     display() {
-        this.animation.x = this.location.x
-        this.animation.y = this.location.y
+        // Updates the display container each game frame
+
+        // this.animation.x = this.location.x
+        // this.animation.y = this.location.y
+        this.container.x = this.location.x
+        this.container.y = this.location.y
         this.animation.play()
     }
 
@@ -80,6 +111,7 @@ export default class Man extends GameObject {
         // this method checks whether the player is moving and redLight light is showing
         if (this.isMoving() && window.gameEngine.redLight) {
             // console.log('DEATH COUNT:', this.deathCount)
+            // if (this.id === 1) return
             this.deathCount ++
         } else {
             this.deathCount = 0
@@ -183,6 +215,49 @@ export default class Man extends GameObject {
             this.location.y = 0
             this.velocity.y = 0
         }
+    }
+
+    checkCollision(data) {
+        // Loop through all data provided and check if this hitbox
+        // overlaps with data's hitbox
+
+
+        const ownGlobalPos = this.container.toGlobal(new PIXI.Point(0,0))
+        const ownXpos = ownGlobalPos.x - -this.hitBoxData.x
+        const ownYpos = ownGlobalPos.y + this.hitBoxData.y
+        const ownW = this.hitBoxData.width
+        const ownH = this.hitBoxData.height
+
+        console.log(ownXpos, ownYpos)
+
+        for (let i=0; i<data.length; i++) {
+            const obj = data[i]
+            if (obj === this) continue
+            if (obj.successLine) continue
+            if (!obj.dead) continue
+            const hitBoxData = obj.hitBoxData
+            const globalPos = obj.container.toGlobal(new PIXI.Point(0,0))
+            const xPos = globalPos.x + hitBoxData.x
+            const yPos = globalPos.y + hitBoxData.y
+            const w = hitBoxData.width
+            const h = hitBoxData.height
+
+            console.log(xPos, yPos)
+            
+            const hit = rectanglesCollide(ownXpos, ownYpos, ownW, ownH,
+                              xPos, yPos, w, h)
+            
+            console.log(hit)
+            if (hit) {
+                console.log('COLLISION')
+                this.topSpeed = this.slowTopSpeed
+                return 
+            } else {
+                console.log('NO HIT')
+                this.topSpeed = this.normalTopSpeed
+            }
+        }
+        
     }
 
     breakMan() {
