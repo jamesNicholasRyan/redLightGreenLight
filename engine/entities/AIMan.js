@@ -26,7 +26,7 @@ export default class AIMan extends Man {
 
         this.movmentTolerance = 0.1
 
-        this.deathTolerance = 200
+        this.deathTolerance = randomNumGen(170, 230)
 
         this.randomized = false
     }
@@ -56,7 +56,7 @@ export default class AIMan extends Man {
         this.randX = ((Math.random() * 1) - 0.5)
         this.randY = randomNumGen(-1, -0.5)
         this.breakPower = randomNumGen(this.breakMinMax.min, this.breakMinMax.max)
-        // console.log(this.speed)
+        this.deathTolerance = randomNumGen(170, 230)
     }
 
     AImove() {
