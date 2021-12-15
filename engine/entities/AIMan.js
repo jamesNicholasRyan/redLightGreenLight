@@ -17,7 +17,7 @@ export default class AIMan extends Man {
         }
         this.breakMinMax = {
             max: 0.03,
-            min: 0.005,
+            min: 0.008,
         }
         this.speed = randomNumGen(this.speedMinMax.min, this.speedMinMax.max)
         this.randX = ((Math.random() * 1) - 0.5)
@@ -27,6 +27,7 @@ export default class AIMan extends Man {
         this.movmentTolerance = 0.1
 
         this.deathTolerance = randomNumGen(170, 230)
+        this.deathProb = 1000
 
         this.randomized = false
     }

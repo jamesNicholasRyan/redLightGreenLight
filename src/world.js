@@ -67,6 +67,7 @@ export default class World {
         if (this.balancing && gameEngine.redLight && this.isLevelActive) {                   // If the man is balancing
             balanceUI.checkLostBalance()           // check if he has lost his balance...
             if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
+            this.randomAIdeath()
         } else {
             window.balanceUI.deactivate()          // else de-activate it
         }
@@ -130,6 +131,19 @@ export default class World {
         const bullet = new Bullet(rand, 0, targetLocation, 5, 10, 0x025666)
         gameEngine.createGameObject(bullet, this.particlesStr)
         bullet.init()
+    }
+
+    randomAIdeath() {
+        // Method that loops through all alive AI men and kills them randomly
+        const AImen = gameEngine.state['gameObjects'].filter((obj) => obj.id > 1)
+        AImen.forEach((man) => {
+            if (man.dead || man.isMoving()) return
+            const randNum = randomNumGen(1, man.deathProb)
+            if (randNum < 2) {
+                man.dead = true
+                man.checkDead()
+            } 
+        })
     }
 
     createAI(idGenerator) {
