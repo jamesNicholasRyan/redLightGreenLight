@@ -26,7 +26,7 @@ export default class Man extends GameObject {
         this.hasWon = false
 
         // ANIMATION VARIABLES
-        this.showHitBoxes = true
+        this.showHitBoxes = false
         this.animationWidth = 52
         this.animationHeight = 72
         this.hitBoxData = {

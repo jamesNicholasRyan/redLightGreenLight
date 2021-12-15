@@ -54,6 +54,8 @@ export default class World {
         document.body.appendChild(initializedGame)
 
         // Loading the sprites and adding world data to the engine
+        // World state holds updatable objects that don't need to be rendered - such 
+        // as the girl/timer logic
         gameEngine.loadSprites()
         gameEngine.worldState.push(this)
     }
