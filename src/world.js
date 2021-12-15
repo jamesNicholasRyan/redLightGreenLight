@@ -27,6 +27,10 @@ export default class World {
         
         // UTILS
         this.gameStarted = false
+        this.gameObjectStr = 'gameObject'
+        this.UIstr = 'UI'
+        this.particlesStr = 'particles'
+        this.buttonsStr = 'buttons'
 
         // POSITIONS
         this.balanceX = this.worldWidth * 0.6
@@ -74,10 +78,10 @@ export default class World {
         this.checkManDead()
         this.checkWinCondition()
         this.checkManCollision()
-        gameEngine.orderObjects()
+        if (this.isLevelActive) gameEngine.orderObjects()
     }
 
-    runGame() {   
+    runGame() {  
         this.createGameObjects()
         gameEngine.loop()
         this.gameStarted = true
@@ -88,10 +92,10 @@ export default class World {
         const idGenerator = new IdGenerator()
 
         const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
-        gameEngine.createGameObject(successLine, 'gameObject')
+        gameEngine.createGameObject(successLine, this.gameObjectStr)
 
         window.man1 = new Man(idGenerator.generateId(), this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
-        gameEngine.createGameObject(man1, 'gameObject')
+        gameEngine.createGameObject(man1, this.gameObjectStr)
 
         this.createAI(idGenerator)
 
@@ -103,18 +107,18 @@ export default class World {
         const gameOverPopUp = new GameOverPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
         const winPopUp = new WinPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
 
-        gameEngine.createGameObject(lights, 'UI')
-        gameEngine.createGameObject(levelTimerUI, 'UI')
-        gameEngine.createGameObject(startCountDownTimerUI, 'UI')
-        gameEngine.createGameObject(balanceUI, 'UI')
-        gameEngine.createGameObject(gameOverPopUp, 'UI')
-        gameEngine.createGameObject(winPopUp, 'UI')
+        gameEngine.createGameObject(lights, this.UIstr)
+        gameEngine.createGameObject(levelTimerUI, this.UIstr)
+        gameEngine.createGameObject(startCountDownTimerUI, this.UIstr)
+        gameEngine.createGameObject(balanceUI, this.UIstr)
+        gameEngine.createGameObject(gameOverPopUp, this.UIstr)
+        gameEngine.createGameObject(winPopUp, this.UIstr)
 
         window.girl = new Girl()
 
         gameEngine.worldState.push(window.girl)
         window.girl.startLevelCountDown()
-
+        gameEngine.orderObjects()
     }
 
     shootBullet(targetLocation) {
@@ -122,7 +126,7 @@ export default class World {
         // initiates its shoot method
         const rand = Math.floor(Math.random() * (700 - 200 + 1) + 200)
         const bullet = new Bullet(rand, 0, targetLocation, 5, 10, 0x025666)
-        gameEngine.createGameObject(bullet, 'particles')
+        gameEngine.createGameObject(bullet, this.particlesStr)
         bullet.init()
     }
 
@@ -133,10 +137,9 @@ export default class World {
                                     randomNumGen(this.worldWidth*0.05, this.worldWidth*0.95), 
                                     randomNumGen(this.worldHeight*0.89, this.worldHeight*0.95),
                                     30, 30)
-            gameEngine.createGameObject(manAI, 'gameObject')
+            gameEngine.createGameObject(manAI, this.gameObjectStr)
         }
     }
-
 
     resetGame() {
         this.stopAnimationLoop()
@@ -166,12 +169,12 @@ export default class World {
     pauseGame() {
         // Loops through all relevant gameObjects and pauses them
         const objectsToPause = ['gameObjects', 'ui', 'particles']
-        console.log('pausing game')
+        // console.log('pausing game')
         objectsToPause.forEach((type) => {
             const objects = gameEngine.state[type]
             if (!objects) return
             objects.forEach((obj) => {
-                console.log('pausing objects')
+                // console.log('pausing objects')
                 obj.pause = true
             })
         })

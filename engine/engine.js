@@ -66,8 +66,7 @@ export default class Engine {
     }
 
     pixiRender() {
-        this.stage.addChild(this.gameObjectsStage)
-        this.stage.addChild(this.UIelementsStage)
+        this.addContainersToStage([this.gameObjectsStage, this.UIelementsStage])
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -111,7 +110,12 @@ export default class Engine {
         this.playerSheet["dead"] = [
             new PIXI.Texture(sSheet, new PIXI.Rectangle(12*w, 0, w*2, h))
         ]
+    }
 
+    createGameObject(object, type) {
+        const graphics = object.createDisplay()
+        this.addToStage(graphics, type)
+        this.addToState(object, type)
     }
 
     addToStage(child, type) {
@@ -165,10 +169,10 @@ export default class Engine {
         // }
     }
 
-    createGameObject(object, type) {
-        const graphics = object.createDisplay()
-        this.addToStage(graphics, type)
-        this.addToState(object, type)
+    addContainersToStage(containers) {
+        containers.forEach((container) => {
+            this.stage.addChild(container)
+        })
     }
 
     removeGameObject(object, type) {
@@ -204,10 +208,13 @@ export default class Engine {
     resetEngine() {
         this.redLight = false
         this.clearState()
+        this.addContainersToStage([this.gameObjectsStage, this.UIelementsStage])
     }
 
     clearState() {
         this.state = {}
+        this.gameObjectsStage = new PIXI.Container()
+        this.UIelementsStage = new PIXI.Container()
         this.stage = new PIXI.Container()
     }
 

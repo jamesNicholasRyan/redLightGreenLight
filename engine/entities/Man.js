@@ -228,8 +228,6 @@ export default class Man extends GameObject {
         const ownW = this.hitBoxData.width
         const ownH = this.hitBoxData.height
 
-        console.log(ownXpos, ownYpos)
-
         for (let i=0; i<data.length; i++) {
             const obj = data[i]
             if (obj === this) continue
@@ -241,19 +239,16 @@ export default class Man extends GameObject {
             const yPos = globalPos.y + hitBoxData.y
             const w = hitBoxData.width
             const h = hitBoxData.height
-
-            console.log(xPos, yPos)
             
             const hit = rectanglesCollide(ownXpos, ownYpos, ownW, ownH,
                               xPos, yPos, w, h)
             
-            console.log(hit)
             if (hit) {
-                console.log('COLLISION')
+                // console.log('COLLISION')
                 this.topSpeed = this.slowTopSpeed
                 return 
             } else {
-                console.log('NO HIT')
+                // console.log('NO HIT')
                 this.topSpeed = this.normalTopSpeed
             }
         }

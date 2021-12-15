@@ -17,8 +17,8 @@ function gameRender( engine ) {
         // engine.graphics.clear()
 
         if (engine.showFps) {
-            const text = new PIXI.Text(`${fps}`, {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'right'})
-            engine.addToStage(text)
+            // const text = new PIXI.Text(`${fps}`, {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'right'})
+            // engine.addToStage(text)
         }
         if (engine.state) {
             // console.log('checking engine state')

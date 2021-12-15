@@ -28,7 +28,6 @@ function gameUpdate() {
 
     // If there are gameObjects, iterate through them and call their 'update' methods
     if (!state.hasOwnProperty('gameObjects')) { 
-        // console.log('no game objects to update')
         return 
     }
 
@@ -41,7 +40,7 @@ function gameUpdate() {
     uiObjects.forEach((obj) => obj.update())
     if (buttonObjects) buttonObjects.forEach((obj) => obj.update())
 
-    if (particleObjects && particleObjects.length > 0) { // Garbage collection for particles
+    if (particleObjects && particleObjects.length > 0) {   // Garbage collection for particles
         for (let i=particleObjects.length-1; i>=0; i--) {
             const obj = particleObjects[i]
             obj.update()
