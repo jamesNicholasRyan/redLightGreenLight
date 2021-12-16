@@ -25,8 +25,6 @@ export default class Bullet extends GameObject {
         this.active = true
         this.distanceToTarget = Vector.dist(this.target, this.location)
         this.rotation = Vector.angle(this.location, this.target) *-1
-        // console.log('LOCATION: ', this.location)
-        // console.log(`Initialising target DISTANCE ${this.distanceToTarget} & ROTATION: ${this.rotation}. TARGET: `, this.target)
     }
 
     createDisplay() {
@@ -70,7 +68,7 @@ export default class Bullet extends GameObject {
     }
 
     garbageCollection() {
-        // If this life is < 0, return false
+        // If this life is < 0, return true
         return this.life < 0
     }
 }

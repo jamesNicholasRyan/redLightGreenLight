@@ -27,7 +27,7 @@ export default class AIMan extends Man {
         this.movmentTolerance = 0.1
 
         this.deathTolerance = randomNumGen(170, 230)
-        this.deathProb = 1000
+        this.deathProb = 1500
 
         this.randomized = false
     }

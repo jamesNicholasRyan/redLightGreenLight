@@ -22,6 +22,7 @@ export default class Engine {
         this.showFps = showFps,
         this.gameObjectsStage = new PIXI.Container()
         this.UIelementsStage = new PIXI.Container()
+        this.particlesStage = new PIXI.Container()
         this.stage = new PIXI.Container()
         this.containers = []
         this.state = {}
@@ -66,7 +67,7 @@ export default class Engine {
     }
 
     pixiRender() {
-        this.addContainersToStage([this.gameObjectsStage, this.UIelementsStage])
+        this.addContainersToStage([this.gameObjectsStage, this.UIelementsStage, this.particlesStage])
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -119,8 +120,9 @@ export default class Engine {
     }
 
     addToStage(child, type) {
-        if (type === 'gameObject' || type === 'particles') this.gameObjectsStage.addChild(child)
+        if (type === 'gameObject') this.gameObjectsStage.addChild(child)
         if (type === 'UI' || type === 'buttons') this.UIelementsStage.addChild(child)
+        if (type === 'particles') this.particlesStage.addChild(child)
     }
 
     addToState(object, type) {
@@ -208,7 +210,9 @@ export default class Engine {
     resetEngine() {
         this.redLight = false
         this.clearState()
-        this.addContainersToStage([this.gameObjectsStage, this.UIelementsStage])
+        this.addContainersToStage([this.gameObjectsStage, 
+                                   this.UIelementsStage, 
+                                   this.particlesStage])
     }
 
     clearState() {

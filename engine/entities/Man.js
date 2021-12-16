@@ -135,6 +135,7 @@ export default class Man extends GameObject {
             // this.reset()
             this.lives --
             window.world.shootBullet(this.location)
+            window.world.bloodSplatter(this.location)
         }
     }
 

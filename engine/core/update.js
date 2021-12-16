@@ -1,6 +1,8 @@
 // Called by the game loop, this module will perform any state 
 // calculations / updates to properly render the next frame
 
+import Engine from "../engine"
+
 
 // function gameUpdate( s ) {
 
@@ -42,10 +44,13 @@ function gameUpdate() {
 
     if (particleObjects && particleObjects.length > 0) {   // Garbage collection for particles
         for (let i=particleObjects.length-1; i>=0; i--) {
-            const obj = particleObjects[i]
-            obj.update()
-            if (obj.garbageCollection()) {
-                const index = particleObjects.indexOf(obj)
+            const particle = particleObjects[i]
+            particle.update()
+            if (particle.garbageCollection()) {
+                // Remove particles from STAGE
+                particle.graphics.parent.removeChild(particle.graphics)
+                // Remove particles from STATE
+                const index = particleObjects.indexOf(particle)
                 particleObjects.splice(index, 1)
             }
         }
