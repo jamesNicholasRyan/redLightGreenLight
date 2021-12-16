@@ -10,10 +10,10 @@ export default class AIMan extends Man {
 
     constructor(id, x, y, a, b, player) {
         super(id, x, y, a, b)
-        this.topSpeed = 10
+        this.topSpeed = 2
         this.speedMinMax = {
-            max: 0.02,
-            min: 0.005,
+            max: 0.01,
+            min: 0.002,
         }
         this.breakMinMax = {
             max: 0.03,

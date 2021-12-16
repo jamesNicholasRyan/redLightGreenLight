@@ -4,8 +4,8 @@
 
 export default class Girl {
     constructor() {
-        this.max = 2500
-        this.min = 500
+        this.max = 4000
+        this.min = 2500
         this.startCounter = 3
         this.levelCounter = 300
         this.outOfTime = false
@@ -69,7 +69,7 @@ export default class Girl {
     }
 
     redLight() {                                             // GREEN LIGHT ON
-        const rand = Math.floor(Math.random() * (2500 - 1000 + 1) + 1000)
+        const rand = Math.floor(Math.random() * (this.max - this.min + 1) + this.min)
         this.redTimer = setTimeout(() => {
             // console.log('GREEN LIGHT')
             window.gameEngine.redLight = true
@@ -83,7 +83,7 @@ export default class Girl {
                 window.gameEngine.redLight = false
                 this.redLight()
             }
-        }, 4000)
+        }, 5000)
     }
 
 }
