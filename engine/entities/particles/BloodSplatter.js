@@ -9,6 +9,7 @@ export default class BloodSplatter {
         this.locationX = x
         this.locationY = y
         this.numOfParticles = numOfParticles
+        this.colorArray = [0xB22222, 0x8B0000, 0x8B0000, 0xDC143C,]
     }
 
     init() {
@@ -16,11 +17,12 @@ export default class BloodSplatter {
             const randomNumX = randomNumGen(-3, 3)
             const randomNumY = randomNumGen(-3, 3)
             const randomRadius = randomNumGen(0.1, 2)
+            const randNum = Math.round(randomNumGen(0, 3))
             const initAcceleration = new Vector(randomNumX, randomNumY)
             const bloodParticle = new BloodParticle(this.locationX,
                                                this.locationY,
                                                initAcceleration,
-                                               50, 100, randomRadius, 0x0000FF)
+                                               50, 100, randomRadius, this.colorArray[randNum])
             gameEngine.createGameObject(bloodParticle, window.world.gameObjectStr)
             
         }

@@ -67,7 +67,7 @@ export default class Engine {
     }
 
     pixiRender() {
-        this.addContainersToStage([ this.particlesStage, this.gameObjectsStage, this.UIelementsStage])
+        this.addContainersToStage([ this.gameObjectsStage, this.particlesStage, this.UIelementsStage])
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -224,7 +224,7 @@ export default class Engine {
 
     orderObjects() {
         // This method orders the game objects
-        const gameObjectsContainer = this.stage.getChildAt(1)
+        const gameObjectsContainer = this.stage.getChildAt(0)
         gameObjectsContainer.children.sort((a, b) => {
             const globalPosA = a.toGlobal(new PIXI.Point(0,0))
             const globalPosB = b.toGlobal(new PIXI.Point(0,0))
