@@ -8,7 +8,7 @@ export default class Menu {
         this.fill = fill
         this.alpha = alpha
         this.graphics = new PIXI.Graphics()
-        this.active = true
+        this.active = false
     }
 
     createDisplay() {
@@ -25,6 +25,8 @@ export default class Menu {
     update() {
         if (this.active) {
             this.fadeIn()
+        } else {
+            this.fadeOut()
         }
     }
 

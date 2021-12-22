@@ -1,4 +1,9 @@
 import initializeGame from '../engine/init.js'
+import { createGirl, createUI, createGameCharacters } from './LevelsAndMenus/Levels.js'
+
+import randomNumGen from '../engine/utils/randomNumberGen.js'
+import IdGenerator from '../engine/utils/idGenerrator.js'
+import Vector from '../engine/utils/vector.js'
 
 import Man from '../engine/entities/Man'
 import SuccessLine from '../engine/entities/SuccessLine.js'
@@ -11,11 +16,9 @@ import LevelTimer from '../engine/ui/LevelTimer.js'
 import StartCountDownTimer from '../engine/ui/StartCountDown.js'
 import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
-import IdGenerator from '../engine/utils/idGenerrator.js'
-import Vector from '../engine/utils/vector.js'
 import AIMan from '../engine/entities/AIMan.js'
-import randomNumGen from '../engine/utils/randomNumberGen.js'
 import Menu from '../engine/ui/Menu.js'
+import { createMenus } from './LevelsAndMenus/Menus.js'
 
 
 export default class World {
@@ -41,6 +44,7 @@ export default class World {
 
         // GAMEPLAY
         this.paused = false
+        this.level = 1
         this.isLevelActive = false
         this.gameOver = false
         this.gameWin = false
@@ -87,46 +91,18 @@ export default class World {
     }
 
     runGame() {  
-        this.createGameObjects()
+        this.createGameData()
         gameEngine.loop()
         this.gameStarted = true
     }
     
-    createGameObjects() {
-        // create game data
-        const idGenerator = new IdGenerator()
+    createGameData() {
+        // Create game data
 
-        const successLine = new SuccessLine(0, this.worldHeight*gameEngine.successLine, this.worldWidth, 5)
-        gameEngine.createGameObject(successLine, this.gameObjectStr)
-
-        window.man1 = new Man(idGenerator.generateId(), this.worldWidth/2, this.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
-        gameEngine.createGameObject(man1, this.gameObjectStr)
-
-        this.createAI(idGenerator)
-
-        const lights = new Lights(10, 10, 80, 200, 0x025666)
-        const levelTimerUI = new LevelTimer(((this.worldWidth/2)-50), 5, 100, 25, 0x025666)
-        const startCountDownTimerUI = new StartCountDownTimer(this.worldWidth/2, this.worldHeight/2, 50, 50, 0x025666)
-        window.balanceUI = new BalanceUI(this.balanceX, this.balanceY, this.balanceWidth, 50, 0x025666, 0xFF0000,
-                                         this.balanceMed, 0, this.balanceMin, this.balanceMax)
-        const gameOverPopUp = new GameOverPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
-        const winPopUp = new WinPopUp(this.worldWidth/2, this.worldHeight/2, 200, 100, 0x025666)
-
-        gameEngine.createGameObject(lights, this.UIstr)
-        gameEngine.createGameObject(levelTimerUI, this.UIstr)
-        gameEngine.createGameObject(startCountDownTimerUI, this.UIstr)
-        gameEngine.createGameObject(balanceUI, this.UIstr)
-        gameEngine.createGameObject(gameOverPopUp, this.UIstr)
-        gameEngine.createGameObject(winPopUp, this.UIstr)
-
-        window.girl = new Girl()
-
-        gameEngine.worldState.push(window.girl)
-        window.girl.startLevelCountDown()
-        gameEngine.orderObjects()
-
-        // const mainMenu = new Menu(this.worldWidth, this.worldHeight, 0xa1788f, 1)
-        // gameEngine.createGameObject(mainMenu, this.UIstr)
+        createUI()
+        createGirl()
+        createGameCharacters(this.level)
+        // createMenus()
     }
 
     shootBullet(targetLocation) {
@@ -173,7 +149,7 @@ export default class World {
         this.stopAnimationLoop()
         window.gameEngine.resetEngine()
         this.deActivateLevel()
-        this.createGameObjects()
+        this.createGameData()
         window.man1.reset()
         this.gameOver = false
         this.gameWin = false
