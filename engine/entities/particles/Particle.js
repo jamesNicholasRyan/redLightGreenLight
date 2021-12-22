@@ -11,10 +11,12 @@ export default class Particle {
         this.topSpeed = topSpeed
         this.speed = speed
         this.life = life
+        this.width = life
         this.pause = false
 
         this.graphics = new PIXI.Graphics()
         this.fill = fill
+        this.alpha = 1
     }
 
     createDisplay() {
@@ -23,8 +25,8 @@ export default class Particle {
     }
 
     display() {
-        this.graphics.beginFill(this.fill)
-        this.graphics.drawCircle(this.location.x, this.location.y, this.life)
+        this.graphics.beginFill(this.fill, this.alpha)
+        this.graphics.drawEllipse(this.location.x, this.location.y, this.width, this.life)
         this.graphics.endFill()
     }
 
