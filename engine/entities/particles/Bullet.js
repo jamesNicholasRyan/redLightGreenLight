@@ -58,6 +58,7 @@ export default class Bullet extends GameObject {
         // console.log('HEIGHT: ', this.height + 'DISTANCE: ', this.distanceToTarget)
         if (this.height + this.bulletSpeed >= this.distanceToTarget) {
             this.height = this.distanceToTarget
+            window.world.bloodSplatter(this.target, this.rotation)
             return this.shot = true
         }
         this.height += this.bulletSpeed

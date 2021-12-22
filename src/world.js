@@ -10,11 +10,12 @@ import WinPopUp from '../engine/ui/WinPopUp.js'
 import LevelTimer from '../engine/ui/LevelTimer.js'
 import StartCountDownTimer from '../engine/ui/StartCountDown.js'
 import Bullet from '../engine/entities/particles/Bullet.js'
-import Blood from '../engine/entities/particles/Blood.js'
+import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import IdGenerator from '../engine/utils/idGenerrator.js'
 import Vector from '../engine/utils/vector.js'
 import AIMan from '../engine/entities/AIMan.js'
 import randomNumGen from '../engine/utils/randomNumberGen.js'
+import Menu from '../engine/ui/Menu.js'
 
 
 export default class World {
@@ -123,6 +124,9 @@ export default class World {
         gameEngine.worldState.push(window.girl)
         window.girl.startLevelCountDown()
         gameEngine.orderObjects()
+
+        // const mainMenu = new Menu(this.worldWidth, this.worldHeight, 0xa1788f, 1)
+        // gameEngine.createGameObject(mainMenu, this.UIstr)
     }
 
     shootBullet(targetLocation) {
@@ -137,8 +141,8 @@ export default class World {
     bloodSplatter(targetLocation) {
         // This method is called when a man dies - setting off a blood splatter particle
         // system animation
-        const bloodSplatter = new Blood(targetLocation.x, targetLocation.y)
-        gameEngine.createGameObject(bloodSplatter, this.particlesStr)
+        const bloodSplatter = new BloodSplatter(targetLocation.x, targetLocation.y, 40)
+        bloodSplatter.init()
     }
 
     randomAIdeath() {

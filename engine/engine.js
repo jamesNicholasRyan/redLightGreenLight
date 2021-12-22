@@ -67,7 +67,7 @@ export default class Engine {
     }
 
     pixiRender() {
-        this.addContainersToStage([this.gameObjectsStage, this.UIelementsStage, this.particlesStage])
+        this.addContainersToStage([ this.particlesStage, this.gameObjectsStage, this.UIelementsStage])
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -120,9 +120,9 @@ export default class Engine {
     }
 
     addToStage(child, type) {
+        if (type === 'particles') this.particlesStage.addChild(child)
         if (type === 'gameObject') this.gameObjectsStage.addChild(child)
         if (type === 'UI' || type === 'buttons') this.UIelementsStage.addChild(child)
-        if (type === 'particles') this.particlesStage.addChild(child)
     }
 
     addToState(object, type) {
@@ -186,7 +186,7 @@ export default class Engine {
         // check if mouse is over any of them?
 
         const UIelements = this.state.ui
-        if (!UIelements) returnd
+        if (!UIelements) return
         for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...
             const element = UIelements[i]
             if (!element.active) continue
@@ -224,7 +224,7 @@ export default class Engine {
 
     orderObjects() {
         // This method orders the game objects
-        const gameObjectsContainer = this.stage.getChildAt(0)
+        const gameObjectsContainer = this.stage.getChildAt(1)
         gameObjectsContainer.children.sort((a, b) => {
             const globalPosA = a.toGlobal(new PIXI.Point(0,0))
             const globalPosB = b.toGlobal(new PIXI.Point(0,0))
