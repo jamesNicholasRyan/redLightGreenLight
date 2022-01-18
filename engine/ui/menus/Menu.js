@@ -2,18 +2,22 @@ import * as PIXI from 'pixi.js'
 
 
 export default class Menu {
-    constructor(w, h, fill, alpha) {
+    constructor(name, w, h, fill, active) {
+        this.name = name
         this.width = w
         this.height = h
         this.fill = fill
-        this.alpha = alpha
+        this.alpha = 0
         this.graphics = new PIXI.Graphics()
-        this.active = false
+        this.container = new PIXI.Container()
+        this.active = active
+        this.fadeSpeed = 0.05
     }
 
     createDisplay() {
         this.graphics.drawRect(0,0, this.width, this.height, this.fill)
-        return this.graphics
+        this.container.addChild(this.graphics)
+        return this.container
     }
     
     display() {
@@ -24,20 +28,22 @@ export default class Menu {
 
     update() {
         if (this.active) {
+            // console.log('fading IN')
             this.fadeIn()
         } else {
+            // console.log('fading OUT')
             this.fadeOut()
         }
     }
 
     fadeIn() {
-        if (this.alpha <= 0) return
-        this.alpha += 0.01
+        if (this.alpha >= 1) return this.alpha=1
+        this.alpha += this.fadeSpeed
     }
 
     fadeOut() {
-        if (this.alpha >= 1) return
-        this.alpha -= 0.01
+        if (this.alpha <= 0) return this.alpha=0
+        this.alpha -= this.fadeSpeed
     }
 
     checkMouseOver(mousePosition) {

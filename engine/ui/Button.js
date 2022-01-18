@@ -1,42 +1,40 @@
-// ui elements are the anchored buttons, menus and displays that 'stick' to certain
-// points on the screen
-
+// This fle contains logic for the button classes
 import * as PIXI from 'pixi.js'
-// import Vector from '../utils/vector'
+import World from '../../src/world'
 
-export default class UiElement {
 
-    constructor(x, y, w, h, fill) {
+export default class Button {
+    constructor(name, x, y, w, h, fill, text, action) {
+        this.name = name
         this.x = x
         this.y = y
         this.w = w
         this.h = h
         this.fill = fill
+        this.alpha = 0
         this.graphics = new PIXI.Graphics()
-        this.isSprite = false
-        this.active = false
-        this.pause = false
+        this.active = true
+        this.chosenAction = action
+        this.text = new PIXI.Text(`${text}`, {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'})
     }
 
+    createDisplay() {
+        this.display()
+        return this.graphics
+    }
+    
     display() {
-
+        this.graphics.beginFill(this.fill)
+        this.graphics.drawRect(this.x, this.y, this.w, this.h)
+        this.graphics.endFill()
     }
 
     update() {
-        if (this.pause) return
 
     }
 
-    action() {
-
-    }
-
-    activate() {
-
-    }
-
-    deactivate() {
-
+    action(){
+        this.chosenAction()
     }
 
     checkMouseOver(mousePosition) {

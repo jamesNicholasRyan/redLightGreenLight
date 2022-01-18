@@ -36,7 +36,7 @@ export default class WinPopUp extends GameOverPopUp {
     deactivate() {
         // What happens when this element is clicked on
         console.log("POP UP CLICKED!")
-        window.world.resetGame()
+        window.world.resetGame('LEVEL')
         this.active = false
     }
 }

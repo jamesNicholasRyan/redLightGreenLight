@@ -44,7 +44,6 @@ export default class Particle {
     }
 
     applyForce(force) {
-        console.log('applying force')
         this.acceleration.add(force)
     }
 

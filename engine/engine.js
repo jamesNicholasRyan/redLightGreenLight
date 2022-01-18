@@ -5,7 +5,7 @@ import * as PIXI from 'pixi.js'
 import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
-import sort from '../engine/ui/dataSort.js'
+import sort from './utils/dataSort.js'
 
 import spriteSheet from './assets/man_01.png'
 
@@ -171,6 +171,12 @@ export default class Engine {
         // }
     }
 
+    findInState(type, name) {
+        // Find an object related to the type and name provided
+        const typeState = this.state[type]
+        return typeState.filter((obj) => obj.name === name)[0]
+    }
+
     addContainersToStage(containers) {
         containers.forEach((container) => {
             this.stage.addChild(container)
@@ -195,16 +201,6 @@ export default class Engine {
                 return
             }    
         }
-        // const UIelements = this.state.buttons
-        // if (!UIelements) return
-        // for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...
-        //     const element = UIelements[i]
-        //     if (!element.active) continue
-        //     if (element.checkMouseOver(mousePosition)) {
-        //         element.action()
-        //         return
-        //     }    
-        // }
     }
 
     resetEngine() {

@@ -1,5 +1,5 @@
 import initializeGame from '../engine/init.js'
-import { createGirl, createUI, createGameCharacters } from './LevelsAndMenus/Levels.js'
+import { createGirl, createUI, createGameCharacters } from './levelsAndMenus/levels.js'
 
 import randomNumGen from '../engine/utils/randomNumberGen.js'
 import IdGenerator from '../engine/utils/idGenerrator.js'
@@ -17,8 +17,9 @@ import StartCountDownTimer from '../engine/ui/StartCountDown.js'
 import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import AIMan from '../engine/entities/AIMan.js'
-import Menu from '../engine/ui/Menu.js'
-import { createMenus } from './LevelsAndMenus/Menus.js'
+import Menu from '../engine/ui/menus/Menu.js'
+import { mainMenu, pauseMenu } from './levelsAndMenus/menus.js'
+import stateService from '../engine/utils/statemachine.js'
 
 
 export default class World {
@@ -36,6 +37,10 @@ export default class World {
         this.UIstr = 'UI'
         this.particlesStr = 'particles'
         this.buttonsStr = 'buttons'
+        this.menuStr = 'menus'
+
+        // STATE
+        this.stateService = stateService
 
         // POSITIONS
         this.balanceX = this.worldWidth * 0.6
@@ -68,26 +73,29 @@ export default class World {
 
     update() {
         // This update function, updates the whole game / world data!
-        if (!this.gameStarted) return                    // wait for the game to initialize first
-        this.balancing = window.balanceUI.checkManBalance()
-        if (this.balancing && gameEngine.redLight && this.isLevelActive) {                   // If the man is balancing
-            // balanceUI.checkLostBalance()           // check if he has lost his balance...
-            if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
-            this.randomAIdeath()
-        } else {
-            window.balanceUI.deactivate()          // else de-activate it
-        }
-        
-        if (this.paused) {
+        console.log(this.stateService.state.value)
+        if (this.stateService.state.matches('playing')) {
+            if (!this.gameStarted) return                    // wait for the game to initialize first
+            this.balancing = window.balanceUI.checkManBalance()
+            if (this.balancing && gameEngine.redLight && this.isLevelActive) {   // If the man is balancing
+                // balanceUI.checkLostBalance()           // check if he has lost his balance...
+                if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
+                this.randomAIdeath()
+            } else {
+                window.balanceUI.deactivate()          // else de-activate it
+            }
+
+            this.checkTimer()
+            this.checkManDead()
+            this.checkWinCondition()
+            this.checkManCollision()
+            if (this.isLevelActive) gameEngine.orderObjects()
+
+        } else if (this.stateService.state.matches('pauseMenu')) {
             // console.log('pausing game')
             this.pauseGame()
             return
         }
-        this.checkTimer()
-        this.checkManDead()
-        this.checkWinCondition()
-        this.checkManCollision()
-        if (this.isLevelActive) gameEngine.orderObjects()
     }
 
     runGame() {  
@@ -98,11 +106,11 @@ export default class World {
     
     createGameData() {
         // Create game data
-
         createUI()
         createGirl()
         createGameCharacters(this.level)
-        // createMenus()
+        mainMenu()
+        pauseMenu()
     }
 
     shootBullet(targetLocation) {
@@ -172,7 +180,7 @@ export default class World {
 
     pauseGame() {
         // Loops through all relevant gameObjects and pauses them
-        const objectsToPause = ['gameObjects', 'ui', 'particles']
+        const objectsToPause = ['gameObjects', 'particles']
         // console.log('pausing game')
         objectsToPause.forEach((type) => {
             const objects = gameEngine.state[type]

@@ -13,7 +13,15 @@ import WinPopUp from "../../engine/ui/WinPopUp"
 import LevelTimer from "../../engine/ui/LevelTimer"
 import StartCountDownTimer from "../../engine/ui/StartCountDown"
 import AIMan from "../../engine/entities/AIMan"
+import Button from "../../engine/ui/Button"
+import Engine from "../../engine/engine"
 
+function pauseGame() {
+    console.log('PAUUSING GAME')
+    world.stateService.send('PAUSE')
+    // const mainMenu = gameEngine.findInState('ui', 'mainMenu')
+    // mainMenu.active = true
+}
 
 export function createUI() {
     // This function creates UI for the game level
@@ -22,6 +30,7 @@ export function createUI() {
     const lights = new Lights(10, 10, 80, 200, 0x025666)
     const levelTimerUI = new LevelTimer(((world.worldWidth/2)-50), 5, 100, 25, 0x025666)
     const startCountDownTimerUI = new StartCountDownTimer(world.worldWidth/2, world.worldHeight/2, 50, 50, 0x025666)
+    const menuButton = new Button('menuButton', world.worldWidth - 40, 10, 30, 30, 0xffffff, ' || ', pauseGame)
     window.balanceUI = new BalanceUI(world.balanceX, world.balanceY, world.balanceWidth, 50, 0x025666, 0xFF0000,
                                      world.balanceMed, 0, world.balanceMin, world.balanceMax)
                                      const gameOverPopUp = new GameOverPopUp(world.worldWidth/2, world.worldHeight/2, 200, 100, 0x025666)
@@ -34,6 +43,7 @@ export function createUI() {
     gameEngine.createGameObject(balanceUI, world.UIstr)
     gameEngine.createGameObject(gameOverPopUp, world.UIstr)
     gameEngine.createGameObject(winPopUp, world.UIstr)
+    gameEngine.createGameObject(menuButton, world.UIstr)
 }
 
 export function createGirl() {
@@ -59,7 +69,7 @@ export function createGameCharacters(level) {
 
 function createAI(idGenerator, numOfAI) {
     // loop through and create AI men
-    for (let i=0; i<40; i++) {
+    for (let i=0; i<numOfAI; i++) {
         const manAI = new AIMan(idGenerator.generateId(), 
                                 randomNumGen(world.worldWidth*0.05, world.worldWidth*0.95), 
                                 randomNumGen(world.worldHeight*0.89, world.worldHeight*0.95),
