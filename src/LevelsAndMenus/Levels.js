@@ -17,10 +17,7 @@ import Button from "../../engine/ui/Button"
 import Engine from "../../engine/engine"
 
 function pauseGame() {
-    console.log('PAUUSING GAME')
     world.stateService.send('PAUSE')
-    // const mainMenu = gameEngine.findInState('ui', 'mainMenu')
-    // mainMenu.active = true
 }
 
 export function createUI() {

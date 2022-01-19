@@ -1,8 +1,8 @@
 import Menu from "./Menu"
 
 export default class PauseMenu extends Menu {
-    constructor(w, h, fill, active) {
-        super(w, h, fill, active)
+    constructor(name, w, h, fill, active, buttonData) {
+        super(name, w, h, fill, active, buttonData)
     }
 
     update() {

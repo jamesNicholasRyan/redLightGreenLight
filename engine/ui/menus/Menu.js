@@ -2,28 +2,43 @@ import * as PIXI from 'pixi.js'
 
 
 export default class Menu {
-    constructor(name, w, h, fill, active) {
+    constructor(name, w, h, fill, active, parsedButtonData) {
         this.name = name
         this.width = w
         this.height = h
         this.fill = fill
         this.alpha = 0
         this.graphics = new PIXI.Graphics()
+        this.buttonsGraphics = new PIXI.Graphics()
         this.container = new PIXI.Container()
         this.active = active
-        this.fadeSpeed = 0.05
+        this.fadeSpeed = 0.08
+        this.buttonData = parsedButtonData
     }
 
     createDisplay() {
         this.graphics.drawRect(0,0, this.width, this.height, this.fill)
+        this.drawButtons()
         this.container.addChild(this.graphics)
+        this.container.addChild(this.buttonsGraphics)
         return this.container
     }
     
     display() {
+        this.drawButtons()
         this.graphics.beginFill(this.fill, this.alpha)
         this.graphics.drawRect(0,0, this.width, this.height)
         this.graphics.endFill()
+    }
+
+    drawButtons() {
+        if (!this.buttonData) return
+        this.buttonsGraphics.alpha = this.alpha
+        this.buttonData.forEach((data) => {
+            this.buttonsGraphics.beginFill(data.fill)
+            this.buttonsGraphics.drawRect(data.x, data.y, data.w, data.h)
+            this.buttonsGraphics.endFill()
+        })
     }
 
     update() {
@@ -47,14 +62,21 @@ export default class Menu {
     }
 
     checkMouseOver(mousePosition) {
+
+        let answer = false
+        this.buttonData.forEach((button) => {
+            // Checks whether a given mouse position is over the current button
+            if ((mousePosition.x > button.x) && (mousePosition.x < button.x+button.w) && 
+                (mousePosition.y > button.y) && (mousePosition.y < button.y+button.h)) {
+                button.action()
+                return answer = true
+            }
+        })
+
         if (this.isSprite) { // If this element is a sprite, use the Sprite.containsPoint()
              return this.sprite.containsPoint(mousePosition)
         }
-        // Checks whether a given mouse position is over the current UI element
-        if ((mousePosition.x > this.x) && (mousePosition.x < this.x+this.w) &&
-            (mousePosition.y > this.y) && (mousePosition.y < this.y+this.h)) {
-            return true
-        }
-        return false
+
+        return answer
     }
 }
