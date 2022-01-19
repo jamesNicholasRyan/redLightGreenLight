@@ -19,6 +19,7 @@ export default class Engine {
         this.width = width,
         this.height = height,
         this.targetFps = targetFps,
+        this.then = Date.now()
         this.showFps = showFps,
         this.gameObjectsStage = new PIXI.Container()
         this.UIelementsStage = new PIXI.Container()
@@ -197,7 +198,7 @@ export default class Engine {
             const element = UIelements[i]
             if (!element.active) continue
             if (element.checkMouseOver(mousePosition)) {
-                element.action()
+                if (element.action) element.action()
                 return
             }    
         }

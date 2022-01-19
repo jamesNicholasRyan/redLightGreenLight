@@ -30,7 +30,7 @@ export default class Button {
     }
 
     update() {
-
+        
     }
 
     action(){

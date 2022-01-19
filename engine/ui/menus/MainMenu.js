@@ -1,8 +1,8 @@
 import Menu from "./Menu"
 
 export default class MainMenu extends Menu {
-    constructor(w, h, fill, alpha) {
-        super(w, h, fill, alpha)
+    constructor(name, w, h, fill, active) {
+        super(name, w, h, fill, active)
     }
 
     update() {
@@ -12,10 +12,7 @@ export default class MainMenu extends Menu {
 
     checkGameState() {
         // Checks the world/game state and responds appropriately
-        if (world.stateService.state.matches('mainMenu')) {
-            console.log('PAUSED')
-            return this.active = true
-        }
+        if (world.stateService.state.matches('mainMenu')) return this.active = true
         this.active = false
     }
 }

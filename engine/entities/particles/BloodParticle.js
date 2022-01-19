@@ -14,9 +14,11 @@ export default class BloodParticle extends Particle {
             max: randomNumGen(30, 50),
             lifeRandom: randomNumGen(0.1, 0.25)
         }
+        this.stopParticle = false
     }
 
     update() {
+        if (this.stopParticle) return
         super.update()
         if (this.pause) return
         this.life += this.randomObj.lifeRandom
@@ -32,6 +34,7 @@ export default class BloodParticle extends Particle {
             this.width = this.life * 2
             this.alpha = 0.6
             this.pause = true
+            this.stopParticle = true
         }
     }
 

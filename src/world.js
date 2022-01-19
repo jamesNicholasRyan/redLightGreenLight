@@ -73,8 +73,9 @@ export default class World {
 
     update() {
         // This update function, updates the whole game / world data!
-        console.log(this.stateService.state.value)
+        // console.log(this.stateService.state.value)
         if (this.stateService.state.matches('playing')) {
+            this.unpuaseGame()
             if (!this.gameStarted) return                    // wait for the game to initialize first
             this.balancing = window.balanceUI.checkManBalance()
             if (this.balancing && gameEngine.redLight && this.isLevelActive) {   // If the man is balancing
@@ -181,13 +182,24 @@ export default class World {
     pauseGame() {
         // Loops through all relevant gameObjects and pauses them
         const objectsToPause = ['gameObjects', 'particles']
-        // console.log('pausing game')
         objectsToPause.forEach((type) => {
             const objects = gameEngine.state[type]
             if (!objects) return
             objects.forEach((obj) => {
-                // console.log('pausing objects')
                 obj.pause = true
+            })
+        })
+    }
+
+    unpuaseGame() {
+        window.girl.levelTimer()
+        // Loops through all relevant gameObjects and pauses them
+        const objectsToUnPause = ['gameObjects', 'particles']
+        objectsToUnPause.forEach((type) => {
+            const objects = gameEngine.state[type]
+            if (!objects) return
+            objects.forEach((obj) => {
+                obj.pause = false
             })
         })
     }

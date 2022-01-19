@@ -8,16 +8,37 @@ export default class Girl {
         this.min = 2500
         this.startCounter = 3
         this.levelCounter = 300
+        this.levelTimerOn = false
         this.outOfTime = false
         this.minuteTimer
         this.redTimer
         this.greenTimer
+
+        // CLOCK
+        this.frameInterval = 60
+        this.counter = 0
     }
 
     update() {
         if ((this.levelCounter < 0) || (window.world.gameOver) || (window.world.gameWin)) {
             this.stopTimers()
         }
+        if (world.stateService.state.matches('pauseMenu')) {
+            this.levelTimerOn = false
+            this.stopTimers()
+        } else if (world.stateService.state.matches('playing')) {
+            this.levelTimer()
+        }
+        // console.log(this.counter)
+        if (this.counter >= this.frameInterval) {
+            this.counter = 0
+        } else {
+            this.counter++
+        }
+    }
+
+    stopMinute() {
+        clearInterval(this.minuteTimer)
     }
 
     stopTimers() {
@@ -33,7 +54,6 @@ export default class Girl {
         this.outOfTime = false
         const countDown = setInterval(() => {
             this.startCounter --
-            // console.log(this.startCounter)
             if (this.startCounter < 0) {
                 clearInterval(countDown)
                 window.world.activateLevel()
@@ -47,18 +67,16 @@ export default class Girl {
 
 
     levelTimer() {
+        if (this.levelTimerOn) return
         // This function lasts for 60 seconds, randomly setting 
         // lights as red or green
+        this.levelTimerOn = true
         window.gameEngine.redLight = false
-
         this.minuteTimer = setInterval(() => this.countDown(), 1000)
-
         this.redLight()
     }
 
     countDown() {
-        // console.log('time: ', this.levelCounter)
-
         this.levelCounter = this.levelCounter - 1
         if (this.levelCounter <= 0) {            // If minute is up, stop
             clearInterval(this.minuteTimer)
