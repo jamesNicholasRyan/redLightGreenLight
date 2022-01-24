@@ -18,7 +18,7 @@ import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import AIMan from '../engine/entities/AIMan.js'
 import Menu from '../engine/ui/menus/Menu.js'
-import { mainMenu, pauseMenu } from './levelsAndMenus/menus.js'
+import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu } from './levelsAndMenus/menus.js'
 import stateService from '../engine/utils/statemachine.js'
 
 
@@ -49,7 +49,7 @@ export default class World {
 
         // GAMEPLAY
         this.paused = false
-        this.level = 1
+        this.level = 3
         this.isLevelActive = false
         this.gameOver = false
         this.gameWin = false
@@ -61,7 +61,7 @@ export default class World {
     }
 
     init() {
-        const initializedGame = initializeGame(this.worldWidth, this.worldHeight, 30, true)
+        const initializedGame = initializeGame(this.worldWidth, this.worldHeight, 60, true)
         document.body.appendChild(initializedGame)
 
         // Loading the sprites and adding world data to the engine
@@ -92,7 +92,7 @@ export default class World {
             this.checkManCollision()
             if (this.isLevelActive) gameEngine.orderObjects()
 
-        } else if (this.stateService.state.matches('pauseMenu')) {
+        } else {
             // console.log('pausing game')
             this.pauseGame()
             return
@@ -112,6 +112,8 @@ export default class World {
         createGameCharacters(this.level)
         mainMenu()
         pauseMenu()
+        mainOptionsMenu()
+        difficultyMenu()
     }
 
     shootBullet(targetLocation) {

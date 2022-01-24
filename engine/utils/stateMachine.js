@@ -4,7 +4,7 @@ import { Machine, interpret } from "xstate"
 
 const stateMachine = Machine({
     id: 'gameState',
-    initial: 'playing',
+    initial: 'mainMenu',
     context: {
         retries: 0
     },
@@ -12,13 +12,25 @@ const stateMachine = Machine({
         mainMenu: {
             on: {
                 STARTGAME: 'playing',
-                OPTIONS: 'options',
+                OPTIONS: 'mainOptions',
                 QUIT: 'quit'
             }
         },
-        options: {
+        mainOptions: {
             on: {
-                BACK: 'mainMenu'
+                BACK: 'mainMenu',
+                DIFFICULTY: 'difficulty',
+                SOUND: 'sound'
+            }
+        },
+        difficulty: {
+            on: {
+                BACK: 'mainOptions',
+            }
+        },
+        sound: {
+            on: {
+                BACK: 'mainOptions',
             }
         },
         playing: {
@@ -29,9 +41,14 @@ const stateMachine = Machine({
         pauseMenu: {
             on: {
                 BACK: 'playing',
-                OPTIONS: 'options',
+                OPTIONS: 'pauseOptions',
                 QUIT: 'quit',
                 MAINMENU: 'mainMenu'
+            }
+        },
+        pauseOptions: {
+            on: {
+                BACK: 'pauseMenu'
             }
         },
         quit: {

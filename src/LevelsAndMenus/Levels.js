@@ -54,8 +54,8 @@ export function createGameCharacters(level) {
     // This function creates all the game objects for the level
     let numOfAi = 10
     if (level === 1) numOfAi = 20
-    if (level === 2) numOfAi = 40
-    if (level === 3) numOfAi = 60
+    if (level === 2) numOfAi = 60
+    if (level === 3) numOfAi = 100
 
     const idGenerator = new IdGenerator()
     window.man1 = new Man(idGenerator.generateId(), world.worldWidth/2, world.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
