@@ -120,7 +120,7 @@ export default class World {
         // This method is called when a man dies - creates a bullett object and
         // initiates its shoot method
         const rand = Math.floor(Math.random() * (700 - 200 + 1) + 200)
-        const bullet = new Bullet(rand, 0, targetLocation, 5, 10, 0x025666)
+        const bullet = new Bullet(rand, 0, targetLocation, 2, 10, 0x025666)
         gameEngine.createGameObject(bullet, this.particlesStr)
         bullet.init()
     }
@@ -128,7 +128,7 @@ export default class World {
     bloodSplatter(targetLocation) {
         // This method is called when a man dies - setting off a blood splatter particle
         // system animation
-        const bloodSplatter = new BloodSplatter(targetLocation.x, targetLocation.y, 40)
+        const bloodSplatter = new BloodSplatter(targetLocation.x, targetLocation.y, 20)
         bloodSplatter.init()
     }
 

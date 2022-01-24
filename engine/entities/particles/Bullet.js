@@ -15,7 +15,7 @@ export default class Bullet extends GameObject {
         this.initialHeight = h
         this.height = h
         this.bulletSpeed = 150
-        this.fadeSpeed = 0.05
+        this.fadeSpeed = 0.1
         this.life = 100
     }
 
