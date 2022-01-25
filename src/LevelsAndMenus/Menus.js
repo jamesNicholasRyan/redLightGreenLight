@@ -4,6 +4,13 @@ import Menu from "../../engine/ui/menus/Menu"
 import resumeSprite from '../../engine/assets/resume.png'
 import optionsSprite from '../../engine/assets/options.png'
 import mainMenuSprite from '../../engine/assets/mainmenu.png'
+import startGameSprite from '../../engine/assets/new_game.png'
+import backSprite from '../../engine/assets/back.png'
+import difficultySprite from '../../engine/assets/difficulty.png'
+import soundSprite from '../../engine/assets/sound.png'
+import levelOneSprite from '../../engine/assets/levelone.png'
+import levelTwoSprite from '../../engine/assets/leveltwo.png'
+import levelThreeSprite from '../../engine/assets/levelthree.png'
 
 
 function mainMenu() {
@@ -13,7 +20,7 @@ function mainMenu() {
         {
             'name': 'startGame',
             'action': startGame,
-            sprite: resumeSprite,
+            sprite: startGameSprite,
             x: buttonX,
             y: 200,
             w: 100,
@@ -83,7 +90,7 @@ function mainOptionsMenu() {
         {
             'name': 'back',
             'action': back,
-            sprite: mainMenuSprite,
+            sprite: backSprite,
             x: buttonX,
             y: 200,
             w: 100,
@@ -93,7 +100,7 @@ function mainOptionsMenu() {
         {
             'name': 'difficulty',
             'action': difficultyOptions,
-            sprite: optionsSprite,
+            sprite: difficultySprite,
             x: buttonX,
             y: 350,
             w: 100,
@@ -103,7 +110,7 @@ function mainOptionsMenu() {
         {
             'name': 'sound',
             'action': soundOptions,
-            sprite: optionsSprite,
+            sprite: soundSprite,
             x: buttonX,
             y: 500,
             w: 100,
@@ -123,7 +130,7 @@ function difficultyMenu() {
         {
             'name': 'back',
             'action': back,
-            sprite: mainMenuSprite,
+            sprite: backSprite,
             x: buttonX,
             y: 200,
             w: 100,
@@ -133,7 +140,7 @@ function difficultyMenu() {
         {
             'name': 'levelOne',
             'action': function() {level(1)},
-            sprite: optionsSprite,
+            sprite: levelOneSprite,
             x: buttonX,
             y: 350,
             w: 100,
@@ -143,7 +150,7 @@ function difficultyMenu() {
         {
             'name': 'levelTwo',
             'action': function() {level(2)},
-            sprite: optionsSprite,
+            sprite: levelTwoSprite,
             x: buttonX,
             y: 500,
             w: 100,
@@ -153,7 +160,7 @@ function difficultyMenu() {
         {
             'name': 'levelThree',
             'action': function() {level(3)},
-            sprite: optionsSprite,
+            sprite: levelThreeSprite,
             x: buttonX,
             y: 650,
             w: 100,
