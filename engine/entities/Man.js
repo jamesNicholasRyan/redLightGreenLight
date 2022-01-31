@@ -51,8 +51,6 @@ export default class Man extends GameObject {
         this.animation.loop = false
         this.animation.width = this.animationWidth
         this.animation.height = this.animationHeight
-        // this.animation.x = this.location.x
-        // this.animation.y = this.location.y
 
         this.container.x = this.location.x
         this.container.y = this.location.y
@@ -71,10 +69,7 @@ export default class Man extends GameObject {
     }
 
     display() {
-        // Updates the display container each game frame
-
-        // this.animation.x = this.location.x
-        // this.animation.y = this.location.y
+        // Updates the display container each game fram
         this.container.x = this.location.x
         this.container.y = this.location.y
         this.animation.play()
@@ -86,8 +81,6 @@ export default class Man extends GameObject {
         this.checkKeyPresses()
         this.checkEdges()
         this.checkAnimation()
-        // this.drag()
-        // this.friction()
         if (!this.hasWon) {
             this.isDying()
             this.checkDeathTimer()
@@ -143,7 +136,6 @@ export default class Man extends GameObject {
         // checks wether the man has crossed the sucess line
         if (this.location.y < gameEngine.height*gameEngine.successLine) {
             this.hasWon = true
-            console.log('YOU WIN!!!!!!')
         }
     }
 
@@ -221,8 +213,6 @@ export default class Man extends GameObject {
     checkCollision(data) {
         // Loop through all data provided and check if this hitbox
         // overlaps with data's hitbox
-
-
         const ownGlobalPos = this.container.toGlobal(new PIXI.Point(0,0))
         const ownXpos = ownGlobalPos.x - -this.hitBoxData.x
         const ownYpos = ownGlobalPos.y + this.hitBoxData.y
@@ -245,11 +235,9 @@ export default class Man extends GameObject {
                               xPos, yPos, w, h)
             
             if (hit) {
-                // console.log('COLLISION')
                 this.topSpeed = this.slowTopSpeed
                 return 
             } else {
-                // console.log('NO HIT')
                 this.topSpeed = this.normalTopSpeed
             }
         }
@@ -281,7 +269,6 @@ export default class Man extends GameObject {
 
     reset() {
         // resets the object
-        console.log('RESETTING MAN')
         this.location.x = this.startingLocationX
         this.location.y = this.startingLocationY
         this.acceleration = new Vector(0,0)

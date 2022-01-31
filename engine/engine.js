@@ -5,7 +5,6 @@ import * as PIXI from 'pixi.js'
 import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
-import sort from './utils/dataSort.js'
 
 import spriteSheet from './assets/man_01.png'
 
@@ -172,10 +171,18 @@ export default class Engine {
         // }
     }
 
-    findInState(type, name) {
+    findInStateName(type, name) {
         // Find an object related to the type and name provided
         const typeState = this.state[type]
         return typeState.filter((obj) => obj.name === name)[0]
+    }
+
+    findIndexStateId(type, id) {
+        // Find index of an object in state related to the type and id provided
+        const typeState = this.state[type]
+        return typeState.findIndex((obj) => {
+            return obj.id === id
+        })
     }
 
     addContainersToStage(containers) {
@@ -185,13 +192,18 @@ export default class Engine {
     }
 
     removeGameObject(object, type) {
-        const index = this.state[type].findIndex(obj)
+        // Remove all references of the game object from the state & stage
+        const index = this.findIndexStateId(type, object.id)
+        this.state[type].splice(index,1)
+        const stageArray = ['gameObjects', 'particles']
+        const stageIndex = stageArray.indexOf(type)
+        const stage = this.stage.getChildAt(stageIndex)
+        stage.removeChild(object.container)
     }
 
     mouseClicked(mousePosition) {
         // loop UI elements
         // check if mouse is over any of them?
-
         const UIelements = this.state.ui
         if (!UIelements) return
         for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...

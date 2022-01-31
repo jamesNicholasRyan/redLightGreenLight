@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { gameLoop } from '../core/loop'
 import Vector from '../utils/vector'
-import GameObject from './GameObject'
 import Man from './Man'
 import randomNumGen from '../utils/randomNumberGen'
 
@@ -100,6 +99,18 @@ export default class AIMan extends Man {
         breakForce.multiply(-1)
         breakForce.multiply(this.breakPower)
         this.applyForce(breakForce)
+    }
+
+    checkWin() {
+        // checks wether the man has crossed the sucess line
+        if (this.location.y < (gameEngine.height*gameEngine.successLine)*0.5) {
+            if (!this.hasWon) this.clearContainer()
+            this.hasWon = true
+        }
+    }
+
+    clearContainer() {
+        gameEngine.removeGameObject(this, 'gameObjects')
     }
 
     checkKeyPresses() {
