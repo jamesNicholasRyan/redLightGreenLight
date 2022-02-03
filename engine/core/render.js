@@ -21,11 +21,15 @@ function gameRender( engine ) {
             // engine.addToStage(text)
         }
         if (engine.state) {
-            // console.log('checking engine state')
+
             if (!engine.state.hasOwnProperty('gameObjects')) return
-            // console.log('found game objects!')
             const gameObjects = engine.state.gameObjects
             gameObjects.forEach((obj) => {
+                obj.graphics.clear()
+                obj.display()
+            })
+            const backgrounds = engine.state.backgrounds
+            backgrounds.forEach((obj) => {
                 obj.graphics.clear()
                 obj.display()
             })

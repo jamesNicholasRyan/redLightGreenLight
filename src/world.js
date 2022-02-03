@@ -1,23 +1,11 @@
 import initializeGame from '../engine/init.js'
-import { createGirl, createUI, createGameCharacters } from './levelsAndMenus/levels.js'
+import { createGirl, createUI, createGameCharacters, createBackground } from './levelsAndMenus/levels.js'
 
 import randomNumGen from '../engine/utils/randomNumberGen.js'
-import IdGenerator from '../engine/utils/idGenerrator.js'
-import Vector from '../engine/utils/vector.js'
 
-import Man from '../engine/entities/Man'
-import SuccessLine from '../engine/entities/SuccessLine.js'
-import Lights from '../engine/ui/Lights'
-import Girl from '../engine/logic/Girl'
-import BalanceUI from '../engine/ui/BalanceUI.js'
-import GameOverPopUp from '../engine/ui/GameOverPopUp.js'
-import WinPopUp from '../engine/ui/WinPopUp.js'
-import LevelTimer from '../engine/ui/LevelTimer.js'
-import StartCountDownTimer from '../engine/ui/StartCountDown.js'
 import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import AIMan from '../engine/entities/AIMan.js'
-import Menu from '../engine/ui/menus/Menu.js'
 import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu } from './levelsAndMenus/menus.js'
 import stateService from '../engine/utils/statemachine.js'
 
@@ -33,6 +21,7 @@ export default class World {
         
         // UTILS
         this.gameStarted = false
+        this.backgroundStr = 'backgrounds'
         this.gameObjectStr = 'gameObject'
         this.UIstr = 'UI'
         this.particlesStr = 'particles'
@@ -107,6 +96,7 @@ export default class World {
     
     createGameData() {
         // Create game data
+        createBackground()
         createUI()
         createGirl()
         createGameCharacters(this.level)

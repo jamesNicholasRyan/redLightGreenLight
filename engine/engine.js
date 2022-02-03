@@ -20,9 +20,11 @@ export default class Engine {
         this.targetFps = targetFps,
         this.then = Date.now()
         this.showFps = showFps,
+        this.backgroundsStage = new PIXI.Container()
         this.gameObjectsStage = new PIXI.Container()
         this.UIelementsStage = new PIXI.Container()
         this.particlesStage = new PIXI.Container()
+        this.stages = [this.backgroundsStage, this.gameObjectsStage, this.particlesStage, this.UIelementsStage]
         this.stage = new PIXI.Container()
         this.containers = []
         this.state = {}
@@ -67,7 +69,7 @@ export default class Engine {
     }
 
     pixiRender() {
-        this.addContainersToStage([ this.gameObjectsStage, this.particlesStage, this.UIelementsStage])
+        this.addContainersToStage([this.backgroundsStage, this.gameObjectsStage, this.particlesStage, this.UIelementsStage])
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -120,6 +122,7 @@ export default class Engine {
     }
 
     addToStage(child, type) {
+        if (type === 'backgrounds') this.backgroundsStage.addChild(child)
         if (type === 'particles') this.particlesStage.addChild(child)
         if (type === 'gameObject') this.gameObjectsStage.addChild(child)
         if (type === 'UI' || type === 'buttons') this.UIelementsStage.addChild(child)
@@ -161,6 +164,15 @@ export default class Engine {
                 }
             } else {
                 this.state.particles.push(object)
+            }
+        } else if (type === 'backgrounds') {
+            if (!this.state.backgrounds) {
+                this.state = {
+                    ...this.state,
+                    backgrounds: [object]
+                }
+            } else {
+                this.state.backgrounds.push(object)
             }
         }
         // if (!this.state.hasOwnProperty(type)) {
@@ -219,9 +231,7 @@ export default class Engine {
     resetEngine() {
         this.redLight = false
         this.clearState()
-        this.addContainersToStage([this.gameObjectsStage, 
-                                   this.UIelementsStage, 
-                                   this.particlesStage])
+        this.addContainersToStage([this.backgroundsStage, this.gameObjectsStage, this.particlesStage, this.UIelementsStage,])
     }
 
     clearState() {
@@ -233,7 +243,7 @@ export default class Engine {
 
     orderObjects() {
         // This method orders the game objects
-        const gameObjectsContainer = this.stage.getChildAt(0)
+        const gameObjectsContainer = this.stage.getChildAt(1)
         gameObjectsContainer.children.sort((a, b) => {
             const globalPosA = a.toGlobal(new PIXI.Point(0,0))
             const globalPosB = b.toGlobal(new PIXI.Point(0,0))

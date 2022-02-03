@@ -3,6 +3,8 @@
 import IdGenerator from "../../engine/utils/idGenerrator"
 import randomNumGen from "../../engine/utils/randomNumberGen"
 
+import arenaBackgroundpng from "../../engine/assets/arena_backgroundgrey.png"
+
 import Man from "../../engine/entities/Man"
 import SuccessLine from "../../engine/entities/SuccessLine"
 import Lights from "../../engine/ui/Lights"
@@ -15,6 +17,7 @@ import StartCountDownTimer from "../../engine/ui/StartCountDown"
 import AIMan from "../../engine/entities/AIMan"
 import Button from "../../engine/ui/Button"
 import Engine from "../../engine/engine"
+import Background from "../../engine/ui/Background"
 
 function pauseGame() {
     world.stateService.send('PAUSE')
@@ -73,4 +76,10 @@ function createAI(idGenerator, numOfAI) {
                                 30, 30)
         gameEngine.createGameObject(manAI, world.gameObjectStr)
     }
+}
+
+export function createBackground() {
+    // Create background object for game level
+    const arenaBackground = new Background(0,0, window.world.worldWidth, window.world.worldHeight, 0x808080, arenaBackgroundpng)
+    gameEngine.createGameObject(arenaBackground, world.backgroundStr)
 }
