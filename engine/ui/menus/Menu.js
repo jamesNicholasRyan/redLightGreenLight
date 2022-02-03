@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 
 
 export default class Menu {
-    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2) {
+    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background) {
         this.name = name
         this.width = w
         this.height = h
@@ -12,6 +12,8 @@ export default class Menu {
         this.graphics = new PIXI.Graphics()
         this.buttonsGraphics = new PIXI.Graphics()
         this.sprites = new PIXI.Container()
+        this.backgroundTexture = background ? new PIXI.Texture.from(background) : null
+        this.backgroundSprite = null
         this.container = new PIXI.Container()
         this.active = active
         this.fadeSpeed = fadeSpeed
@@ -22,7 +24,10 @@ export default class Menu {
     createDisplay() {
         this.graphics.drawRect(0,0, this.width, this.height, this.fill)
         this.createSprites()
-        this.drawButtons()
+        if (this.backgroundTexture) {
+            this.backgroundSprite = new PIXI.Sprite(this.backgroundTexture)
+            this.container.addChild(this.backgroundSprite)
+        }
         this.container.addChild(this.graphics)
         this.container.addChild(this.buttonsGraphics)
         this.container.addChild(this.sprites)
@@ -39,10 +44,11 @@ export default class Menu {
     }
     
     display() {
+        if (this.backgroundTexture) this.drawBackgroundSprite()
         this.drawButtons()
-        this.graphics.beginFill(this.fill, this.backgroundAlpha)
-        this.graphics.drawRect(0,0, this.width, this.height)
-        this.graphics.endFill()
+        // this.graphics.beginFill(this.fill, this.backgroundAlpha)
+        // this.graphics.drawRect(0,0, this.width, this.height)
+        // this.graphics.endFill()
     }
 
     drawButtons() {
@@ -54,6 +60,14 @@ export default class Menu {
             relativeSprite.position.y = data.y
             relativeSprite.alpha = this.alpha
         })
+    }
+
+    drawBackgroundSprite() {
+        this.backgroundSprite.position.x = 0
+        this.backgroundSprite.position.y = 0
+        this.backgroundSprite.width = 1000
+        this.backgroundSprite.height = 900
+        this.backgroundSprite.alpha = this.backgroundAlpha
     }
 
     update() {

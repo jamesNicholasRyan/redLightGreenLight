@@ -207,7 +207,7 @@ export default class Engine {
         // Remove all references of the game object from the state & stage
         const index = this.findIndexStateId(type, object.id)
         this.state[type].splice(index,1)
-        const stageArray = ['gameObjects', 'particles']
+        const stageArray = ['backgrounds', 'gameObjects', 'particles']
         const stageIndex = stageArray.indexOf(type)
         const stage = this.stage.getChildAt(stageIndex)
         stage.removeChild(object.container)

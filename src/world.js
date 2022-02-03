@@ -68,7 +68,7 @@ export default class World {
             if (!this.gameStarted) return                    // wait for the game to initialize first
             this.balancing = window.balanceUI.checkManBalance()
             if (this.balancing && gameEngine.redLight && this.isLevelActive) {   // If the man is balancing
-                // balanceUI.checkLostBalance()           // check if he has lost his balance...
+                balanceUI.checkLostBalance()           // check if he has lost his balance...
                 if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
                 this.randomAIdeath()
             } else {

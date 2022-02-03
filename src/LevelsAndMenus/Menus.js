@@ -11,6 +11,7 @@ import soundSprite from '../../engine/assets/sound.png'
 import levelOneSprite from '../../engine/assets/levelone.png'
 import levelTwoSprite from '../../engine/assets/leveltwo.png'
 import levelThreeSprite from '../../engine/assets/levelthree.png'
+import menuBackground from '../../engine/assets/menu_background.png'
 
 
 function mainMenu() {
@@ -39,7 +40,7 @@ function mainMenu() {
         },
     ]
     const mainMenu = new Menu('mainMenu', world.worldWidth, world.worldHeight, 
-                               0xad0061, false, mainMenuButtonData, 0.1, 1)
+                               0xad0061, false, mainMenuButtonData, 0.1, 1, menuBackground)
     gameEngine.createGameObject(mainMenu, world.UIstr)
 }
 
@@ -79,7 +80,7 @@ function pauseMenu() {
         },
     ]
     const pauseMenu = new Menu('pauseMenu', world.worldWidth, world.worldHeight, 
-                                0xa1788f, false, pauseMenuButtonData, 0.15, 0.3)
+                                0xa1788f, false, pauseMenuButtonData, 0.15, 0.3, null)
     gameEngine.createGameObject(pauseMenu, world.UIstr)
 }
 
@@ -119,7 +120,7 @@ function mainOptionsMenu() {
         },
     ]
     const mainOptionsMenu = new Menu('mainOptions', world.worldWidth, world.worldHeight, 
-                                      0x83bd00, false, mainOptionsButtonData, 0.1, 1)
+                                      0x83bd00, false, mainOptionsButtonData, 0.1, 1, menuBackground)
     gameEngine.createGameObject(mainOptionsMenu, world.UIstr)
 }
 
@@ -169,7 +170,7 @@ function difficultyMenu() {
         },
     ]
     const difficultyMenu = new Menu('difficulty', world.worldWidth, world.worldHeight, 
-                                     0x93bd32, false, difficultyButtonData, 0.1, 1)
+                                     0x93bd32, false, difficultyButtonData, 0.1, 1, menuBackground)
     gameEngine.createGameObject(difficultyMenu, world.UIstr)
 }
 
