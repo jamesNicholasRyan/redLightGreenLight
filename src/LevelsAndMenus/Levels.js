@@ -48,7 +48,7 @@ export function createUI() {
 }
 
 export function createGirl() {
-    // This function creates the Girl object that soecifies timer
+    // This function creates the Girl object that specifies timer
     window.girl = new Girl('girl')
     const index = gameEngine.worldState.findIndex(object => {
         return object.name === 'girl'
@@ -57,8 +57,7 @@ export function createGirl() {
         gameEngine.worldState.splice(index, 1, window.girl)
     } else {
         gameEngine.worldState.push(window.girl)
-    }
-    window.girl.startLevelCountDown()      
+    }   
 }
 
 export function createGameCharacters(level) {

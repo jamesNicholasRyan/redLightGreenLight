@@ -174,6 +174,7 @@ export default class World {
     pauseGame() {
         // Loops through all relevant gameObjects and pauses them
         const objectsToPause = ['gameObjects', 'particles']
+        window.balanceUI.pause = true
         objectsToPause.forEach((type) => {
             const objects = gameEngine.state[type]
             if (!objects) return
@@ -186,6 +187,7 @@ export default class World {
     unpuaseGame() {
         // Loops through all relevant gameObjects and pauses them
         const objectsToUnPause = ['gameObjects', 'particles']
+        window.balanceUI.pause = false
         objectsToUnPause.forEach((type) => {
             const objects = gameEngine.state[type]
             if (!objects) return
