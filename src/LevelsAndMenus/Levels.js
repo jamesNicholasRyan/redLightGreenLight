@@ -21,6 +21,7 @@ import Background from "../../engine/ui/Background"
 
 function pauseGame() {
     world.stateService.send('PAUSE')
+    window.girl.clockStateService.send('PAUSE')
 }
 
 export function createUI() {
@@ -48,8 +49,15 @@ export function createUI() {
 
 export function createGirl() {
     // This function creates the Girl object that soecifies timer
-    window.girl = new Girl()
-    gameEngine.worldState.push(window.girl)
+    window.girl = new Girl('girl')
+    const index = gameEngine.worldState.findIndex(object => {
+        return object.name === 'girl'
+    })
+    if (index >= 0) {
+        gameEngine.worldState.splice(index, 1, window.girl)
+    } else {
+        gameEngine.worldState.push(window.girl)
+    }
     window.girl.startLevelCountDown()      
 }
 

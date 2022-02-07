@@ -47,7 +47,7 @@ export default class Engine {
         // this.mouseClick = false     // NOT NEEDED??
 
         // GAMEPLAY VARIABLES
-        this.redLight = false
+        this.redLight = true
         this.successLine = 0.05
         this.lose = false
         // this.win = false
@@ -69,7 +69,7 @@ export default class Engine {
     }
 
     pixiRender() {
-        this.addContainersToStage([this.backgroundsStage, this.gameObjectsStage, this.particlesStage, this.UIelementsStage])
+        this.addContainersToStage([this.backgroundsStage, this.particlesStage, this.gameObjectsStage, this.UIelementsStage])
         this.renderer.render(this.stage)
         return this.renderer.view
     }
@@ -207,7 +207,7 @@ export default class Engine {
         // Remove all references of the game object from the state & stage
         const index = this.findIndexStateId(type, object.id)
         this.state[type].splice(index,1)
-        const stageArray = ['backgrounds', 'gameObjects', 'particles']
+        const stageArray = ['backgrounds', 'particles', 'gameObjects']
         const stageIndex = stageArray.indexOf(type)
         const stage = this.stage.getChildAt(stageIndex)
         stage.removeChild(object.container)
@@ -229,9 +229,9 @@ export default class Engine {
     }
 
     resetEngine() {
-        this.redLight = false
+        this.redLight = true
         this.clearState()
-        this.addContainersToStage([this.backgroundsStage, this.gameObjectsStage, this.particlesStage, this.UIelementsStage,])
+        this.addContainersToStage([this.backgroundsStage, this.particlesStage, this.gameObjectsStage, this.UIelementsStage])
     }
 
     clearState() {
@@ -243,7 +243,7 @@ export default class Engine {
 
     orderObjects() {
         // This method orders the game objects
-        const gameObjectsContainer = this.stage.getChildAt(1)
+        const gameObjectsContainer = this.stage.getChildAt(2)
         gameObjectsContainer.children.sort((a, b) => {
             const globalPosA = a.toGlobal(new PIXI.Point(0,0))
             const globalPosB = b.toGlobal(new PIXI.Point(0,0))

@@ -7,7 +7,7 @@ import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import AIMan from '../engine/entities/AIMan.js'
 import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu } from './levelsAndMenus/menus.js'
-import stateService from '../engine/utils/statemachine.js'
+import stateService from '../engine/utils/menuStateMachine.js'
 
 
 export default class World {
@@ -68,7 +68,7 @@ export default class World {
             if (!this.gameStarted) return                    // wait for the game to initialize first
             this.balancing = window.balanceUI.checkManBalance()
             if (this.balancing && gameEngine.redLight && this.isLevelActive) {   // If the man is balancing
-                balanceUI.checkLostBalance()           // check if he has lost his balance...
+                // balanceUI.checkLostBalance()           // check if he has lost his balance...
                 if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
                 this.randomAIdeath()
             } else {
@@ -82,7 +82,6 @@ export default class World {
             if (this.isLevelActive) gameEngine.orderObjects()
 
         } else {
-            // console.log('pausing game')
             this.pauseGame()
             return
         }
@@ -155,6 +154,7 @@ export default class World {
         this.gameOver = false
         this.gameWin = false
         this.paused = false
+        window.girl.clockStateService.send('START')
         this.retsartAnimationLoop()
         // this.togglePauseGame()
     }
@@ -184,7 +184,6 @@ export default class World {
     }
 
     unpuaseGame() {
-        window.girl.levelTimer()
         // Loops through all relevant gameObjects and pauses them
         const objectsToUnPause = ['gameObjects', 'particles']
         objectsToUnPause.forEach((type) => {
@@ -203,7 +202,6 @@ export default class World {
         gameObjects.forEach((obj) => {
             obj.active = true
         })
-        window.girl.levelTimer()
     }
 
     deActivateLevel() {
@@ -259,6 +257,7 @@ export default class World {
         setTimeout(() => {
             this.pause = true
             this.gameOver = true
+            window.girl.clockStateService.send('STOP')
         }, 500)
     }
 }

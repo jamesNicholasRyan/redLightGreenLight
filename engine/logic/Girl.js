@@ -1,13 +1,16 @@
 // This file contains all the logic for the girl/boss
 // Which controls all the timings for the game loop
 
+import clockStateService from '../utils/clockStateMachine.js'
+import randomNumGen from '../utils/randomNumberGen.js'
 
 export default class Girl {
-    constructor() {
+    constructor(name) {
+        this.name = name
         this.max = 4000
         this.min = 2500
         this.startCounter = 3
-        this.levelCounter = 300
+        // this.levelCounter = 300
         this.levelTimerOn = false
         this.outOfTime = false
         this.minuteTimer
@@ -15,93 +18,68 @@ export default class Girl {
         this.greenTimer
 
         // CLOCK
+        this.clockStateService = clockStateService
         this.frameInterval = 60
-        this.counter = 0
+        this.clock = 1
+        this.levelCounter = 120
+        this.countdown = 3
+        this.then = 0
+        this.lightnterval = 100
+        this.lightsActive = false
     }
 
     update() {
-        if ((this.levelCounter < 0) || (window.world.gameOver) || (window.world.gameWin)) {
-            this.stopTimers()
-        }
-        if (world.stateService.state.matches('pauseMenu')) {
-            this.levelTimerOn = false
-            this.stopTimers()
-        } else if (world.stateService.state.matches('playing')) {
-            this.levelTimer()
-        }
-        // console.log(this.counter)
-        if (this.counter >= this.frameInterval) {
-            this.counter = 0
-        } else {
-            this.counter++
-        }
-    }
-
-    stopMinute() {
-        clearInterval(this.minuteTimer)
-    }
-
-    stopTimers() {
-        // console.log('stopping timers')
-        clearInterval(this.minuteTimer)
-        clearTimeout(this.redTimer)
-        clearTimeout(this.greenTimer)
-    }
-
-    startLevelCountDown() {
-        // Count down for start of game
-        window.gameEngine.redLight = true
-        this.outOfTime = false
-        const countDown = setInterval(() => {
-            this.startCounter --
-            if (this.startCounter < 0) {
-                clearInterval(countDown)
-                window.world.activateLevel()
-            }
-        }, 1000)
-    }
-
-    countDownFunc() {
-
-    }
-
-
-    levelTimer() {
-        if (this.levelTimerOn) return
-        // This function lasts for 60 seconds, randomly setting 
-        // lights as red or green
-        this.levelTimerOn = true
-        window.gameEngine.redLight = false
-        this.minuteTimer = setInterval(() => this.countDown(), 1000)
-        this.redLight()
-    }
-
-    countDown() {
-        this.levelCounter = this.levelCounter - 1
-        if (this.levelCounter <= 0) {            // If minute is up, stop
-            clearInterval(this.minuteTimer)
-            // console.log('out of time!!')
-            window.world.gameOver = true
-            this.outOfTime = true
-        }
-    }
-
-    redLight() {                                             // GREEN LIGHT ON
-        const rand = Math.floor(Math.random() * (this.max - this.min + 1) + this.min)
-        this.redTimer = setTimeout(() => {
-            // console.log('GREEN LIGHT')
+        if (this.clockStateService.state.matches('ticking')) {
+            this.incrementClock()
+            this.checkLights()
+            this.checkTimer()
+        } else if (this.clockStateService.state.matches('paused')) {
+            
+        } else if (this.clockStateService.state.matches('stopped')) {
             window.gameEngine.redLight = true
-            this.greenLight()
-        }, rand)
+            this.levelCounter = 0
+            this.clock = 0
+        }
+
     }
 
-    greenLight() {                                          // RED LIGHT ON!
-        this.greenTimer = setTimeout(() => {
-            if (!window.world.gameOver || window.world.gameWin) {
-                window.gameEngine.redLight = false
-                this.redLight()
+    incrementClock() {
+        this.clock++
+        if (this.clock % this.frameInterval === 0) {
+            // This happens every second
+            if (this.countdown !== 0) this.countdown --
+            if (this.countdown === 0) {
+                this.levelCounter --
+                this.lightsActive = true
             }
-        }, 5000)
+        }
+    }
+
+    swtichLights() {
+        window.gameEngine.redLight = !window.gameEngine.redLight
+    }
+
+    checkLights() {
+        // This method will check the clock against random numbers
+        if (!this.lightsActive) return
+        if (!window.world.isLevelActive) window.world.activateLevel()
+        const now = this.clock
+        const diff = now - this.then
+        if (diff >= this.lightnterval) {
+            this.swtichLights()
+            this.then = this.clock
+            if (window.gameEngine.redLight ) {
+                this.lightnterval = 240
+            } else {
+                this.lightnterval = randomNumGen(100, 200)
+            }
+        }
+    }
+
+    checkTimer() {
+        if (this.levelCounter >= 0) return
+        window.world.gameOver = true
+        this.outOfTime = true
     }
 
 }

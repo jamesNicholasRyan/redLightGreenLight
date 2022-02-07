@@ -20,7 +20,7 @@ export default class StartCountDownTimer extends LevelTimer {
     }
 
     updateTime() {
-        this.counter = window.girl.startCounter
+        this.counter = window.girl.countdown
     }
 
 }

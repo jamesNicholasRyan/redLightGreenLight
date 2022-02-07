@@ -176,6 +176,7 @@ function difficultyMenu() {
 
 function resumeGame() {
     window.world.stateService.send('BACK')
+    window.girl.clockStateService.send('RESUME')
 }
 
 function pauseOptions() {
@@ -185,10 +186,12 @@ function pauseOptions() {
 
 function mainMenuButton() {
     window.world.stateService.send('MAINMENU')
+    window.girl.clockStateService.send('STOP')
 }
 
 function startGame() {
     window.world.stateService.send('STARTGAME')
+    window.girl.clockStateService.send('START')
     window.world.resetGame()
 }
 

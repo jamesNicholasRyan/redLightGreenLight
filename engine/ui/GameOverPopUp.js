@@ -59,7 +59,6 @@ export default class GameOverPopUp extends UiElement {
     }
 
     deactivate() {
-        console.log("POP UP CLICKED!")
         window.world.resetGame('LEVEL')
         this.active = false
     }
