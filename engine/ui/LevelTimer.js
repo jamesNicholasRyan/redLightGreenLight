@@ -8,16 +8,22 @@ export default class LevelTimer extends UiElement {
     constructor(x, y, w, h, fill) {
         super(x, y, w, h, fill)
         this.counter = 0
-        this.text = new PIXI.Text(this.counter, {fontFamily : 'Arial', fontSize: 40, fill : 0x000000, align : 'center'})
-        
+        this.text = new PIXI.Text(this.counter, {fontFamily : 'Arial', fontSize: 40, fill : 0x00ff00, align : 'center'})
+        this.container = new PIXI.Container()
+        this.graphics = new PIXI.Graphics()
     }
 
     createDisplay() {
         this.display()
-        return this.text
+        this.container.addChild(this.graphics)
+        this.container.addChild(this.text)
+        return this.container
     }
 
     display() {
+        this.graphics.beginFill(this.fill)
+        this.graphics.drawRect(this.x-5, this.y-2.5, this.w, this.h)
+        this.graphics.endFill()
         this.text.text = this.counter
         this.text.x = this.x
         this.text.y = this.y
