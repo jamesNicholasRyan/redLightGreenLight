@@ -46,9 +46,6 @@ export default class Menu {
     display() {
         if (this.backgroundTexture) this.drawBackgroundSprite()
         this.drawButtons()
-        // this.graphics.beginFill(this.fill, this.backgroundAlpha)
-        // this.graphics.drawRect(0,0, this.width, this.height)
-        // this.graphics.endFill()
     }
 
     drawButtons() {
@@ -59,6 +56,13 @@ export default class Menu {
             relativeSprite.position.x = data.x
             relativeSprite.position.y = data.y
             relativeSprite.alpha = this.alpha
+            if (this.name == 'difficulty' && window.world.level == index) {
+                relativeSprite.width = 320
+                relativeSprite.height = 130
+            } else {
+                relativeSprite.width = 279
+                relativeSprite.height = 106
+            }
         })
     }
 

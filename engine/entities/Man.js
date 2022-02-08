@@ -69,9 +69,14 @@ export default class Man extends GameObject {
     }
 
     display() {
-        // Updates the display container each game fram
+        // Updates the display container each game frame
         this.container.x = this.location.x
         this.container.y = this.location.y
+        if (this.pause) {
+            const animationObject = this.container.getChildAt(0)
+            // console.log(animationObject)
+            animationObject.stop()
+        }
         this.animation.play()
     }
 

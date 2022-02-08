@@ -46,7 +46,7 @@ function mainMenu() {
 
 function pauseMenu() {
     const world = window.world
-    const buttonX = world.worldWidth*0.6
+    const buttonX = world.worldWidth*0.5
     const pauseMenuButtonData = [
         {
             'name': 'resume',

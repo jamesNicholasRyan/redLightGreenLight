@@ -29,7 +29,8 @@ export function createUI() {
     const world = window.world
     const successLine = new SuccessLine(0, world.worldHeight*gameEngine.successLine, world.worldWidth, 5)
     const lights = new Lights(10, 10, 80, 200, 0x025666)
-    const levelTimerUI = new LevelTimer(((world.worldWidth/2)-50), 5, 100, 25, 0x025666)
+    // const levelTimerUI = new LevelTimer(((world.worldWidth/2)-50), 5, 100, 25, 0x025666)
+    const levelTimerUI = new LevelTimer(10, 220, 100, 25, 0x025666)
     const startCountDownTimerUI = new StartCountDownTimer(world.worldWidth/2, world.worldHeight/2, 50, 50, 0x025666)
     const menuButton = new Button('menuButton', world.worldWidth - 40, 10, 30, 30, 0xffffff, ' || ', pauseGame)
     window.balanceUI = new BalanceUI(world.balanceX, world.balanceY, world.balanceWidth, 50, 0x025666, 0xFF0000,

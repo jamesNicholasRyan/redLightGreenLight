@@ -21,7 +21,7 @@ export default class Girl {
         this.clockStateService = clockStateService
         this.frameInterval = 60
         this.clock = 1
-        this.levelCounter = 120
+        this.levelCounter = 63
         this.countdown = 3
         this.then = 0
         this.lightnterval = 100
