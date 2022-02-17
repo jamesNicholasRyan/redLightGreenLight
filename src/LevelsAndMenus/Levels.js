@@ -18,6 +18,7 @@ import AIMan from "../../engine/entities/AIMan"
 import Button from "../../engine/ui/Button"
 import Engine from "../../engine/engine"
 import Background from "../../engine/ui/Background"
+import GirlUi from "../../engine/ui/girlUi"
 
 function pauseGame() {
     world.stateService.send('PAUSE')
@@ -37,7 +38,8 @@ export function createUI() {
                                      world.balanceMed, 0, world.balanceMin, world.balanceMax)
                                      const gameOverPopUp = new GameOverPopUp(world.worldWidth/2, world.worldHeight/2, 200, 100, 0x025666)
                                      const winPopUp = new WinPopUp(world.worldWidth/2, world.worldHeight/2, 200, 100, 0x025666)
-        
+    const girl = new GirlUi(world.worldWidth/2, 25, 0, 0, 0)
+                                
     gameEngine.createGameObject(successLine, world.gameObjectStr)
     gameEngine.createGameObject(lights, world.UIstr)
     gameEngine.createGameObject(levelTimerUI, world.UIstr)
@@ -46,6 +48,7 @@ export function createUI() {
     gameEngine.createGameObject(gameOverPopUp, world.UIstr)
     gameEngine.createGameObject(winPopUp, world.UIstr)
     gameEngine.createGameObject(menuButton, world.UIstr)
+    gameEngine.createGameObject(girl, world.UIstr)
 }
 
 export function createGirl() {

@@ -7,6 +7,7 @@ import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
 
 import spriteSheet from './assets/man_01.png'
+import headSpriteSheet from './assets/girl_head.png'
 
 const gameEngine = window.gameEngine
 
@@ -54,6 +55,7 @@ export default class Engine {
 
         //spriteSheets
         this.playerSheet = {}
+        this.headSheet = {}
         this.UIsprite = {}
     }
 
@@ -76,10 +78,13 @@ export default class Engine {
 
     loadSprites() {
         this.loader.add('sheet', spriteSheet)
+        this.loader.add('headSheet', headSpriteSheet)
         this.loader.load(this.setupSpriteSheets())
     }
 
     setupSpriteSheets() {
+
+        // Man sprites
         let sSheet = new PIXI.BaseTexture.from(this.loader.resources['sheet'].url)
         let w = 26
         let h = 36
@@ -113,6 +118,20 @@ export default class Engine {
         this.playerSheet["dead"] = [
             new PIXI.Texture(sSheet, new PIXI.Rectangle(12*w, 0, w*2, h))
         ]
+
+        // Girl head sprites
+        let headSpriteSheet = new PIXI.BaseTexture.from(this.loader.resources['headSheet'].url)
+        let width = 58
+        let height = 72
+        this.headSheet["headForward"] = [
+            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(0*width, 0, width, height)),
+            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(1*width, 0, width, height)),
+            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(2*width, 0, width, height))
+        ]
+        this.headSheet["headBackwards"] = [
+            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(3*width, 0, width, height))
+        ]
+
     }
 
     createGameObject(object, type) {

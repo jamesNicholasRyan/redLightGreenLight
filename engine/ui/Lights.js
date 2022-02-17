@@ -28,7 +28,6 @@ export default class Lights extends UiElement {
         } else {
             this.drawLight(this.offsetX, this.offsetY2, this.green)
         }
-
     }
 
     drawLight(x, y, color) {
