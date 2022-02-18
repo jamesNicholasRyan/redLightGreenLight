@@ -128,12 +128,11 @@ export default class Man extends GameObject {
         // checks dead boolean to see if man has died yet.
         // This is here because there may be multiple ways to die!
         if (this.dead) {
+            this.stop()
             if (this.shot) return
             this.shot = true
-            // this.reset()
             this.lives --
             window.world.shootBullet(this.location)
-            // window.world.bloodSplatter(this.location)
         }
     }
 
