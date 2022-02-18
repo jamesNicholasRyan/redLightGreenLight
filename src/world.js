@@ -198,7 +198,6 @@ export default class World {
     }
 
     activateLevel() {
-        console.log('GAME LEVEL ACTIVE!')
         this.isLevelActive = true
         const gameObjects = window.gameEngine.state.gameObjects
         gameObjects.forEach((obj) => {
@@ -207,7 +206,6 @@ export default class World {
     }
 
     deActivateLevel() {
-        console.log('STOPPING GAME LEVEL!')
         this.isLevelActive = false
         const gameObjects = window.gameEngine.state.gameObjects
         if (gameObjects) {
@@ -225,7 +223,6 @@ export default class World {
 
     checkTimer() {
         if (window.girl.outOfTime) {
-            console.log('TIMER CHEKED: OUT OF TIME')
             this.activateLoss()
             this.pause = true
             // this.gameOver = true

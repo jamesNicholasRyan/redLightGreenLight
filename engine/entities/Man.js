@@ -74,8 +74,8 @@ export default class Man extends GameObject {
         this.container.y = this.location.y
         if (this.pause) {
             const animationObject = this.container.getChildAt(0)
-            // console.log(animationObject)
-            animationObject.stop()
+            // animationObject.stop()
+            this.animation.stop()
         }
         this.animation.play()
     }

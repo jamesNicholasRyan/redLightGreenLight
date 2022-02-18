@@ -126,7 +126,8 @@ export default class Engine {
         this.headSheet["headForward"] = [
             new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(0*width, 0, width, height)),
             new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(1*width, 0, width, height)),
-            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(2*width, 0, width, height))
+            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(2*width, 0, width, height)),
+            new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(1*width, 0, width, height)),
         ]
         this.headSheet["headBackwards"] = [
             new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(3*width, 0, width, height))

@@ -11,9 +11,9 @@ export default class GirlUi extends UiElement {
     }
 
     createDisplay() {
-        this.animation = new PIXI.AnimatedSprite(gameEngine.headSheet.headForward)
+        this.animation = new PIXI.AnimatedSprite(gameEngine.headSheet.headBackwards)
         this.animation.anchor.set(0.5)
-        this.animation.animationSpeed = 1
+        this.animation.animationSpeed = 0.2
         this.animation.loop = true
         this.animation.width = this.animationWidth
         this.animation.height = this.animationHeight
@@ -26,16 +26,17 @@ export default class GirlUi extends UiElement {
     }
 
     display() {
-        this.animation.play()
     }
 
     update() {
+        if (!window.world.stateService.state.matches('playing')) return this.animation.stop()
         this.checkAnimation()
     }
 
     checkAnimation() {
         if (window.gameEngine.redLight) {
-            this.animation.animationSpeed = 1
+            if (this.animation.playing) return
+            this.animation.animationSpeed = 0.01
             this.animation.textures = gameEngine.headSheet["headForward"]
             this.animation.play()
         } else {
