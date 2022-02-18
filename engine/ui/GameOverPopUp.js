@@ -7,8 +7,8 @@ import gameOverButton from '../assets/game_over_button.png'
 
 export default class GameOverPopUp extends UiElement {
 
-    constructor(x, y, w, h, fill) {
-        super(x, y, w, h, fill)
+    constructor(x, y, w, h, fill, name) {
+        super(x, y, w, h, fill, name)
         this.x = x
         this.y = y
         this.fill = fill
@@ -30,7 +30,6 @@ export default class GameOverPopUp extends UiElement {
     }
 
     fullDisplay() {
-        // this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
         this.sprite.anchor.set(0.5)
         this.sprite.position.x = this.x
         this.sprite.position.y = this.y
@@ -39,7 +38,6 @@ export default class GameOverPopUp extends UiElement {
 
     // LOGIC
     update() {
-        this.checkIfGameIsOver()
     }
 
     checkIfGameIsOver() {
@@ -59,7 +57,7 @@ export default class GameOverPopUp extends UiElement {
     }
 
     deactivate() {
-        window.world.resetGame('LEVEL')
+        window.world.resetGame()
         this.active = false
     }
 }

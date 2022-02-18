@@ -6,7 +6,8 @@ import * as PIXI from 'pixi.js'
 
 export default class UiElement {
 
-    constructor(x, y, w, h, fill) {
+    constructor(x, y, w, h, fill, name=null) {
+        this.name = name
         this.x = x
         this.y = y
         this.w = w

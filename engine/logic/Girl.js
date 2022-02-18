@@ -21,10 +21,10 @@ export default class Girl {
         this.clockStateService = clockStateService
         this.frameInterval = 60
         this.clock = 1
-        this.levelCounter = 63
+        this.levelCounter = 60
         this.countdown = 3
         this.then = 0
-        this.lightnterval = 100
+        this.lightinterval = 100
         this.lightsActive = false
     }
 
@@ -34,7 +34,7 @@ export default class Girl {
             this.checkLights()
             this.checkTimer()
         } else if (this.clockStateService.state.matches('paused')) {
-            
+
         } else if (this.clockStateService.state.matches('stopped')) {
             window.gameEngine.redLight = true
             this.levelCounter = 0
@@ -65,13 +65,13 @@ export default class Girl {
         if (!window.world.isLevelActive) window.world.activateLevel()
         const now = this.clock
         const diff = now - this.then
-        if (diff >= this.lightnterval) {
+        if (diff >= this.lightinterval) {
             this.swtichLights()
             this.then = this.clock
             if (window.gameEngine.redLight ) {
-                this.lightnterval = 240
+                this.lightinterval = 240
             } else {
-                this.lightnterval = randomNumGen(100, 200)
+                this.lightinterval = randomNumGen(100, 200)
             }
         }
     }

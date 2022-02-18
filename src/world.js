@@ -62,7 +62,6 @@ export default class World {
 
     update() {
         // This update function, updates the whole game / world data!
-        // console.log(this.stateService.state.value)
         if (this.stateService.state.matches('playing')) {
             this.unpuaseGame()
             if (!this.gameStarted) return                    // wait for the game to initialize first
@@ -147,8 +146,8 @@ export default class World {
 
     resetGame() {
         this.stopAnimationLoop()
-        window.gameEngine.resetEngine()
         this.deActivateLevel()
+        window.gameEngine.resetEngine()
         this.createGameData()
         window.man1.reset()
         this.gameOver = false
@@ -231,10 +230,8 @@ export default class World {
     
     checkManDead() {
         if (window.man1.dead) {
-            this.activateLoss()
+            if (!this.paused) this.activateLoss()
             this.paused = true
-            // this.gameOver = true
-            // this.deActivateLevel()
         }
     }
 
@@ -257,6 +254,8 @@ export default class World {
             this.pause = true
             this.gameOver = true
             window.girl.clockStateService.send('STOP')
+            const gameOverPopUpObject = gameEngine.findInStateName('ui', 'gameOver')
+            gameOverPopUpObject.active = true
         }, 500)
     }
 }
