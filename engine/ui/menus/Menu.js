@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 
 
 export default class Menu {
-    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background) {
+    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background, backgroundColor=false) {
         this.name = name
         this.width = w
         this.height = h
@@ -19,10 +19,13 @@ export default class Menu {
         this.fadeSpeed = fadeSpeed
         this.backgroundFadeSpeed = backgroundFadeSpeed
         this.buttonData = parsedButtonData
+        this.backgroundColor = backgroundColor
     }
 
     createDisplay() {
-        this.graphics.drawRect(0,0, this.width, this.height, this.fill)
+        this.graphics.beginFill(this.fill)
+        this.graphics.drawRect(0,0, this.width, this.height)
+        this.graphics.endFill()
         this.createSprites()
         if (this.backgroundTexture) {
             this.backgroundSprite = new PIXI.Sprite(this.backgroundTexture)
@@ -46,6 +49,11 @@ export default class Menu {
     display() {
         if (this.backgroundTexture) this.drawBackgroundSprite()
         this.drawButtons()
+        if (this.backgroundColor && this.active) {
+            this.graphics.beginFill(this.fill, 0.4)
+            this.graphics.drawRect(0,0, this.width, this.height)
+            this.graphics.endFill()
+        }
     }
 
     drawButtons() {

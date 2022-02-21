@@ -27,7 +27,7 @@ export default class SuccessLine {
         this.graphics.beginFill(0x990000)
         this.graphics.drawRect(this.x, this.y, this.l, this.h)
         this.graphics.endFill()
-        // return this.graphics
+        this.graphics.alpha = 0.7
     }
 
     update() {

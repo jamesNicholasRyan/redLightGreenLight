@@ -49,7 +49,7 @@ export default class Engine {
 
         // GAMEPLAY VARIABLES
         this.redLight = true
-        this.successLine = 0.05
+        this.successLine = 0.1
         this.lose = false
         // this.win = false
 
@@ -121,7 +121,7 @@ export default class Engine {
 
         // Girl head sprites
         let headSpriteSheet = new PIXI.BaseTexture.from(this.loader.resources['headSheet'].url)
-        let width = 58
+        let width = 59
         let height = 72
         this.headSheet["headForward"] = [
             new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(0*width, 0, width, height)),

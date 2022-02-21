@@ -1,11 +1,14 @@
 import UiElement from "./UiElement.js"
 import * as PIXI from 'pixi.js'
 
+import girlBody from '../assets/girl_body.png'
+
 
 export default class GirlUi extends UiElement {
     constructor(x, y, w, h, fill) {
         super(x, y, w, h)
         this.container = new PIXI.Container()
+        this.texture = new PIXI.Texture.from(girlBody)
         this.animationWidth = 52
         this.animationHeight = 72
     }
@@ -18,9 +21,15 @@ export default class GirlUi extends UiElement {
         this.animation.width = this.animationWidth
         this.animation.height = this.animationHeight
 
+        this.sprite = new PIXI.Sprite(this.texture)
+        this.sprite.anchor.set(0.5)
+        this.sprite.position.y = this.y + this.y + 15
+        this.sprite.width = this.animationWidth
+
         this.container.x = this.x
         this.container.y = this.y
 
+        this.container.addChild(this.sprite)
         this.container.addChild(this.animation)
         return this.container 
     }

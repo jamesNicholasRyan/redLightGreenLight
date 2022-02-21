@@ -4,6 +4,7 @@ import IdGenerator from "../../engine/utils/idGenerrator"
 import randomNumGen from "../../engine/utils/randomNumberGen"
 
 import arenaBackgroundpng from "../../engine/assets/arena_backgroundgrey.png"
+import pausePNG from '../../engine/assets/pause.png'
 
 import Man from "../../engine/entities/Man"
 import SuccessLine from "../../engine/entities/SuccessLine"
@@ -31,9 +32,9 @@ export function createUI() {
     const successLine = new SuccessLine(0, world.worldHeight*gameEngine.successLine, world.worldWidth, 5)
     const lights = new Lights(10, 10, 80, 200, 0x025666)
     // const levelTimerUI = new LevelTimer(((world.worldWidth/2)-50), 5, 100, 25, 0x025666)
-    const levelTimerUI = new LevelTimer(10, 220, 110, 50, 0x000000)
-    const startCountDownTimerUI = new StartCountDownTimer(world.worldWidth/2, world.worldHeight/2, 50, 50, 0x025666)
-    const menuButton = new Button('menuButton', world.worldWidth - 40, 10, 30, 30, 0xffffff, ' || ', pauseGame)
+    const levelTimerUI = new LevelTimer(10, 220, 110, 50, 0x000000, 40, 0x00ff00)
+    const startCountDownTimerUI = new StartCountDownTimer(world.worldWidth/2, world.worldHeight/2, 50, 50, 0x002A1D, 80, 0x002A1D)
+    const menuButton = new Button('menuButton', world.worldWidth - 40, 40, 30, 30, 0xffffff, ' || ', pauseGame, pausePNG, true)
     window.balanceUI = new BalanceUI(world.balanceX, world.balanceY, world.balanceWidth, 50, 0x025666, 0xFF0000,
                                      world.balanceMed, 0, world.balanceMin, world.balanceMax)
     const gameOverPopUp = new GameOverPopUp(world.worldWidth/2, world.worldHeight/2, 200, 100, 0x025666, 'gameOver')

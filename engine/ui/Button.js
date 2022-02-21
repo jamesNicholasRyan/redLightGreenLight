@@ -4,7 +4,7 @@ import World from '../../src/world'
 
 
 export default class Button {
-    constructor(name, x, y, w, h, fill, text, action) {
+    constructor(name, x, y, w, h, fill, text, action, png, isSprite) {
         this.name = name
         this.x = x
         this.y = y
@@ -13,20 +13,28 @@ export default class Button {
         this.fill = fill
         this.alpha = 0
         this.graphics = new PIXI.Graphics()
+        this.texture = new PIXI.Texture.from(png)
+        this.isSprite = isSprite
         this.active = true
         this.chosenAction = action
         this.text = new PIXI.Text(`${text}`, {fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'})
     }
 
     createDisplay() {
+        this.sprite = new PIXI.Sprite(this.texture)
         this.display()
+        this.graphics.addChild(this.sprite)
         return this.graphics
     }
     
     display() {
-        this.graphics.beginFill(this.fill)
-        this.graphics.drawRect(this.x, this.y, this.w, this.h)
-        this.graphics.endFill()
+        this.sprite.anchor.set(0.5)
+        this.sprite.position.x = this.x
+        this.sprite.position.y = this.y
+        this.sprite.alpha = 1
+        // this.graphics.beginFill(this.fill)
+        // this.graphics.drawRect(this.x, this.y, this.w, this.h)
+        // this.graphics.endFill()
     }
 
     update() {

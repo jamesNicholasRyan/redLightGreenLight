@@ -80,7 +80,7 @@ function pauseMenu() {
         },
     ]
     const pauseMenu = new Menu('pauseMenu', world.worldWidth, world.worldHeight, 
-                                0xa1788f, false, pauseMenuButtonData, 0.15, 0.3, null)
+                                0x000000, false, pauseMenuButtonData, 0.15, 0.3, null, true)
     gameEngine.createGameObject(pauseMenu, world.UIstr)
 }
 

@@ -5,10 +5,10 @@ import UiElement from "./UiElement.js"
 
 
 export default class LevelTimer extends UiElement {
-    constructor(x, y, w, h, fill) {
+    constructor(x, y, w, h, fill, fontSize, fontFill) {
         super(x, y, w, h, fill)
         this.counter = 0
-        this.text = new PIXI.Text(this.counter, {fontFamily : 'Arial', fontSize: 40, fill : 0x00ff00, align : 'center'})
+        this.text = new PIXI.Text(this.counter, {fontFamily : 'Arial', fontSize: fontSize, fill : fontFill, align : 'center'})
         this.container = new PIXI.Container()
         this.graphics = new PIXI.Graphics()
     }
