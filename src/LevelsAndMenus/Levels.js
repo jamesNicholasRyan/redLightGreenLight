@@ -37,8 +37,8 @@ export function createUI() {
     const menuButton = new Button('menuButton', world.worldWidth - 40, 40, 30, 30, 0xffffff, ' || ', pauseGame, pausePNG, true)
     window.balanceUI = new BalanceUI(world.balanceX, world.balanceY, world.balanceWidth, 50, 0x025666, 0xFF0000,
                                      world.balanceMed, 0, world.balanceMin, world.balanceMax)
-    const gameOverPopUp = new GameOverPopUp(world.worldWidth/2, world.worldHeight/2, 200, 100, 0x025666, 'gameOver')
-    const winPopUp = new WinPopUp(world.worldWidth/2, world.worldHeight/2, 200, 100, 0x025666)
+    const gameOverPopUp = new GameOverPopUp(world.worldWidth/2, world.worldHeight/2, 300, 170, 0x025666, 'gameOver')
+    const winPopUp = new WinPopUp(world.worldWidth/2, world.worldHeight/2, 300, 170, 0x025666)
     const girl = new GirlUi(world.worldWidth/2, 25, 0, 0, 0)
                                 
     gameEngine.createGameObject(successLine, world.gameObjectStr)

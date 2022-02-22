@@ -6,11 +6,11 @@
 import * as PIXI from 'pixi.js'
   
 export default class SuccessLine {
-
     constructor(x, y, l, h) {
-        this.x = x
-        this.y = y
-        this.l = l 
+        this.ratio = window.world.ratio
+        this.x = x *this.ratio
+        this.y = y *this.ratio
+        this.l = l
         this.h = h
         this.graphics = new PIXI.Graphics()
         this.successLine = true

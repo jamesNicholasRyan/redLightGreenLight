@@ -29,9 +29,9 @@ export default class BloodParticle extends Particle {
     stopBlood() {
         // This methods checks wether the blood has hit the floor yet
         // stopping it if that is the case
-        const randomDist = randomNumGen(this.randomObj.min, this.randomObj.max)
+        const randomDist = randomNumGen(this.randomObj.min, this.randomObj.max)   *this.ratio
         if (this.location.y >= this.originalLocationY + randomDist) {
-            this.width = this.life * 2
+            this.width = (this.life * 2)   *this.ratio
             this.alpha = 0.6
             this.pause = true
             this.stopParticle = true

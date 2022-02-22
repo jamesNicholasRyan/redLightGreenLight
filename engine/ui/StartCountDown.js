@@ -8,9 +8,12 @@ export default class StartCountDownTimer extends LevelTimer {
     constructor(x, y, w, h, fill, fontSize, fontFill) {
         super(x, y, w, h, fill, fontSize, fontFill)
         this.counter = 0
+        this.x = x
+        this.y = y
     }
 
     display() {
+        const ratio = window.world.ratio
         this.text.alpha = 0
         if (window.world.isLevelActive) return
         this.graphics.beginFill(this.fill)

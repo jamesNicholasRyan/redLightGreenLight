@@ -27,8 +27,8 @@ export default class Man extends GameObject {
 
         // ANIMATION VARIABLES
         this.showHitBoxes = false
-        this.animationWidth = 52
-        this.animationHeight = 72
+        this.animationWidth = 52  *this.ratio
+        this.animationHeight = 72  *this.ratio
         this.hitBoxData = {
             x: -this.animationWidth*0.4,
             y: this.animationHeight*0.2,

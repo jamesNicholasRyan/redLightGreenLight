@@ -9,21 +9,21 @@ export default class AIMan extends Man {
 
     constructor(id, x, y, a, b, player) {
         super(id, x, y, a, b)
-        this.topSpeed = 2
+        this.topSpeed = 2   *this.ratio
         this.speedMinMax = {
-            max: 0.01,
-            min: 0.002,
+            max: 0.01  *this.ratio,
+            min: 0.002  *this.ratio,
         }
         this.breakMinMax = {
-            max: 0.03,
-            min: 0.008,
+            max: 0.03  *this.ratio,
+            min: 0.008  *this.ratio,
         }
         this.speed = randomNumGen(this.speedMinMax.min, this.speedMinMax.max)
         this.randX = ((Math.random() * 1) - 0.5)
         this.randY = randomNumGen(-1, -0.5)
         this.breakPower = randomNumGen(this.breakMinMax.min, this.breakMinMax.max)
 
-        this.movmentTolerance = 0.1
+        this.movmentTolerance = 0.1   *this.ratio
 
         this.deathTolerance = randomNumGen(170, 230)
         this.deathProb = 1500

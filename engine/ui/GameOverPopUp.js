@@ -33,6 +33,8 @@ export default class GameOverPopUp extends UiElement {
         this.sprite.anchor.set(0.5)
         this.sprite.position.x = this.x
         this.sprite.position.y = this.y
+        this.sprite.width = this.w
+        this.sprite.height = this.h
         this.sprite.alpha = 1
     }
 

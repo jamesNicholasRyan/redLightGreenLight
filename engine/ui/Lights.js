@@ -31,8 +31,9 @@ export default class Lights extends UiElement {
     }
 
     drawLight(x, y, color) {
+        const ratio = window.world.ratio
         this.graphics.beginFill(color)
-        this.graphics.drawCircle(x, y, 30)
+        this.graphics.drawCircle(x, y, 30 *ratio)
         this.graphics.endFill()
     }
 

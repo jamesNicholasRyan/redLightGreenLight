@@ -8,10 +8,11 @@ export default class UiElement {
 
     constructor(x, y, w, h, fill, name=null) {
         this.name = name
-        this.x = x
-        this.y = y
-        this.w = w
-        this.h = h
+        this.ratio = window.world.ratio
+        this.x = x *this.ratio
+        this.y = y *this.ratio
+        this.w = w *this.ratio
+        this.h = h *this.ratio
         this.fill = fill
         this.graphics = new PIXI.Graphics()
         this.isSprite = false

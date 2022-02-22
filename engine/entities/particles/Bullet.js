@@ -14,7 +14,7 @@ export default class Bullet extends GameObject {
         this.width = w
         this.initialHeight = h
         this.height = h
-        this.bulletSpeed = 150
+        this.bulletSpeed = 150   *this.ratio
         this.fadeSpeed = 0.1
         this.life = 100
     }
@@ -33,10 +33,9 @@ export default class Bullet extends GameObject {
     }
 
     display() {
-        this.graphics.beginTextureFill(this.gradient('white', 'yellow', this.location.x, this.location.y, this.target.x, this.target.y))
+        this.graphics.beginFill(0xffffff)
         this.graphics.position.x = this.location.x
         this.graphics.position.y = this.location.y
-        // this.graphics.beginFill(this.fill)
         this.graphics.drawRect(-2.5, 0, this.width, this.height)
         this.graphics.rotation = this.rotation - (Math.PI/2)
         this.graphics.endFill()

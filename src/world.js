@@ -27,14 +27,15 @@ export default class World {
         this.particlesStr = 'particles'
         this.buttonsStr = 'buttons'
         this.menuStr = 'menus'
+        this.ratio = width/1000
 
         // STATE
         this.stateService = stateService
 
         // POSITIONS
-        this.balanceX = this.worldWidth * 0.6
-        this.balanceY = this.worldHeight * 0.9
-        this.balanceWidth = 400
+        this.balanceX = (this.worldWidth * 0.6) * this.ratio
+        this.balanceY = (this.worldHeight * 0.9) * this.ratio
+        this.balanceWidth = 400 *this.ratio
 
         // GAMEPLAY
         this.paused = false
@@ -67,7 +68,7 @@ export default class World {
             if (!this.gameStarted) return                    // wait for the game to initialize first
             this.balancing = window.balanceUI.checkManBalance()
             if (this.balancing && gameEngine.redLight && this.isLevelActive && !window.man1.dead) {   // If the man is balancing
-                balanceUI.checkLostBalance()           // check if he has lost his balance...
+                // balanceUI.checkLostBalance()           // check if he has lost his balance...
                 if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
                 this.randomAIdeath()
             } else {

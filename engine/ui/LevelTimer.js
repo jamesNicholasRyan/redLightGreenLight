@@ -8,7 +8,8 @@ export default class LevelTimer extends UiElement {
     constructor(x, y, w, h, fill, fontSize, fontFill) {
         super(x, y, w, h, fill)
         this.counter = 0
-        this.text = new PIXI.Text(this.counter, {fontFamily : 'Arial', fontSize: fontSize, fill : fontFill, align : 'center'})
+        this.fontSize = fontSize *window.world.ratio
+        this.text = new PIXI.Text(this.counter, {fontFamily : 'Arial', fontSize: this.fontSize, fill : fontFill, align : 'center'})
         this.container = new PIXI.Container()
         this.graphics = new PIXI.Graphics()
     }
@@ -21,8 +22,9 @@ export default class LevelTimer extends UiElement {
     }
 
     display() {
+        const ratio = window.world.ratio
         this.graphics.beginFill(this.fill)
-        this.graphics.drawRect(this.x-5, this.y-2.5, this.w, this.h)
+        this.graphics.drawRect((this.x-5), (this.y-2.5), this.w, this.h)
         this.graphics.endFill()
         this.text.text = this.counter
         this.text.x = this.x

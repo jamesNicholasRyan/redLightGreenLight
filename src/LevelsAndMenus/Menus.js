@@ -14,8 +14,10 @@ import levelThreeSprite from '../../engine/assets/levelthree.png'
 import menuBackground from '../../engine/assets/menu_background.png'
 
 
+
 function mainMenu() {
     const world = window.world
+    const ratio = world.ratio
     const buttonX = world.worldWidth*0.5
     const mainMenuButtonData = [
         {
@@ -23,9 +25,9 @@ function mainMenu() {
             'action': startGame,
             sprite: startGameSprite,
             x: buttonX,
-            y: 200,
-            w: 100,
-            h: 50,
+            y: 200 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -33,9 +35,9 @@ function mainMenu() {
             'action': mainOptions,
             sprite: optionsSprite,
             x: buttonX,
-            y: 350,
-            w: 100,
-            h: 50,
+            y: 350 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
     ]
@@ -46,6 +48,7 @@ function mainMenu() {
 
 function pauseMenu() {
     const world = window.world
+    const ratio = world.ratio
     const buttonX = world.worldWidth*0.5
     const pauseMenuButtonData = [
         {
@@ -53,9 +56,9 @@ function pauseMenu() {
             'action': resumeGame,
             sprite: resumeSprite,
             x: buttonX,
-            y: 200,
-            w: 100,
-            h: 50,
+            y: 200 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -63,9 +66,9 @@ function pauseMenu() {
             'action': pauseOptions,
             sprite: optionsSprite,
             x: buttonX,
-            y: 350,
-            w: 100,
-            h: 50,
+            y: 350 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -73,9 +76,9 @@ function pauseMenu() {
             'action': mainMenuButton,
             sprite: mainMenuSprite,
             x: buttonX,
-            y: 500,
-            w: 100,
-            h: 50,
+            y: 500 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
     ]
@@ -86,6 +89,7 @@ function pauseMenu() {
 
 function mainOptionsMenu() {
     const world = window.world
+    const ratio = world.ratio
     const buttonX = world.worldWidth*0.4
     const mainOptionsButtonData = [
         {
@@ -93,9 +97,9 @@ function mainOptionsMenu() {
             'action': back,
             sprite: backSprite,
             x: buttonX,
-            y: 200,
-            w: 100,
-            h: 50,
+            y: 200 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -103,9 +107,9 @@ function mainOptionsMenu() {
             'action': difficultyOptions,
             sprite: difficultySprite,
             x: buttonX,
-            y: 350,
-            w: 100,
-            h: 50,
+            y: 350 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -113,9 +117,9 @@ function mainOptionsMenu() {
             'action': soundOptions,
             sprite: soundSprite,
             x: buttonX,
-            y: 500,
-            w: 100,
-            h: 50,
+            y: 500 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
     ]
@@ -126,6 +130,7 @@ function mainOptionsMenu() {
 
 function difficultyMenu() {
     const world = window.world
+    const ratio = world.ratio
     const buttonX = world.worldWidth*0.3
     const difficultyButtonData = [
         {
@@ -133,9 +138,9 @@ function difficultyMenu() {
             'action': back,
             sprite: backSprite,
             x: buttonX,
-            y: 200,
-            w: 100,
-            h: 50,
+            y: 200 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -143,9 +148,9 @@ function difficultyMenu() {
             'action': function() {level(1)},
             sprite: levelOneSprite,
             x: buttonX,
-            y: 350,
-            w: 100,
-            h: 50,
+            y: 350 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -153,9 +158,9 @@ function difficultyMenu() {
             'action': function() {level(2)},
             sprite: levelTwoSprite,
             x: buttonX,
-            y: 500,
-            w: 100,
-            h: 50,
+            y: 500 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
         {
@@ -163,9 +168,9 @@ function difficultyMenu() {
             'action': function() {level(3)},
             sprite: levelThreeSprite,
             x: buttonX,
-            y: 650,
-            w: 100,
-            h: 50,
+            y: 650 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
             fill: 0xffffff
         },
     ]

@@ -7,12 +7,13 @@ import Vector from '../utils/vector'
 export default class GameObject {
 
     constructor(x, y, a, b, fill) {
-        this.location = new Vector(x,y)
-        this.a = a
-        this.b = b
+        this.ratio = window.world.ratio
+        this.location = new Vector(x, y)
+        this.a = a *this.ratio
+        this.b = b *this.ratio
         this.acceleration = new Vector(0,0)
         this.velocity = new Vector(0,0)
-        this.topSpeed = 10
+        this.topSpeed = 10 *this.ratio
         this.graphics = new PIXI.Graphics()
         this.container = new PIXI.Container()
         this.fill = fill

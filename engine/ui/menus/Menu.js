@@ -57,6 +57,7 @@ export default class Menu {
     }
 
     drawButtons() {
+        const ratio = window.world.ratio
         if (!this.buttonData) return
         this.buttonData.forEach((data, index) => {
             const relativeSprite = this.sprites.getChildAt(index)
@@ -65,11 +66,11 @@ export default class Menu {
             relativeSprite.position.y = data.y
             relativeSprite.alpha = this.alpha
             if (this.name == 'difficulty' && window.world.level == index) {
-                relativeSprite.width = 320
-                relativeSprite.height = 130
+                relativeSprite.width = 320 *ratio
+                relativeSprite.height = 130 *ratio
             } else {
-                relativeSprite.width = 279
-                relativeSprite.height = 106
+                relativeSprite.width = 279 *ratio
+                relativeSprite.height = 106 *ratio
             }
         })
     }
@@ -77,8 +78,8 @@ export default class Menu {
     drawBackgroundSprite() {
         this.backgroundSprite.position.x = 0
         this.backgroundSprite.position.y = 0
-        this.backgroundSprite.width = 1000
-        this.backgroundSprite.height = 900
+        this.backgroundSprite.width = window.world.worldWidth
+        this.backgroundSprite.height = window.world.worldWidth*0.9
         this.backgroundSprite.alpha = this.backgroundAlpha
     }
 

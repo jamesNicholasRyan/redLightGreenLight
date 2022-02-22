@@ -5,21 +5,22 @@ import UiElement from "./UiElement.js"
 export default class BalanceUI extends UiElement {
     constructor(x, y, w, h, fill, ballFill, X, v, min, max) {
         super(x, y, w, h, fill)
+        this.ratio = window.world.ratio
         // VISUAL
         this.ballFill = ballFill
-        this.ballPosX = x + w/2
-        this.ballPosY = y + (h/2)
+        this.ballPosX = (x + w/2)  *this.ratio
+        this.ballPosY = (y + (h/2))  *this.ratio
         
         // LOGIC
-        this.position = x + w/2
-        this.oringinalPosition = x + w/2
+        this.position = (x + w/2)   *this.ratio
+        this.oringinalPosition = (x + w/2)   *this.ratio
         this.velocity = v // TODO: randomize it OR Randomize applyforce?
         this.acceleration = 0
-        this.topSpeedMax = 10
-        this.topSpeedMin = -10
-        this.forceStrength = 2
-        this.minLimit = min
-        this.maxLimit = max
+        this.topSpeedMax = 10   *this.ratio
+        this.topSpeedMin = -10  *this.ratio
+        this.forceStrength = 2  *this.ratio
+        this.minLimit = min  *this.ratio
+        this.maxLimit = max  *this.ratio
         this.randomVelChance = 400
         this.lostBalance = false
         this.active = false
@@ -37,7 +38,7 @@ export default class BalanceUI extends UiElement {
 
     fullDisplay() {
         this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
-        this.drawBall(this.position, this.ballPosY, 25, this.ballFill)
+        this.drawBall(this.position, this.ballPosY, 25*this.ratio, this.ballFill)
     }
 
     drawRectangle(x, y, w, h, color) {
@@ -101,7 +102,10 @@ export default class BalanceUI extends UiElement {
         this.active = true
         this.lostBalance = false
         // Random velocity between -10 and 10
-        const randForce = Math.random() * (5 - -5) + -5
+        const max = 5 *this.ratio
+        const min = -5 *this.ratio
+        const randForce = Math.random() * (max - min) + min
+        console.log(randForce)
         this.applyForce(randForce)
     }
 

@@ -7,10 +7,11 @@ import girlBody from '../assets/girl_body.png'
 export default class GirlUi extends UiElement {
     constructor(x, y, w, h, fill) {
         super(x, y, w, h)
+        this.x = x
         this.container = new PIXI.Container()
         this.texture = new PIXI.Texture.from(girlBody)
-        this.animationWidth = 52
-        this.animationHeight = 72
+        this.animationWidth = 52 *window.world.ratio
+        this.animationHeight = 72 *window.world.ratio
     }
 
     createDisplay() {
@@ -23,8 +24,9 @@ export default class GirlUi extends UiElement {
 
         this.sprite = new PIXI.Sprite(this.texture)
         this.sprite.anchor.set(0.5)
-        this.sprite.position.y = this.y + this.y + 15
+        this.sprite.position.y = this.y + this.y + 10
         this.sprite.width = this.animationWidth
+        this.sprite.height = this.animationHeight
 
         this.container.x = this.x
         this.container.y = this.y

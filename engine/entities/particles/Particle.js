@@ -5,13 +5,14 @@ import Vector from "../../utils/vector"
 
 export default class Particle {
     constructor(x, y, acceleration, speed, topSpeed, life, fill) {
+        this.ratio = window.world.ratio
         this.location = new Vector(x, y)
         this.acceleration = acceleration
         this.velocity = new Vector(0,0)
-        this.topSpeed = topSpeed
-        this.speed = speed
-        this.life = life
-        this.width = life
+        this.topSpeed = topSpeed *this.ratio
+        this.speed = speed *this.ratio
+        this.life = life 
+        this.width = life *this.ratio
         this.pause = false
 
         this.graphics = new PIXI.Graphics()
