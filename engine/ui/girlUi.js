@@ -24,6 +24,7 @@ export default class GirlUi extends UiElement {
 
         this.sprite = new PIXI.Sprite(this.texture)
         this.sprite.anchor.set(0.5)
+        this.sprite.position.x = -1 *this.ratio
         this.sprite.position.y = this.y + this.y + 10
         this.sprite.width = this.animationWidth
         this.sprite.height = this.animationHeight

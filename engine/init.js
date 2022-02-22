@@ -11,7 +11,7 @@ export default function initializeGame(width, height, targetFps, showFps) {
         gameViewport.setAttribute('style', `display: flex;
                                 justify-content: center;
                                 align-items: center;
-                                margin: 20% auto; 
+                                margin: 1% auto; 
                                 background-color: black;
                                 width: ${width}px;
                                 height: ${height}px;

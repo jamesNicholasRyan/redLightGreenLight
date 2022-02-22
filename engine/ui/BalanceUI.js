@@ -3,24 +3,24 @@ import UiElement from "./UiElement.js"
 
 
 export default class BalanceUI extends UiElement {
-    constructor(x, y, w, h, fill, ballFill, X, v, min, max) {
+    constructor(x, y, w, h, fill, ballFill, v) {
         super(x, y, w, h, fill)
         this.ratio = window.world.ratio
         // VISUAL
         this.ballFill = ballFill
-        this.ballPosX = (x + w/2)  *this.ratio
-        this.ballPosY = (y + (h/2))  *this.ratio
+        this.ballPosX = (this.x + this.w/2)
+        this.ballPosY = this.y + (this.h/2)
         
         // LOGIC
-        this.position = (x + w/2)   *this.ratio
-        this.oringinalPosition = (x + w/2)   *this.ratio
+        this.position = (this.x + this.w/2)
+        this.oringinalPosition = (this.x + this.w/2)
         this.velocity = v // TODO: randomize it OR Randomize applyforce?
         this.acceleration = 0
-        this.topSpeedMax = 10   *this.ratio
-        this.topSpeedMin = -10  *this.ratio
-        this.forceStrength = 2  *this.ratio
-        this.minLimit = min  *this.ratio
-        this.maxLimit = max  *this.ratio
+        this.topSpeedMax = 10  *this.ratio
+        this.topSpeedMin = -10 *this.ratio
+        this.forceStrength = 2 *this.ratio
+        this.minLimit = this.x
+        this.maxLimit = this.x + this.w 
         this.randomVelChance = 400
         this.lostBalance = false
         this.active = false
@@ -38,7 +38,7 @@ export default class BalanceUI extends UiElement {
 
     fullDisplay() {
         this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
-        this.drawBall(this.position, this.ballPosY, 25*this.ratio, this.ballFill)
+        this.drawBall(this.position, this.ballPosY, 25 *this.ratio, this.ballFill)
     }
 
     drawRectangle(x, y, w, h, color) {
@@ -75,7 +75,6 @@ export default class BalanceUI extends UiElement {
     }
 
     applyForce(force) {
-        // this.acceleration.add(force)
         this.acceleration += force
     }
 
@@ -101,11 +100,10 @@ export default class BalanceUI extends UiElement {
     activate() {
         this.active = true
         this.lostBalance = false
-        // Random velocity between -10 and 10
+        // Random velocity between -10 and 10...
         const max = 5 *this.ratio
         const min = -5 *this.ratio
         const randForce = Math.random() * (max - min) + min
-        console.log(randForce)
         this.applyForce(randForce)
     }
 
@@ -141,7 +139,6 @@ export default class BalanceUI extends UiElement {
 
     checkLostBalance() {
         // If the blanacing mini game is lost, the man is reset
-        // console.log(this.lostBalance)
         if (this.lostBalance) {
             window.man1.dead = true
         }

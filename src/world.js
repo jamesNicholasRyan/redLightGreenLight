@@ -32,11 +32,6 @@ export default class World {
         // STATE
         this.stateService = stateService
 
-        // POSITIONS
-        this.balanceX = (this.worldWidth * 0.6) * this.ratio
-        this.balanceY = (this.worldHeight * 0.9) * this.ratio
-        this.balanceWidth = 400 *this.ratio
-
         // GAMEPLAY
         this.paused = false
         this.level = 3
@@ -45,9 +40,6 @@ export default class World {
         this.gameWin = false
 
         this.balancing = false
-        this.balanceMin = (this.worldWidth * 0.6)
-        this.balanceMax = (this.worldWidth * 0.6) + this.balanceWidth
-        this.balanceMed = (this.worldWidth * 0.6) + (this.balanceWidth/2)
     }
 
     init() {

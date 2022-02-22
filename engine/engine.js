@@ -6,7 +6,7 @@ import { gameUpdate } from './core/update.js'
 import { gameRender } from './core/render.js'
 import { gameLoop } from './core/loop.js'
 
-import spriteSheet from './assets/man_01.png'
+import spriteSheet from './assets/man.png'
 import headSpriteSheet from './assets/girl_head.png'
 
 const gameEngine = window.gameEngine

@@ -8,6 +8,8 @@ export default class Background extends UiElement {
         super(x, y, w, h, fill)
         this.x = x
         this.y = y
+        this.w = w
+        this.h = h
         this.fill = fill
         this.active = true
         this.sprite = ''
@@ -33,8 +35,8 @@ export default class Background extends UiElement {
     fullDisplay() {
         this.sprite.position.x = this.x
         this.sprite.position.y = this.y
-        this.sprite.width = 1000
-        this.sprite.height = 900
+        this.sprite.width = this.w
+        this.sprite.height = this.h
         this.sprite.alpha = 1
     }
 }
