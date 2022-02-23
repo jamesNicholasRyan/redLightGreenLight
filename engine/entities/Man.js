@@ -108,8 +108,6 @@ export default class Man extends GameObject {
     isDying() {
         // this method checks whether the player is moving and redLight light is showing
         if (this.isMoving() && window.gameEngine.redLight) {
-            // console.log('DEATH COUNT:', this.deathCount)
-            // if (this.id === 1) return
             this.deathCount ++
         } else {
             this.deathCount = 0

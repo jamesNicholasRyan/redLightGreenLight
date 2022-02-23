@@ -179,6 +179,46 @@ function difficultyMenu() {
     gameEngine.createGameObject(difficultyMenu, world.UIstr)
 }
 
+function soundMenu() {
+    const world = window.world
+    const ratio = world.ratio
+    const buttonX = world.worldWidth*0.3
+    const soundButtonData = [
+        {
+            'name': 'back',
+            'action': back,
+            sprite: backSprite,
+            x: buttonX,
+            y: 200 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
+            fill: 0xffffff
+        },
+        {
+            'name': 'increaseMaster',
+            'action': function() {increaseSound('master')},
+            sprite: levelOneSprite,
+            x: buttonX,
+            y: 350 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
+            fill: 0xffffff
+        },
+        {
+            'name': 'decreaseMaster',
+            'action': function() {decreaseSound('master')},
+            sprite: levelTwoSprite,
+            x: buttonX,
+            y: 500 *ratio,
+            w: 100 *ratio,
+            h: 50 *ratio,
+            fill: 0xffffff
+        },
+    ]
+    const soundMenu = new Menu('sound', world.worldWidth, world.worldHeight, 0x93bd32, false, soundButtonData, 0.1, 1, menuBackground)
+    gameEngine.createGameObject(soundMenu, world.UIstr)
+}
+
 function resumeGame() {
     window.world.stateService.send('BACK')
     window.girl.clockStateService.send('RESUME')
@@ -216,9 +256,24 @@ function level(difficulty) {
     window.world.level = difficulty
 }
 
+function increaseSound(sound) {
+    if (sound === 'master') {
+        const newVolume = Math.round((world.masterVolume + world.volumeIncrement) * 10) / 10
+        world.masterVolume = newVolume < world.volumeMax ? newVolume : world.volumeMax
+        console.log(world.masterVolume)
+    }
+}
+
+function decreaseSound(sound) {
+    if (sound === 'master') {
+        const newVolume = Math.round((world.masterVolume - world.volumeIncrement) * 10) / 10
+        world.masterVolume = newVolume > 0 ? newVolume : 0
+        console.log(world.masterVolume)
+    }
+}
+
 function soundOptions() {
-    // window.world.stateService.send('SOUND')
-    console.log('SOUND MENU!')
+    window.world.stateService.send('SOUND')
 }
 
 
@@ -227,5 +282,6 @@ export {
     pauseMenu,
     mainOptionsMenu,
     difficultyMenu,
+    soundMenu,
 }
 

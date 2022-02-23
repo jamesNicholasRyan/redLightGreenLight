@@ -1,3 +1,12 @@
+// import bullet_1 from '../engine/assets/audio/bullet_1.mp3'
+import {Howl, Howler} from 'howler'
+
+import bullet_1 from '../engine/assets/audio/bullet_1.mp3'
+import bullet_2 from '../engine/assets/audio/bullet_2.mp3'
+import bullet_3 from '../engine/assets/audio/bullet_3.mp3'
+import bullet_4 from '../engine/assets/audio/bullet_4.mp3'
+import bullet_5 from '../engine/assets/audio/bullet_5.mp3'
+
 import initializeGame from '../engine/init.js'
 import { createGirl, createUI, createGameCharacters, createBackground } from './levelsAndMenus/levels.js'
 
@@ -6,7 +15,7 @@ import randomNumGen from '../engine/utils/randomNumberGen.js'
 import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import AIMan from '../engine/entities/AIMan.js'
-import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu } from './levelsAndMenus/menus.js'
+import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu, soundMenu } from './levelsAndMenus/menus.js'
 import stateService from '../engine/utils/menuStateMachine.js'
 
 
@@ -28,6 +37,11 @@ export default class World {
         this.buttonsStr = 'buttons'
         this.menuStr = 'menus'
         this.ratio = width/1000
+
+        // AUDIO
+        this.masterVolume = 1
+        this.volumeIncrement = 0.2
+        this.volumeMax = 2.2
 
         // STATE
         this.stateService = stateService
@@ -55,6 +69,7 @@ export default class World {
 
     update() {
         // This update function, updates the whole game / world data!
+        // console.log(this.stateService.state.value)
         if (this.stateService.state.matches('playing')) {
             this.unpuaseGame()
             if (!this.gameStarted) return                    // wait for the game to initialize first
@@ -95,6 +110,7 @@ export default class World {
         pauseMenu()
         mainOptionsMenu()
         difficultyMenu()
+        soundMenu()
     }
 
     shootBullet(targetLocation) {
@@ -104,6 +120,14 @@ export default class World {
         const bullet = new Bullet(rand, 0, targetLocation, 2, 10, 0x025666)
         gameEngine.createGameObject(bullet, this.particlesStr)
         bullet.init()
+
+        const randomNum = Math.floor(randomNumGen(1, 5))
+        const mp3Array = [bullet_1, bullet_2, bullet_3, bullet_4, bullet_5]
+        var sound = new Howl({
+            src: [mp3Array[randomNum]],
+            volume: this.masterVolume,
+        })
+        sound.play()
     }
 
     bloodSplatter(targetLocation) {
