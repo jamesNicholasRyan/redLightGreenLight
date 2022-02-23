@@ -1,5 +1,4 @@
 // This file contains all the logic to create the specific levels
-
 import IdGenerator from "../../engine/utils/idGenerrator"
 import randomNumGen from "../../engine/utils/randomNumberGen"
 
@@ -24,6 +23,7 @@ import GirlUi from "../../engine/ui/girlUi"
 function pauseGame() {
     world.stateService.send('PAUSE')
     window.girl.clockStateService.send('PAUSE')
+    window.audioController.playSound('button')
 }
 
 export function createUI() {

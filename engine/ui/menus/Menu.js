@@ -1,4 +1,7 @@
 import * as PIXI from 'pixi.js'
+import {Howl, Howler} from 'howler'
+
+import buttonClick from '../../assets/audio/button.mp3'
 
 
 export default class Menu {
@@ -125,6 +128,7 @@ export default class Menu {
             const sprite = this.sprites.getChildAt(i)
             if (sprite.containsPoint(mousePosition)) {
                 this.buttonData[i].action()
+                window.audioController.playSound('button')
                 answer = true
             }
         }

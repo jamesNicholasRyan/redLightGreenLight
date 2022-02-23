@@ -1,12 +1,3 @@
-// import bullet_1 from '../engine/assets/audio/bullet_1.mp3'
-import {Howl, Howler} from 'howler'
-
-import bullet_1 from '../engine/assets/audio/bullet_1.mp3'
-import bullet_2 from '../engine/assets/audio/bullet_2.mp3'
-import bullet_3 from '../engine/assets/audio/bullet_3.mp3'
-import bullet_4 from '../engine/assets/audio/bullet_4.mp3'
-import bullet_5 from '../engine/assets/audio/bullet_5.mp3'
-
 import initializeGame from '../engine/init.js'
 import { createGirl, createUI, createGameCharacters, createBackground } from './levelsAndMenus/levels.js'
 
@@ -17,6 +8,7 @@ import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
 import AIMan from '../engine/entities/AIMan.js'
 import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu, soundMenu } from './levelsAndMenus/menus.js'
 import stateService from '../engine/utils/menuStateMachine.js'
+import AudioController from '../engine/inputOuput/audioController.js'
 
 
 export default class World {
@@ -60,6 +52,8 @@ export default class World {
         const initializedGame = initializeGame(this.worldWidth, this.worldHeight, 60, true)
         document.body.appendChild(initializedGame)
 
+        window.audioController = new AudioController()
+        audioController.init()
         // Loading the sprites and adding world data to the engine
         // World state holds updatable objects that don't need to be rendered - such 
         // as the girl/timer logic
@@ -121,13 +115,10 @@ export default class World {
         gameEngine.createGameObject(bullet, this.particlesStr)
         bullet.init()
 
-        const randomNum = Math.floor(randomNumGen(1, 5))
-        const mp3Array = [bullet_1, bullet_2, bullet_3, bullet_4, bullet_5]
-        var sound = new Howl({
-            src: [mp3Array[randomNum]],
-            volume: this.masterVolume,
-        })
-        sound.play()
+        const randomNum = Math.floor(randomNumGen(1, 6))
+        console.log(randomNum)
+        const mp3Name = "bullet_" + randomNum
+        window.audioController.playSound(mp3Name)
     }
 
     bloodSplatter(targetLocation) {
