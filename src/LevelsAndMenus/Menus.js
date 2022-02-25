@@ -12,13 +12,15 @@ import levelOneSprite from '../../engine/assets/levelone.png'
 import levelTwoSprite from '../../engine/assets/leveltwo.png'
 import levelThreeSprite from '../../engine/assets/levelthree.png'
 import menuBackground from '../../engine/assets/menu_background.png'
+import increase from '../../engine/assets/increase.png'
+import decrease from '../../engine/assets/decrease.png'
 
 
 
 function mainMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.5
+    const buttonX = world.worldWidth*0.5 *ratio
     const mainMenuButtonData = [
         {
             'name': 'startGame',
@@ -26,8 +28,8 @@ function mainMenu() {
             sprite: startGameSprite,
             x: buttonX,
             y: 200 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -36,8 +38,8 @@ function mainMenu() {
             sprite: optionsSprite,
             x: buttonX,
             y: 350 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
     ]
@@ -49,7 +51,7 @@ function mainMenu() {
 function pauseMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.5
+    const buttonX = world.worldWidth*0.5 *ratio
     const pauseMenuButtonData = [
         {
             'name': 'resume',
@@ -57,8 +59,8 @@ function pauseMenu() {
             sprite: resumeSprite,
             x: buttonX,
             y: 200 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -67,8 +69,8 @@ function pauseMenu() {
             sprite: optionsSprite,
             x: buttonX,
             y: 350 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -77,8 +79,8 @@ function pauseMenu() {
             sprite: mainMenuSprite,
             x: buttonX,
             y: 500 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
     ]
@@ -90,7 +92,7 @@ function pauseMenu() {
 function mainOptionsMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.4
+    const buttonX = world.worldWidth*0.4 *ratio
     const mainOptionsButtonData = [
         {
             'name': 'back',
@@ -98,8 +100,8 @@ function mainOptionsMenu() {
             sprite: backSprite,
             x: buttonX,
             y: 200 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -108,8 +110,8 @@ function mainOptionsMenu() {
             sprite: difficultySprite,
             x: buttonX,
             y: 350 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -118,8 +120,8 @@ function mainOptionsMenu() {
             sprite: soundSprite,
             x: buttonX,
             y: 500 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
     ]
@@ -131,7 +133,7 @@ function mainOptionsMenu() {
 function difficultyMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.3
+    const buttonX = world.worldWidth*0.3 *ratio
     const difficultyButtonData = [
         {
             'name': 'back',
@@ -139,8 +141,8 @@ function difficultyMenu() {
             sprite: backSprite,
             x: buttonX,
             y: 200 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -149,8 +151,8 @@ function difficultyMenu() {
             sprite: levelOneSprite,
             x: buttonX,
             y: 350 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -159,8 +161,8 @@ function difficultyMenu() {
             sprite: levelTwoSprite,
             x: buttonX,
             y: 500 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
         {
@@ -169,8 +171,8 @@ function difficultyMenu() {
             sprite: levelThreeSprite,
             x: buttonX,
             y: 650 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
             fill: 0xffffff
         },
     ]
@@ -182,7 +184,7 @@ function difficultyMenu() {
 function soundMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.3
+    const buttonX = world.worldWidth*0.3 *ratio
     const soundButtonData = [
         {
             'name': 'back',
@@ -190,32 +192,50 @@ function soundMenu() {
             sprite: backSprite,
             x: buttonX,
             y: 200 *ratio,
-            w: 100 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
+            fill: 0xffffff
+        },
+        {
+            'name': 'decreaseMaster',
+            'action': function() {decreaseSound('master')},
+            sprite: decrease,
+            x: buttonX + 50,
+            y: 350 *ratio,
+            w: 50 *ratio,
             h: 50 *ratio,
             fill: 0xffffff
         },
         {
             'name': 'increaseMaster',
             'action': function() {increaseSound('master')},
-            sprite: levelOneSprite,
-            x: buttonX,
+            sprite: increase,
+            x: buttonX + 100,
             y: 350 *ratio,
-            w: 100 *ratio,
-            h: 50 *ratio,
-            fill: 0xffffff
-        },
-        {
-            'name': 'decreaseMaster',
-            'action': function() {decreaseSound('master')},
-            sprite: levelTwoSprite,
-            x: buttonX,
-            y: 500 *ratio,
-            w: 100 *ratio,
+            w: 50 *ratio,
             h: 50 *ratio,
             fill: 0xffffff
         },
     ]
-    const soundMenu = new Menu('sound', world.worldWidth, world.worldHeight, 0x93bd32, false, soundButtonData, 0.1, 1, menuBackground)
+    const textData = [
+        {
+            getText: function() {return window.world.masterVolume},
+            'text': window.world.masterVolume,
+            fontSize: 23,
+            fill: 0x000000,
+            x: buttonX + 150,
+            y: 350 *ratio,
+        },
+        {
+            getText: function() {return 'MASTER'},
+            'text': window.world.masterVolume,
+            fontSize: 25,
+            fill: 0x000000,
+            x: buttonX - 50,
+            y: 350 *ratio,
+        },
+    ]
+    const soundMenu = new Menu('sound', world.worldWidth, world.worldHeight, 0x93bd32, false, soundButtonData, 0.1, 1, menuBackground, false, textData)
     gameEngine.createGameObject(soundMenu, world.UIstr)
 }
 
@@ -238,6 +258,7 @@ function startGame() {
     window.world.stateService.send('STARTGAME')
     window.girl.clockStateService.send('START')
     window.world.resetGame()
+    window.audioController.playSound('intro', 500)
 }
 
 function mainOptions() {
@@ -260,7 +281,6 @@ function increaseSound(sound) {
     if (sound === 'master') {
         const newVolume = Math.round((world.masterVolume + world.volumeIncrement) * 10) / 10
         world.masterVolume = newVolume < world.volumeMax ? newVolume : world.volumeMax
-        console.log(world.masterVolume)
     }
 }
 
@@ -268,7 +288,6 @@ function decreaseSound(sound) {
     if (sound === 'master') {
         const newVolume = Math.round((world.masterVolume - world.volumeIncrement) * 10) / 10
         world.masterVolume = newVolume > 0 ? newVolume : 0
-        console.log(world.masterVolume)
     }
 }
 

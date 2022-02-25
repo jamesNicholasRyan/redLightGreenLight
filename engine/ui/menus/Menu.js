@@ -1,11 +1,8 @@
 import * as PIXI from 'pixi.js'
-import {Howl, Howler} from 'howler'
-
-import buttonClick from '../../assets/audio/button.mp3'
 
 
 export default class Menu {
-    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background, backgroundColor=false) {
+    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background, backgroundColor=false, textData) {
         this.name = name
         this.width = w
         this.height = h
@@ -13,15 +10,17 @@ export default class Menu {
         this.alpha = 0
         this.backgroundAlpha = 0
         this.graphics = new PIXI.Graphics()
+        this.buttonData = parsedButtonData
         this.buttonsGraphics = new PIXI.Graphics()
         this.sprites = new PIXI.Container()
+        this.textData = textData
+        this.text = new PIXI.Container()
         this.backgroundTexture = background ? new PIXI.Texture.from(background) : null
         this.backgroundSprite = null
         this.container = new PIXI.Container()
         this.active = active
         this.fadeSpeed = fadeSpeed
         this.backgroundFadeSpeed = backgroundFadeSpeed
-        this.buttonData = parsedButtonData
         this.backgroundColor = backgroundColor
     }
 
@@ -30,6 +29,7 @@ export default class Menu {
         this.graphics.drawRect(0,0, this.width, this.height)
         this.graphics.endFill()
         this.createSprites()
+        this.createText()
         if (this.backgroundTexture) {
             this.backgroundSprite = new PIXI.Sprite(this.backgroundTexture)
             this.container.addChild(this.backgroundSprite)
@@ -37,6 +37,7 @@ export default class Menu {
         this.container.addChild(this.graphics)
         this.container.addChild(this.buttonsGraphics)
         this.container.addChild(this.sprites)
+        this.container.addChild(this.text)
         return this.container
     }
 
@@ -48,10 +49,20 @@ export default class Menu {
             this.sprites.addChild(newSprite)
         })
     }
+
+    createText() {
+        if (!this.textData) return
+        this.textData.forEach((text) => {
+            console.log('creating text')
+            const newText = new PIXI.Text(text.text, {fontFamily : 'Arial', fontSize: text.fontSize, fill : text.fill, align : 'center'})
+            this.text.addChild(newText)
+        })
+    }
     
     display() {
         if (this.backgroundTexture) this.drawBackgroundSprite()
         this.drawButtons()
+        this.drawText()
         if (this.backgroundColor && this.active) {
             this.graphics.beginFill(this.fill, 0.4)
             this.graphics.drawRect(0,0, this.width, this.height)
@@ -72,9 +83,21 @@ export default class Menu {
                 relativeSprite.width = 320 *ratio
                 relativeSprite.height = 130 *ratio
             } else {
-                relativeSprite.width = 279 *ratio
-                relativeSprite.height = 106 *ratio
+                relativeSprite.width = data.w
+                relativeSprite.height = data.h
             }
+        })
+    }
+
+    drawText() {
+        if (!this.textData) return
+        this.textData.forEach((text, index) => {
+            const relativeText = this.text.getChildAt(index)
+            relativeText.anchor.set(0.5)
+            relativeText.position.x = text.x
+            relativeText.position.y = text.y
+            relativeText.alpha = this.alpha
+            relativeText.text = text.getText()
         })
     }
 
