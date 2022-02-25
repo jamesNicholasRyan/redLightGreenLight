@@ -57,6 +57,15 @@ export default class Girl {
 
     swtichLights() {
         window.gameEngine.redLight = !window.gameEngine.redLight
+        if (!window.gameEngine.redLight) {
+            const randNum = Math.round(randomNumGen(1, 2))
+            const mp3 = `green_${randNum}`
+            window.audioController.playSound(mp3)
+        } else {
+            const randNum = Math.round(randomNumGen(1, 2))
+            const mp3 = `red_${randNum}`
+            window.audioController.playSound(mp3)
+        }
     }
 
     checkLights() {

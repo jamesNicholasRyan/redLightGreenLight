@@ -32,7 +32,7 @@ export default class World {
 
         // AUDIO
         this.masterVolume = 1
-        this.volumeIncrement = 0.2
+        this.volumeIncrement = 0.1
         this.volumeMax = 2.2
 
         // STATE
@@ -116,7 +116,6 @@ export default class World {
         bullet.init()
 
         const randomNum = Math.floor(randomNumGen(1, 6))
-        console.log(randomNum)
         const mp3Name = "bullet_" + randomNum
         window.audioController.playSound(mp3Name)
     }

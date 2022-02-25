@@ -38,9 +38,9 @@ module.exports = {
       {
         test: /\.mp3$/,
         loader: 'file-loader',
-        query: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
+        // query: {
+        //   name: 'static/media/[name].[hash:8].[ext]'
+        // }
       }
     ],
   },

@@ -6,6 +6,11 @@ import bullet_2 from '../assets/audio/bullet_2.mp3'
 import bullet_3 from '../assets/audio/bullet_3.mp3'
 import bullet_4 from '../assets/audio/bullet_4.mp3'
 import bullet_5 from '../assets/audio/bullet_5.mp3'
+import intro from '../assets/audio/intro.mp3'
+import green_1 from '../assets/audio/green_light_1.mp3'
+import green_2 from '../assets/audio/green_light_2.mp3'
+import red_1 from '../assets/audio/red_light_1.mp3'
+import red_2 from '../assets/audio/red_light_2.mp3'
 
 export default class AudioController {
     constructor() {
@@ -42,11 +47,39 @@ export default class AudioController {
                 src: [bullet_5],
                 volume: this.masterVolume,
             }),
+            intro: new Howl({
+                src: [intro],
+                volume: this.masterVolume,
+            }),
+            green_1: new Howl({
+                src: [green_1],
+                volume: this.masterVolume,
+            }),
+            green_2: new Howl({
+                src: [green_2],
+                volume: this.masterVolume,
+            }),
+            red_1: new Howl({
+                src: [red_1],
+                volume: this.masterVolume,
+            }),
+            red_2: new Howl({
+                src: [red_2],
+                volume: this.masterVolume,
+            }),
         }
 
     }
 
-    playSound(soundName) {
+    playSound(soundName, delay=null) {
+        if (delay) {
+            setTimeout(() => {
+                const sound = this.sounds[soundName]
+                sound.volume(window.world.masterVolume)
+                sound.play()
+            }, delay)
+            return
+        }
         const sound = this.sounds[soundName]
         sound.volume(window.world.masterVolume)
         sound.play()
