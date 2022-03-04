@@ -9,6 +9,7 @@ import AIMan from '../engine/entities/AIMan.js'
 import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu, soundMenu } from './levelsAndMenus/menus.js'
 import stateService from '../engine/utils/menuStateMachine.js'
 import AudioController from '../engine/inputOuput/audioController.js'
+import cameraShake from '../engine/utils/cameraShake.js'
 
 
 export default class World {
@@ -48,15 +49,30 @@ export default class World {
         this.balancing = false
 
         // ANIMATION
-        this.shakingX = false
-        this.shakingY = false
-        this.originalShakingLimitX = 8
-        this.shakingLimitX = this.originalShakingLimitX
-        this.originalShakingLimitY = 4
-        this.shakingLimitY = this.originalShakingLimitY
-        this.shakingDirectionX = false
-        this.shakingDirectionY = false
-        this.shakingStrength = 2
+        this.shaking = false
+        this.UIShakingData = {
+            shakingX: false,
+            shakingY: false,
+            originalShakingLimitX: 10 * this.ratio,
+            shakingLimitX: 10 * this.ratio,
+            originalShakingLimitY: 6 * this.ratio,
+            shakingLimitY: 6 * this.ratio,
+            shakingDirectionX: false,
+            shakingDirectionY: false,
+            shakingStrength: 4,
+        }
+        this.GOShakingData = {
+            shakingX: false,
+            shakingY: false,
+            originalShakingLimitX: 5 * this.ratio,
+            shakingLimitX: 5 * this.ratio,
+            originalShakingLimitY: 3 * this.ratio,
+            shakingLimitY: 3 * this.ratio,
+            shakingDirectionX: false,
+            shakingDirectionY: false,
+            shakingStrength: 2,
+        }
+
     }
 
     init() {
@@ -130,7 +146,7 @@ export default class World {
         const randomNum = Math.floor(randomNumGen(1, 6))
         const mp3Name = "bullet_" + randomNum
         window.audioController.playSound(mp3Name)
-        this.shakingX = true
+        this.shaking = true
     }
 
     bloodSplatter(targetLocation) {
@@ -140,44 +156,8 @@ export default class World {
     }
 
     checkShake() {
-        if (this.shakingX) {
-            this.cameraShake()
-        }
-    }
-
-    cameraShake() {
-        // This method causes the canvas view to shake vigorously left to right AND up and down
-        const negativeLimitX = 0-this.originalShakingLimitX
-        const negativeLimitY = 0-this.originalShakingLimitY
-        if (this.shakingDirectionX) {
-            gameEngine.UIelementsStage.position.x += this.shakingStrength
-        } else {
-            gameEngine.UIelementsStage.position.x -= this.shakingStrength
-        }
-        if (this.shakingDirectionY) {
-            gameEngine.UIelementsStage.position.y += this.shakingStrength
-        } else {
-            gameEngine.UIelementsStage.position.y -= this.shakingStrength
-        }
-        if ((gameEngine.UIelementsStage.position.x >= this.shakingLimitX) || (gameEngine.UIelementsStage.position.x <= negativeLimitX)) {
-            this.shakingDirectionX = !this.shakingDirectionX
-            this.shakingLimitX --
-        }
-        if ((gameEngine.UIelementsStage.position.y >= this.shakingLimitY) || (gameEngine.UIelementsStage.position.y <= negativeLimitY)) {
-            this.shakingDirectionY = !this.shakingDirectionY
-            this.shakingLimitY --
-        }
-
-        if (this.shakingLimitX === 1) {
-            this.shakingX = false
-            gameEngine.UIelementsStage.position.x = 0
-            this.shakingLimitX = this.originalShakingLimitX
-        }
-        if (this.shakingLimitY === 1) {
-            this.shakingY = false
-            gameEngine.UIelementsStage.position.y = 0
-            this.shakingLimitY = this.originalShakingLimitY
-        }
+        cameraShake(this, 'UIelementsStage', this.UIShakingData)
+        cameraShake(this, 'gameObjectsStage', this.GOShakingData)
     }
 
     randomAIdeath() {
