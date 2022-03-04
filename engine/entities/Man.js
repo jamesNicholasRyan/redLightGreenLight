@@ -11,11 +11,11 @@ export default class Man extends GameObject {
         this.id = id
         this.startingLocationX = x
         this.startingLocationY = y
-        this.speed = 0.04
-        this.topSpeed = 1.5
+        this.speed = 0.03
+        this.topSpeed = 1.1
         this.slowTopSpeed = 0.2
-        this.normalTopSpeed = 1.5
-        this.breakPower = 0.04
+        this.normalTopSpeed = 1.1
+        this.breakPower = 0.03
         this.movmentTolerance = 0.1
         this.player = true
 

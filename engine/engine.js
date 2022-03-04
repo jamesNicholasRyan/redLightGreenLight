@@ -44,9 +44,6 @@ export default class Engine {
         this.arrowRight = false
         this.arrowDown = false
 
-        // Mouse Controller
-        // this.mouseClick = false     // NOT NEEDED??
-
         // GAMEPLAY VARIABLES
         this.redLight = true
         this.successLine = 0.1

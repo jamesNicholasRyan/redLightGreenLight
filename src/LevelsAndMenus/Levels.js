@@ -47,7 +47,7 @@ export function createUI() {
     gameEngine.createGameObject(gameOverPopUp, world.UIstr)
     gameEngine.createGameObject(winPopUp, world.UIstr)
     gameEngine.createGameObject(menuButton, world.UIstr)
-    gameEngine.createGameObject(girl, world.UIstr)
+    gameEngine.createGameObject(girl, world.gameObjectStr)
 }
 
 export function createGirl() {
@@ -71,7 +71,7 @@ export function createGameCharacters(level) {
     if (level === 3) numOfAi = 100
 
     const idGenerator = new IdGenerator()
-    window.man1 = new Man(idGenerator.generateId(), world.worldWidth/2, world.worldHeight*0.9, 30, 30, 0, 0, 0x025666)
+    window.man1 = new Man(idGenerator.generateId(), world.worldWidth/2, world.worldHeight*0.95, 30, 30, 0, 0, 0x025666)
     gameEngine.createGameObject(man1, world.gameObjectStr)
 
     createAI(idGenerator, numOfAi)

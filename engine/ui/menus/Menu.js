@@ -53,7 +53,6 @@ export default class Menu {
     createText() {
         if (!this.textData) return
         this.textData.forEach((text) => {
-            console.log('creating text')
             const newText = new PIXI.Text(text.text, {fontFamily : 'Arial', fontSize: text.fontSize, fill : text.fill, align : 'center'})
             this.text.addChild(newText)
         })

@@ -72,16 +72,18 @@ export default class AudioController {
     }
 
     playSound(soundName, delay=null) {
+        const trueMasterVolume = window.world.masterVolume/100
         if (delay) {
             setTimeout(() => {
                 const sound = this.sounds[soundName]
-                sound.volume(window.world.masterVolume)
+                const trueMasterVolume = window.world.masterVolume/100
+                sound.volume(trueMasterVolume)
                 sound.play()
             }, delay)
             return
         }
         const sound = this.sounds[soundName]
-        sound.volume(window.world.masterVolume)
+        sound.volume(trueMasterVolume)
         sound.play()
     }
 }

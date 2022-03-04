@@ -219,11 +219,11 @@ function soundMenu() {
     ]
     const textData = [
         {
-            getText: function() {return window.world.masterVolume},
+            getText: function() {return window.world.masterVolume + '%'},
             'text': window.world.masterVolume,
             fontSize: 23,
             fill: 0x000000,
-            x: buttonX + 150,
+            x: buttonX + 160,
             y: 350 *ratio,
         },
         {
@@ -287,7 +287,7 @@ function increaseSound(sound) {
 function decreaseSound(sound) {
     if (sound === 'master') {
         const newVolume = Math.round((world.masterVolume - world.volumeIncrement) * 10) / 10
-        world.masterVolume = newVolume > 0 ? newVolume : 0
+        world.masterVolume = newVolume >= 0 ? newVolume : 0
     }
 }
 
