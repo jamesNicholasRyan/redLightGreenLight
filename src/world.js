@@ -31,9 +31,9 @@ export default class World {
         this.ratio = width/1000
 
         // AUDIO
-        this.masterVolume = 1
-        this.volumeIncrement = 0.1
-        this.volumeMax = 2.2
+        this.masterVolume = 50
+        this.volumeIncrement = 5
+        this.volumeMax = 100
 
         // STATE
         this.stateService = stateService
@@ -46,6 +46,17 @@ export default class World {
         this.gameWin = false
 
         this.balancing = false
+
+        // ANIMATION
+        this.shakingX = false
+        this.shakingY = false
+        this.originalShakingLimitX = 8
+        this.shakingLimitX = this.originalShakingLimitX
+        this.originalShakingLimitY = 4
+        this.shakingLimitY = this.originalShakingLimitY
+        this.shakingDirectionX = false
+        this.shakingDirectionY = false
+        this.shakingStrength = 2
     }
 
     init() {
@@ -80,6 +91,7 @@ export default class World {
             this.checkManDead()
             this.checkWinCondition()
             this.checkManCollision()
+            this.checkShake()
             if (this.isLevelActive) gameEngine.orderObjects()
 
         } else {
@@ -118,13 +130,54 @@ export default class World {
         const randomNum = Math.floor(randomNumGen(1, 6))
         const mp3Name = "bullet_" + randomNum
         window.audioController.playSound(mp3Name)
+        this.shakingX = true
     }
 
     bloodSplatter(targetLocation) {
-        // This method is called when a man dies - setting off a blood splatter particle
-        // system animation
+        // This method is called when a man dies - setting off a blood splatter particle system animation
         const bloodSplatter = new BloodSplatter(targetLocation.x, targetLocation.y, 20)
         bloodSplatter.init()
+    }
+
+    checkShake() {
+        if (this.shakingX) {
+            this.cameraShake()
+        }
+    }
+
+    cameraShake() {
+        // This method causes the canvas view to shake vigorously left to right AND up and down
+        const negativeLimitX = 0-this.originalShakingLimitX
+        const negativeLimitY = 0-this.originalShakingLimitY
+        if (this.shakingDirectionX) {
+            gameEngine.UIelementsStage.position.x += this.shakingStrength
+        } else {
+            gameEngine.UIelementsStage.position.x -= this.shakingStrength
+        }
+        if (this.shakingDirectionY) {
+            gameEngine.UIelementsStage.position.y += this.shakingStrength
+        } else {
+            gameEngine.UIelementsStage.position.y -= this.shakingStrength
+        }
+        if ((gameEngine.UIelementsStage.position.x >= this.shakingLimitX) || (gameEngine.UIelementsStage.position.x <= negativeLimitX)) {
+            this.shakingDirectionX = !this.shakingDirectionX
+            this.shakingLimitX --
+        }
+        if ((gameEngine.UIelementsStage.position.y >= this.shakingLimitY) || (gameEngine.UIelementsStage.position.y <= negativeLimitY)) {
+            this.shakingDirectionY = !this.shakingDirectionY
+            this.shakingLimitY --
+        }
+
+        if (this.shakingLimitX === 1) {
+            this.shakingX = false
+            gameEngine.UIelementsStage.position.x = 0
+            this.shakingLimitX = this.originalShakingLimitX
+        }
+        if (this.shakingLimitY === 1) {
+            this.shakingY = false
+            gameEngine.UIelementsStage.position.y = 0
+            this.shakingLimitY = this.originalShakingLimitY
+        }
     }
 
     randomAIdeath() {
