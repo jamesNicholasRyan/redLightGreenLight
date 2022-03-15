@@ -1,5 +1,6 @@
 // This is the class for the Balance Ball UI
 import UiElement from "./UiElement.js"
+import * as PIXI from 'pixi.js'
 
 
 export default class BalanceUI extends UiElement {
@@ -24,6 +25,7 @@ export default class BalanceUI extends UiElement {
         this.randomVelChance = 400
         this.lostBalance = false
         this.active = false
+        this.rotation = 0
     }
 
     createDisplay() {
@@ -32,19 +34,40 @@ export default class BalanceUI extends UiElement {
     }
 
     display() {
-        if (!this.active) return
+        if (!this.active) {
+            this.graphics.visible = false
+            return
+        }
+        this.graphics.visible = true
         this.fullDisplay()
     }
 
     fullDisplay() {
-        this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
-        this.drawBall(this.position, this.ballPosY, 25 *this.ratio, this.ballFill)
+        // this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
+        // this.drawBall(this.position, this.ballPosY, 25 *this.ratio, this.ballFill)
+        if (window.man1) {
+            this.x = window.man1.location.x - 75 * this.ratio
+            this.y = window.man1.location.y + 75 * this.ratio
+        }
+        const x = (this.x + (this.w/2)) * this.ratio
+        const y = (this.y-50) * this.ratio
+        this.drawRotationalRect(this.x + (this.w/2), this.y-50, 10*this.ratio, 100*this.ratio, this.fill)
     }
 
     drawRectangle(x, y, w, h, color) {
         this.graphics.beginFill(color)
         this.graphics.drawRect(x, y, w, h)
         this.graphics.endFill()
+    }
+
+    drawRotationalRect(x, y, w, h, color) {
+        this.graphics.position.x = x
+        this.graphics.position.y = y
+
+        this.graphics.beginFill(color)
+        this.graphics.drawRect(0, 0, w, h)
+        this.graphics.endFill()
+        this.graphics.angle = this.calculateRotation()
     }
 
     drawBall(x, y, r, color) {
@@ -67,11 +90,20 @@ export default class BalanceUI extends UiElement {
         }
     }
 
+    calculateRotation() {
+        // Calculate roation based on the linear position of original ball
+        const linearWidth = this.maxLimit - this.minLimit
+        const ratio = linearWidth / 180
+        const degrees = this.position / ratio
+        return degrees + 205
+    }
+
     move() {
         this.velocity += this.acceleration
         this.limitVelocity()
         this.position += this.velocity
         this.acceleration = 0
+        this.rotation += this.position *0.01
     }
 
     applyForce(force) {
@@ -79,7 +111,7 @@ export default class BalanceUI extends UiElement {
     }
 
     randomVel() {   
-        // This function makes the velocity of the ball a but random on random occassions
+        // This function makes the velocity of the ball a bit random on random occassions
         const random = Math.floor(Math.random() * 400)     // if zero - do random vel
         if (random > 30) return
         const randNegPos = Math.floor(Math.random() * 1)   // 0 is positive, 1 is negative
@@ -101,8 +133,8 @@ export default class BalanceUI extends UiElement {
         this.active = true
         this.lostBalance = false
         // Random velocity between -10 and 10...
-        const max = 5 *this.ratio
-        const min = -5 *this.ratio
+        const max = 4 *this.ratio
+        const min = -4 *this.ratio
         const randForce = Math.random() * (max - min) + min
         this.applyForce(randForce)
     }

@@ -24,7 +24,7 @@ export default class Bullet extends GameObject {
         // the rotation & distance to the target man
         this.active = true
         this.distanceToTarget = Vector.dist(this.target, this.location)
-        this.rotation = Vector.angle(this.location, this.target) *-1
+        this.rotation = Vector.angle(this.location, this.target) *-1    // radians? 
     }
 
     createDisplay() {
@@ -37,7 +37,7 @@ export default class Bullet extends GameObject {
         this.graphics.position.x = this.location.x
         this.graphics.position.y = this.location.y
         this.graphics.drawRect(-2.5, 0, this.width, this.height)
-        this.graphics.rotation = this.rotation - (Math.PI/2)
+        this.graphics.rotation = this.rotation - (Math.PI/2)   // degrees?
         this.graphics.endFill()
     }
 
