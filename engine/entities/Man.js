@@ -21,9 +21,11 @@ export default class Man extends GameObject {
 
         this.lives = 3
         this.dead = false
+        this.toBeShot = false
         this.deathCount = 0
         this.deathTolerance = 75
         this.hasWon = false
+        this.disbaleKeyPresses = false
 
         // ANIMATION VARIABLES
         this.showHitBoxes = false
@@ -74,7 +76,6 @@ export default class Man extends GameObject {
         this.container.y = this.location.y
         if (this.pause) {
             const animationObject = this.container.getChildAt(0)
-            // animationObject.stop()
             this.animation.stop()
         }
         this.animation.play()
@@ -82,14 +83,17 @@ export default class Man extends GameObject {
 
     update() {
         super.update()
-        if (this.pause) return
+        if (this.pause) {
+            this.stop()
+            return
+        }
         this.checkKeyPresses()
         this.checkEdges()
         this.checkAnimation()
         if (!this.hasWon) {
             this.isDying()
-            this.checkDeathTimer()
-            this.checkDead()
+            this.checkDeath()
+            this.checkShot()
             this.checkBalance()
             this.checkWin()
         }
@@ -114,23 +118,26 @@ export default class Man extends GameObject {
         }
     }
 
-    checkDeathTimer() {
+    checkDeath() {
         // Checks whether the player has moved enough during redlight, to be noticed / killed
         if (this.deathCount > this.deathTolerance) {
-            this.dead = true
+            this.toBeShot = true
         }
-        if (this.lives <= 0) gameEngine.lose = true
+        if (this.lives <= 0) this.dead = true
     }
 
-    checkDead() {
+    checkShot() {
         // checks dead boolean to see if man has died yet.
         // This is here because there may be multiple ways to die!
-        if (this.dead) {
+        if (this.toBeShot) {
+            this.toBeShot = false
             this.stop()
+            this.deactivateKeypress(1000)
             if (this.shot) return
             this.shot = true
             this.lives --
             window.world.shootBullet(this.location)
+            this.shot = false
         }
     }
 
@@ -175,6 +182,8 @@ export default class Man extends GameObject {
     }
 
     checkKeyPresses() {
+        if (this.disbaleKeyPresses) return
+        if (this.dead) return
         if (window.gameEngine.keyW) {                        // UP
             this.applyForce(new Vector(0,-this.speed))
             this.lastKeyPress = 'north'
@@ -278,4 +287,12 @@ export default class Man extends GameObject {
         this.dead = false
     }
     
+    deactivateKeypress(time) {
+        /// This method deactivates a key pass variable for a certain amount of time
+        this.disbaleKeyPresses = true
+        setTimeout(() => {
+            this.disbaleKeyPresses = false
+        }, [time])
+    }
+
 }

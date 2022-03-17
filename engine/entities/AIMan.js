@@ -44,8 +44,8 @@ export default class AIMan extends Man {
         }
         if (!this.hasWon) {
             this.isDying()
-            this.checkDeathTimer()
-            this.checkDead()
+            this.checkDeath()
+            this.checkShot()
             this.checkWin()
         }
     }
@@ -116,6 +116,35 @@ export default class AIMan extends Man {
     checkKeyPresses() {
     }
     checkBalance() {
+    }
+
+    isDying() {
+        // this method checks whether the player is moving and redLight light is showing
+        if (this.isMoving() && window.gameEngine.redLight) {
+            this.deathCount ++
+        } else {
+            this.deathCount = 0
+        }
+    }
+
+    checkDeath() {
+        // Checks whether the player has moved enough during redlight, to be noticed / killed
+        if (this.deathCount > this.deathTolerance) {
+            this.dead = true
+        }
+        if (this.lives <= 0) gameEngine.lose = true
+    }
+
+    checkShot() {
+        // checks dead boolean to see if man has died yet.
+        // This is here because there may be multiple ways to die!
+        if (this.dead) {
+            this.stop()
+            if (this.shot) return
+            this.shot = true
+            this.lives --
+            window.world.shootBullet(this.location)
+        }
     }
 
 }

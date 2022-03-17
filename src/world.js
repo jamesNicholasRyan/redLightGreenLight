@@ -96,11 +96,11 @@ export default class World {
             if (!this.gameStarted) return                    // wait for the game to initialize first
             this.balancing = window.balanceUI.checkManBalance()
             if (this.balancing && gameEngine.redLight && this.isLevelActive && !window.man1.dead) {   // If the man is balancing
-                // balanceUI.checkLostBalance()           // check if he has lost his balance...
-                if (!window.balanceUI.active) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
+                balanceUI.checkLostBalance()           // check if he has lost his balance...
+                if (!window.balanceUI.active && !window.man1.isMoving() && !window.man1.disbaleKeyPresses) window.balanceUI.activate()   // if the balance mini game isn't active, activate it
                 this.randomAIdeath()
             } else {
-                window.balanceUI.deactivate()          // else de-activate it
+                window.balanceUI.reset()          // else reset it
             }
 
             this.checkTimer()
@@ -168,7 +168,7 @@ export default class World {
             const randNum = randomNumGen(1, man.deathProb)
             if (randNum < 2) {
                 man.dead = true
-                man.checkDead()
+                man.checkShot()
             } 
         })
     }
@@ -289,7 +289,7 @@ export default class World {
 
     activateLoss() {
         // This function creates a delay between loosing and the popup
-        window.balanceUI.deactivate() 
+        window.balanceUI.reset() 
         setTimeout(() => {
             this.pause = true
             this.gameOver = true

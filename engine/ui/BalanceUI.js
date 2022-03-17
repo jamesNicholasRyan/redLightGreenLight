@@ -26,6 +26,7 @@ export default class BalanceUI extends UiElement {
         this.lostBalance = false
         this.active = false
         this.rotation = 0
+        this.pauseBalance = false
     }
 
     createDisplay() {
@@ -79,7 +80,7 @@ export default class BalanceUI extends UiElement {
     // LOGIC
     update() {
         super.update()
-        if (this.pause) return
+        if (this.pauseBalance || this.pause) return
         if (this.active) {
             this.randomVel()
             this.move()
@@ -139,17 +140,26 @@ export default class BalanceUI extends UiElement {
         this.applyForce(randForce)
     }
 
-    deactivate() {
+    reset() {
         this.active = false
         this.position = this.oringinalPosition
         this.velocity = 0
         this.acceleration = 0
     }
 
+    pauseForCertainTime(time) {
+        this.pauseBalance = true
+        setTimeout(() => {
+            this.pauseBalance = false
+            this.reset()
+        }, [time])
+    }
+
     checkLimits() {
         if ((this.position > this.maxLimit) || (this.position < this.minLimit)) {
-            this.lostBalance = true
-            this.deactivate()
+            // this.lostBalance = true
+            window.man1.toBeShot = true
+            this.pauseForCertainTime(2000)
         } else {
             this.lostBalance = false
         }
@@ -170,9 +180,10 @@ export default class BalanceUI extends UiElement {
     }
 
     checkLostBalance() {
-        // If the blanacing mini game is lost, the man is reset
+        // If the blanacing mini game is lost, the man is shot
+        if (this.pauseBalance) return
         if (this.lostBalance) {
-            window.man1.dead = true
+            window.man1.toBeShot = true
         }
     }
 }

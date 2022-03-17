@@ -51,14 +51,14 @@ export default class GameOverPopUp extends UiElement {
 
     action() {
         // What happens when this element is clicked on
-        this.deactivate()
+        this.reset()
     }
 
     activate() {
         this.active = true
     }
 
-    deactivate() {
+    reset() {
         window.world.resetGame()
         this.active = false
     }

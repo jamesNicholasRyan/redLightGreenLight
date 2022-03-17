@@ -37,7 +37,7 @@ export default class UiElement {
 
     }
 
-    deactivate() {
+    reset() {
 
     }
 

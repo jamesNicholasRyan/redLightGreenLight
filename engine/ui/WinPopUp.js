@@ -26,14 +26,14 @@ export default class WinPopUp extends GameOverPopUp {
 
     action() {
         // What happens when this element is clicked on
-        this.deactivate()
+        this.reset()
     }
 
     activate() {
         this.active = true
     }
 
-    deactivate() {
+    reset() {
         // What happens when this element is clicked on
         window.world.resetGame('LEVEL')
         this.active = false
