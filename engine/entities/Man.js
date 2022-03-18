@@ -122,6 +122,7 @@ export default class Man extends GameObject {
         // Checks whether the player has moved enough during redlight, to be noticed / killed
         if (this.deathCount > this.deathTolerance) {
             this.toBeShot = true
+            window.borderBlood.active = true
         }
         if (this.lives <= 0) this.dead = true
     }

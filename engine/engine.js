@@ -238,6 +238,7 @@ export default class Engine {
         for (let i=UIelements.length-1; i>=0; i--) {   // Loop backwards, to select top most UI...
             const element = UIelements[i]
             if (!element.active) continue
+            if (!element.checkMouseOver) continue
             if (element.checkMouseOver(mousePosition)) {
                 if (element.action) element.action()
                 return

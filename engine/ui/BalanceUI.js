@@ -157,8 +157,8 @@ export default class BalanceUI extends UiElement {
 
     checkLimits() {
         if ((this.position > this.maxLimit) || (this.position < this.minLimit)) {
-            // this.lostBalance = true
             window.man1.toBeShot = true
+            window.borderBlood.active = true
             this.pauseForCertainTime(2000)
         } else {
             this.lostBalance = false
