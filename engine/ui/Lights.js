@@ -19,15 +19,15 @@ export default class Lights extends UiElement {
     }
 
     display() {
-        this.graphics.beginFill(this.fill)
-        this.graphics.drawRect(this.x, this.y, this.w, this.h)
-        this.graphics.endFill()
+        // this.graphics.beginFill(this.fill)
+        // this.graphics.drawRect(this.x, this.y, this.w, this.h)
+        // this.graphics.endFill()
 
-        if (window.gameEngine.redLight) {
-            this.drawLight(this.offsetX, this.offsetY1, this.red)
-        } else {
-            this.drawLight(this.offsetX, this.offsetY2, this.green)
-        }
+        // if (window.gameEngine.redLight) {
+        //     this.drawLight(this.offsetX, this.offsetY1, this.red)
+        // } else {
+        //     this.drawLight(this.offsetX, this.offsetY2, this.green)
+        // }
     }
 
     drawLight(x, y, color) {

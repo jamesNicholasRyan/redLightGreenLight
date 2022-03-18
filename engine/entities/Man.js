@@ -6,7 +6,7 @@ import rectanglesCollide from '../utils/rectCollision'
 
 export default class Man extends GameObject {
 
-    constructor(id, x, y, a, b) {
+    constructor(id, x, y, a, b, lives) {
         super(x, y, a, b)
         this.id = id
         this.startingLocationX = x
@@ -19,7 +19,7 @@ export default class Man extends GameObject {
         this.movmentTolerance = 0.1
         this.player = true
 
-        this.lives = 3
+        this.lives = lives
         this.dead = false
         this.toBeShot = false
         this.deathCount = 0
