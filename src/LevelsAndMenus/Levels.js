@@ -19,6 +19,8 @@ import Button from "../../engine/ui/Button"
 import Engine from "../../engine/engine"
 import Background from "../../engine/ui/Background"
 import GirlUi from "../../engine/ui/girlUi"
+import BloodBorder from '../../engine/entities/particles/BloodBorder'
+import Hearts from "../../engine/ui/Hearts"
 
 function pauseGame() {
     world.stateService.send('PAUSE')
@@ -30,8 +32,10 @@ export function createUI() {
     // This function creates UI for the game level
     const world = window.world
     const successLine = new SuccessLine(0, world.worldHeight*gameEngine.successLine, world.worldWidth, 5)
+    window.borderBlood = new BloodBorder(0.05)
     const lights = new Lights(10, 10, 80, 200, 0x025666)
-    const levelTimerUI = new LevelTimer(10, 220, 110, 50, 0x000000, 40, 0x00ff00)
+    const hearts = new Hearts(40, 180, 50, 150, 0x025666)
+    const levelTimerUI = new LevelTimer(10, 20, 110, 50, 0x000000, 40, 0x00ff00)
     const startCountDownTimerUI = new StartCountDownTimer(world.worldWidth/2, world.worldHeight/2, 50, 50, 0x002A1D, 80, 0x002A1D)
     const menuButton = new Button('menuButton', world.worldWidth - 40, 40, 30, 30, 0xffffff, ' || ', pauseGame, pausePNG, true)
     window.balanceUI = new BalanceUI(550, 825, 400, 50, 0xa813a6, 0xFF0000, 0)
@@ -40,7 +44,9 @@ export function createUI() {
     const girl = new GirlUi(world.worldWidth/2, 25, 0, 0, 0)
                                 
     gameEngine.createGameObject(successLine, world.gameObjectStr)
+    gameEngine.createGameObject(borderBlood, world.UIstr)
     gameEngine.createGameObject(lights, world.UIstr)
+    gameEngine.createGameObject(hearts, world.UIstr)
     gameEngine.createGameObject(levelTimerUI, world.UIstr)
     gameEngine.createGameObject(startCountDownTimerUI, world.UIstr)
     gameEngine.createGameObject(balanceUI, world.UIstr)
@@ -66,12 +72,22 @@ export function createGirl() {
 export function createGameCharacters(level) {
     // This function creates all the game objects for the level
     let numOfAi = 10
-    if (level === 1) numOfAi = 20
-    if (level === 2) numOfAi = 60
-    if (level === 3) numOfAi = 100
+    let lives = 3
+    if (level === 1) {
+        numOfAi = 20
+        lives = 3
+    }
+    if (level === 2) {
+        numOfAi = 60
+        lives = 2
+    }
+    if (level === 3) {
+        numOfAi = 100
+        lives = 1
+    }
 
     const idGenerator = new IdGenerator()
-    window.man1 = new Man(idGenerator.generateId(), world.worldWidth/2, world.worldHeight*0.95, 30, 30, 0, 0, 0x025666)
+    window.man1 = new Man(idGenerator.generateId(), world.worldWidth/2, world.worldHeight*0.95, 30, 30, lives)
     gameEngine.createGameObject(man1, world.gameObjectStr)
 
     createAI(idGenerator, numOfAi)
