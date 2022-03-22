@@ -2,6 +2,9 @@
 import UiElement from "./UiElement.js"
 import * as PIXI from 'pixi.js'
 
+import balancingMan from '../assets/balance_ui_man.png'
+import balancingLegs from '../assets/balance_ui_legs.png'
+
 
 export default class BalanceUI extends UiElement {
     constructor(x, y, w, h, fill, ballFill, v) {
@@ -11,6 +14,9 @@ export default class BalanceUI extends UiElement {
         this.ballFill = ballFill
         this.ballPosX = (this.x + this.w/2)
         this.ballPosY = this.y + (this.h/2)
+        this.container = new PIXI.Container()
+        this.spriteWidth = 30 * this.ratio
+        this.spriteHeight = 50 * this.ratio
         
         // LOGIC
         this.position = (this.x + this.w/2)
@@ -30,45 +36,52 @@ export default class BalanceUI extends UiElement {
     }
 
     createDisplay() {
+        this.texture = new PIXI.Texture.from(balancingMan)
+        this.spriteBody = new PIXI.Sprite(this.texture)
+        this.legsTexture = new PIXI.Texture.from(balancingLegs)
+        this.spriteLegs = new PIXI.Sprite(this.legsTexture)
+        this.spriteBody.width = this.spriteWidth
+        this.spriteBody.height = this.spriteHeight
+        this.spriteBody.anchor.set(0.5, 0.9)
         this.fullDisplay()
-        return this.graphics
+        return this.container
     }
 
     display() {
         if (!this.active) {
             this.graphics.visible = false
+            this.container.visible = false
             return
         }
         this.graphics.visible = true
+        this.container.visible = true
         this.fullDisplay()
     }
 
     fullDisplay() {
-        // this.drawRectangle(this.x, this.y, this.w, this.h, this.fill)
-        // this.drawBall(this.position, this.ballPosY, 25 *this.ratio, this.ballFill)
         if (window.man1) {
-            this.x = window.man1.location.x - 75 * this.ratio
-            this.y = window.man1.location.y + 75 * this.ratio
+            this.x = window.man1.location.x + 70 * this.ratio
+            this.y = window.man1.location.y + 20 * this.ratio
         }
-        const x = (this.x + (this.w/2)) * this.ratio
-        const y = (this.y-50) * this.ratio
-        this.drawRotationalRect(this.x + (this.w/2), this.y-50, 10*this.ratio, 100*this.ratio, this.fill)
+        this.container.x = this.x
+        this.container.y = this.y
+        this.drawRotationMan()
+        this.container.addChild(this.spriteBody)
+        this.container.addChild(this.spriteLegs)
+    }
+
+    drawRotationMan() {
+        this.spriteLegs.width = this.spriteWidth
+        this.spriteLegs.height = this.spriteHeight + (this.spriteHeight/2)
+        this.spriteLegs.y = -50 * this.ratio
+        this.spriteLegs.x = -15 * this.ratio
+        this.spriteBody.angle = this.calculateRotation()
     }
 
     drawRectangle(x, y, w, h, color) {
         this.graphics.beginFill(color)
         this.graphics.drawRect(x, y, w, h)
         this.graphics.endFill()
-    }
-
-    drawRotationalRect(x, y, w, h, color) {
-        this.graphics.position.x = x
-        this.graphics.position.y = y
-
-        this.graphics.beginFill(color)
-        this.graphics.drawRect(0, 0, w, h)
-        this.graphics.endFill()
-        this.graphics.angle = this.calculateRotation()
     }
 
     drawBall(x, y, r, color) {
@@ -96,7 +109,7 @@ export default class BalanceUI extends UiElement {
         const linearWidth = this.maxLimit - this.minLimit
         const ratio = linearWidth / 180
         const degrees = this.position / ratio
-        return degrees + 205
+        return degrees + 20
     }
 
     move() {

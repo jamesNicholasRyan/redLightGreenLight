@@ -41,7 +41,7 @@ export default class World {
 
         // GAMEPLAY
         this.paused = false
-        this.level = 3
+        this.level = 1
         this.isLevelActive = false
         this.gameOver = false
         this.gameWin = false
