@@ -15,8 +15,11 @@ export default class BalanceUI extends UiElement {
         this.ballPosX = (this.x + this.w/2)
         this.ballPosY = this.y + (this.h/2)
         this.container = new PIXI.Container()
-        this.spriteWidth = 30 * this.ratio
-        this.spriteHeight = 50 * this.ratio
+        this.spriteRatio = 3
+        this.spriteWidth = (15 * this.ratio) * this.spriteRatio
+        this.spriteHeight = (18 * this.ratio) * this.spriteRatio
+        this.legsWidth = (23 * this.ratio) * this.spriteRatio
+        this.legsHeight = ((18 + 21) * this.ratio) * this.spriteRatio
         
         // LOGIC
         this.position = (this.x + this.w/2)
@@ -71,10 +74,10 @@ export default class BalanceUI extends UiElement {
     }
 
     drawRotationMan() {
-        this.spriteLegs.width = this.spriteWidth
-        this.spriteLegs.height = this.spriteHeight + (this.spriteHeight/2)
+        this.spriteLegs.width = this.legsWidth
+        this.spriteLegs.height = this.legsHeight
         this.spriteLegs.y = -50 * this.ratio
-        this.spriteLegs.x = -15 * this.ratio
+        this.spriteLegs.x = -32 * this.ratio
         this.spriteBody.angle = this.calculateRotation()
     }
 
