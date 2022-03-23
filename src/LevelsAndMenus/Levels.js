@@ -94,7 +94,7 @@ export function createGameCharacters(level) {
     gameEngine.orderObjects()
 }
 
-function createAI(idGenerator, numOfAI) {
+export default function createAI(idGenerator, numOfAI) {
     // loop through and create AI men
     for (let i=0; i<numOfAI; i++) {
         const manAI = new AIMan(idGenerator.generateId(), 

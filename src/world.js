@@ -10,6 +10,9 @@ import { mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu, soundMenu } from 
 import stateService from '../engine/utils/menuStateMachine.js'
 import AudioController from '../engine/inputOuput/audioController.js'
 import cameraShake from '../engine/utils/cameraShake.js'
+import IdGenerator from '../engine/utils/idGenerrator.js'
+import MenuMan from '../engine/entities/MenuMan.js'
+import Vector from '../engine/utils/vector.js'
 
 
 export default class World {
@@ -49,6 +52,7 @@ export default class World {
         this.balancing = false
 
         // ANIMATION
+        this.menuScreenActive = false
         this.shaking = false
         this.UIShakingData = {
             shakingX: false,
@@ -91,6 +95,11 @@ export default class World {
     update() {
         // This update function, updates the whole game / world data!
         // console.log(this.stateService.state.value)
+        if (this.stateService.state.matches('mainMenu')) {
+            this.startMenuAnimation()
+            this.menuScreenActive = true
+            return
+        }
         if (this.stateService.state.matches('playing')) {
             this.unpuaseGame()
             if (!this.gameStarted) return                    // wait for the game to initialize first
@@ -135,6 +144,20 @@ export default class World {
         soundMenu()
     }
 
+    startMenuAnimation() {
+        if (!this.menuScreenActive) {
+            console.log('creating menu men')
+            const numOfAI = 10
+            for (let i=0; i<numOfAI; i++) {
+                const y = world.worldHeight * (0.8 + (i/100))
+                const randNum = randomNumGen(0.9, 50)
+                const randVel = new Vector(randNum, 0)
+                const manAI = new MenuMan(i, randomNumGen(-100, -50), y, 30, 30, randVel)
+                gameEngine.createGameObject(manAI, world.UIstr)
+            }
+        }
+    }
+
     shootBullet(targetLocation) {
         // This method is called when a man dies - creates a bullett object and
         // initiates its shoot method
@@ -171,17 +194,6 @@ export default class World {
                 man.checkShot()
             } 
         })
-    }
-
-    createAI(idGenerator) {
-        // loop through and create AI men
-        for (let i=0; i<40; i++) {
-            const manAI = new AIMan(idGenerator.generateId(), 
-                                    randomNumGen(this.worldWidth*0.05, this.worldWidth*0.95), 
-                                    randomNumGen(this.worldHeight*0.89, this.worldHeight*0.95),
-                                    30, 30)
-            gameEngine.createGameObject(manAI, this.gameObjectStr)
-        }
     }
 
     resetGame() {

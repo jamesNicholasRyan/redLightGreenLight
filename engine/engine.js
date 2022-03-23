@@ -192,12 +192,6 @@ export default class Engine {
                 this.state.backgrounds.push(object)
             }
         }
-        // if (!this.state.hasOwnProperty(type)) {
-        //     this.state = {
-        //         ...this.state,
-        //         [type]: [object]
-        //     }
-        // }
     }
 
     findInStateName(type, name) {

@@ -259,6 +259,7 @@ function startGame() {
     window.girl.clockStateService.send('START')
     window.world.resetGame()
     window.audioController.playSound('intro', 500)
+    window.world.menuScreenActive = false
 }
 
 function mainOptions() {

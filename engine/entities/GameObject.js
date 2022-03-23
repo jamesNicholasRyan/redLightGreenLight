@@ -49,7 +49,7 @@ export default class GameObject {
         this.velocity.limit(this.topSpeed)
         this.location.add(this.velocity)
         this.acceleration.multiply(0)
-      }
+    }
 
     applyForce(force) {
         this.acceleration.add(force)
