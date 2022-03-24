@@ -13,6 +13,7 @@ import cameraShake from '../engine/utils/cameraShake.js'
 import IdGenerator from '../engine/utils/idGenerrator.js'
 import MenuMan from '../engine/entities/MenuMan.js'
 import Vector from '../engine/utils/vector.js'
+import MusicController from '../engine/inputOuput/musicController.js'
 
 
 export default class World {
@@ -38,6 +39,7 @@ export default class World {
         this.masterVolume = 50
         this.volumeIncrement = 5
         this.volumeMax = 100
+        this.menuMusicActive = false
 
         // STATE
         this.stateService = stateService
@@ -84,7 +86,9 @@ export default class World {
         document.body.appendChild(initializedGame)
 
         window.audioController = new AudioController()
+        window.musicController = new MusicController()
         audioController.init()
+        window.musicController.init()
         // Loading the sprites and adding world data to the engine
         // World state holds updatable objects that don't need to be rendered - such 
         // as the girl/timer logic
@@ -95,6 +99,7 @@ export default class World {
     update() {
         // This update function, updates the whole game / world data!
         // console.log(this.stateService.state.value)
+        this.checkAudio()
         if (this.stateService.state.matches('mainMenu')) {
             this.startMenuAnimation()
             this.menuScreenActive = true
@@ -146,15 +151,31 @@ export default class World {
 
     startMenuAnimation() {
         if (!this.menuScreenActive) {
-            console.log('creating menu men')
             const numOfAI = 10
             for (let i=0; i<numOfAI; i++) {
-                const y = world.worldHeight * (0.8 + (i/100))
+                const y = world.worldHeight * (0.85 + (i/100))
                 const randNum = randomNumGen(0.9, 50)
                 const randVel = new Vector(randNum, 0)
                 const manAI = new MenuMan(i, randomNumGen(-100, -50), y, 30, 30, randVel)
                 gameEngine.createGameObject(manAI, world.UIstr)
             }
+        }
+    }
+
+    checkAudio() {
+        window.musicController.adjustVolume(this.masterVolume)
+        if (this.stateService.state.matches('mainMenu')) {
+            this.startMenuMusic()
+        } else if (this.stateService.state.matches('playing')) {
+            window.musicController.stopMusic()
+            this.menuMusicActive = false
+        }
+    }
+
+    startMenuMusic() {
+        if (!this.menuMusicActive) {
+            window.musicController.playMusic('menu')
+            this.menuMusicActive = true
         }
     }
 

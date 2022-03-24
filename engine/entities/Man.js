@@ -145,8 +145,13 @@ export default class Man extends GameObject {
     checkWin() {
         // checks wether the man has crossed the sucess line
         if (this.location.y < gameEngine.height*gameEngine.successLine) {
+            if (!this.hasWon) this.clearContainer()
             this.hasWon = true
         }
+    }
+
+    clearContainer() {
+        gameEngine.removeGameObject(this, 'gameObjects')
     }
 
     checkBalance() {

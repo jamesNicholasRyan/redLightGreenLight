@@ -8,8 +8,8 @@ export default class MenuMan extends Man {
         super(id, x, y, a, b)
         this.randomForce =randVel
         this.topSpeed = randomNumGen(0.8, 2)
-        this.animationWidth = 104  *this.ratio
-        this.animationHeight = 144  *this.ratio
+        this.animationWidth = 52  *this.ratio
+        this.animationHeight = 72  *this.ratio
     }
 
     update() {
