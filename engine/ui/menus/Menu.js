@@ -2,8 +2,10 @@ import * as PIXI from 'pixi.js'
 
 
 export default class Menu {
-    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background, backgroundColor=false, textData) {
+    constructor(name, w, h, fill, active, parsedButtonData, fadeSpeed=0.15, backgroundFadeSpeed=0.2, background, backgroundColor=false, textData, 
+        logoPNG, lWidth, lHeight, lX, lY) {
         this.name = name
+        this.ratio = world.ratio
         this.width = w
         this.height = h
         this.fill = fill
@@ -17,6 +19,12 @@ export default class Menu {
         this.text = new PIXI.Container()
         this.backgroundTexture = background ? new PIXI.Texture.from(background) : null
         this.backgroundSprite = null
+        this.logoTexture = logoPNG ? new PIXI.Texture.from(logoPNG) : null
+        this.logoSprite = null
+        this.logoWidth = lWidth
+        this.logoHeight = lHeight
+        this.logoX = lX
+        this.logoY = lY
         this.container = new PIXI.Container()
         this.active = active
         this.fadeSpeed = fadeSpeed
@@ -33,6 +41,11 @@ export default class Menu {
         if (this.backgroundTexture) {
             this.backgroundSprite = new PIXI.Sprite(this.backgroundTexture)
             this.container.addChild(this.backgroundSprite)
+        }
+        if (this.logoTexture) {
+            this.logoTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+            this.logoSprite = new PIXI.Sprite(this.logoTexture)
+            this.container.addChild(this.logoSprite)
         }
         this.container.addChild(this.graphics)
         this.container.addChild(this.buttonsGraphics)
@@ -60,6 +73,7 @@ export default class Menu {
     
     display() {
         if (this.backgroundTexture) this.drawBackgroundSprite()
+        if (this.logoTexture) this.drawLogoSprite()
         this.drawButtons()
         this.drawText()
         if (this.backgroundColor && this.active) {
@@ -106,6 +120,15 @@ export default class Menu {
         this.backgroundSprite.width = window.world.worldWidth
         this.backgroundSprite.height = window.world.worldWidth*0.9
         this.backgroundSprite.alpha = this.backgroundAlpha
+    }
+
+
+    drawLogoSprite() {
+        this.logoSprite.position.x = this.logoX * this.ratio
+        this.logoSprite.position.y = this.logoY * this.ratio
+        this.logoSprite.width = this.logoWidth * this.ratio
+        this.logoSprite.height = this.logoHeight * this.ratio
+        this.logoSprite.alpha = this.backgroundAlpha
     }
 
     update() {

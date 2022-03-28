@@ -1,6 +1,5 @@
 // This fle contains logic for the button classes
 import * as PIXI from 'pixi.js'
-import World from '../../src/world'
 
 
 export default class Button {
@@ -32,9 +31,6 @@ export default class Button {
         this.sprite.position.x = this.x
         this.sprite.position.y = this.y
         this.sprite.alpha = 1
-        // this.graphics.beginFill(this.fill)
-        // this.graphics.drawRect(this.x, this.y, this.w, this.h)
-        // this.graphics.endFill()
     }
 
     update() {

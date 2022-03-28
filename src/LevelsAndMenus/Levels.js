@@ -4,6 +4,7 @@ import randomNumGen from "../../engine/utils/randomNumberGen"
 
 import arenaBackgroundpng from "../../engine/assets/arena_backgroundgrey.png"
 import pausePNG from '../../engine/assets/pause.png'
+import logoPNG from '../../engine/assets/game_logo.png'
 
 import Man from "../../engine/entities/Man"
 import SuccessLine from "../../engine/entities/SuccessLine"
@@ -16,7 +17,6 @@ import LevelTimer from "../../engine/ui/LevelTimer"
 import StartCountDownTimer from "../../engine/ui/StartCountDown"
 import AIMan from "../../engine/entities/AIMan"
 import Button from "../../engine/ui/Button"
-import Engine from "../../engine/engine"
 import Background from "../../engine/ui/Background"
 import GirlUi from "../../engine/ui/girlUi"
 import BloodBorder from '../../engine/entities/particles/BloodBorder'

@@ -14,20 +14,21 @@ import levelThreeSprite from '../../engine/assets/levelthree.png'
 import menuBackground from '../../engine/assets/menu_background.png'
 import increase from '../../engine/assets/increase.png'
 import decrease from '../../engine/assets/decrease.png'
+import logoPNG from '../../engine/assets/game_logo.png'
 
 
 
 function mainMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.5 *ratio
+    const buttonX = (world.worldWidth*0.5)
     const mainMenuButtonData = [
         {
             'name': 'startGame',
             'action': startGame,
             sprite: startGameSprite,
             x: buttonX,
-            y: 200 *ratio,
+            y: 400 *ratio,
             w: 279 *ratio,
             h: 106 *ratio,
             fill: 0xffffff
@@ -37,21 +38,22 @@ function mainMenu() {
             'action': mainOptions,
             sprite: optionsSprite,
             x: buttonX,
-            y: 350 *ratio,
+            y: 550 *ratio,
             w: 279 *ratio,
             h: 106 *ratio,
             fill: 0xffffff
         },
     ]
     const mainMenu = new Menu('mainMenu', world.worldWidth, world.worldHeight, 
-                               0xad0061, false, mainMenuButtonData, 0.1, 1, menuBackground)
+                               0xad0061, false, mainMenuButtonData, 0.1, 1, menuBackground, 
+                               false, null, logoPNG, 744, 184, 140, 100)
     gameEngine.createGameObject(mainMenu, world.UIstr)
 }
 
 function pauseMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.5 *ratio
+    const buttonX = world.worldWidth*0.5
     const pauseMenuButtonData = [
         {
             'name': 'resume',
@@ -92,7 +94,7 @@ function pauseMenu() {
 function mainOptionsMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.4 *ratio
+    const buttonX = world.worldWidth*0.5
     const mainOptionsButtonData = [
         {
             'name': 'back',
@@ -133,7 +135,7 @@ function mainOptionsMenu() {
 function difficultyMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.3 *ratio
+    const buttonX = world.worldWidth*0.5
     const difficultyButtonData = [
         {
             'name': 'back',
@@ -184,7 +186,7 @@ function difficultyMenu() {
 function soundMenu() {
     const world = window.world
     const ratio = world.ratio
-    const buttonX = world.worldWidth*0.3 *ratio
+    const buttonX = world.worldWidth*0.5
     const soundButtonData = [
         {
             'name': 'back',
