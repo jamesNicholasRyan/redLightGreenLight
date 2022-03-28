@@ -24,6 +24,11 @@ export default class Hearts extends UiElement {
     }
 
     createDisplay() {
+        this.fullTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+        this.emptyTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+        this.oneTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+        this.twoTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+
         this.fullSprite = new PIXI.Sprite(this.fullTexture)
         this.emptySprite = new PIXI.Sprite(this.emptyTexture)
         this.oneSprite = new PIXI.Sprite(this.oneTexture)

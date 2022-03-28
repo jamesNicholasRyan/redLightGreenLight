@@ -4,11 +4,16 @@ import { Machine, interpret } from "xstate"
 
 const stateMachine = Machine({
     id: 'gameState',
-    initial: 'mainMenu',
+    initial: 'splashScreen',
     context: {
         retries: 0
     },
     states: {
+        splashScreen: {
+            on: {
+                ENTER: 'mainMenu',
+            }
+        },
         mainMenu: {
             on: {
                 STARTGAME: 'playing',

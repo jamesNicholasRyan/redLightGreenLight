@@ -15,8 +15,31 @@ import menuBackground from '../../engine/assets/menu_background.png'
 import increase from '../../engine/assets/increase.png'
 import decrease from '../../engine/assets/decrease.png'
 import logoPNG from '../../engine/assets/game_logo.png'
+import enter from '../../engine/assets/enter.png'
 
 
+
+function splashScreen() {
+    const world = window.world
+    const ratio = world.ratio
+    const buttonX = (world.worldWidth*0.5)
+    const mainMenuButtonData = [
+        {
+            'name': 'enterGame',
+            'action': enterGame,
+            sprite: enter,
+            x: buttonX,
+            y: 400 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
+            fill: 0xffffff
+        },
+    ]
+    const splashScreen = new Menu('splashScreen', world.worldWidth, world.worldHeight, 
+        0xad0061, false, mainMenuButtonData, 0.1, 1, menuBackground, 
+        false, null, logoPNG, 744, 184, 140, 100)
+    gameEngine.createGameObject(splashScreen, world.UIstr)
+}
 
 function mainMenu() {
     const world = window.world
@@ -241,6 +264,10 @@ function soundMenu() {
     gameEngine.createGameObject(soundMenu, world.UIstr)
 }
 
+function enterGame() {
+    window.world.stateService.send('ENTER')
+}
+
 function resumeGame() {
     window.world.stateService.send('BACK')
     window.girl.clockStateService.send('RESUME')
@@ -300,6 +327,7 @@ function soundOptions() {
 
 
 export {
+    splashScreen,
     mainMenu,
     pauseMenu,
     mainOptionsMenu,

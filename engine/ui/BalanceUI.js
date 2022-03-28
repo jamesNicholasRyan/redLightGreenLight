@@ -40,6 +40,7 @@ export default class BalanceUI extends UiElement {
 
     createDisplay() {
         this.texture = new PIXI.Texture.from(balancingMan)
+        this.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
         this.spriteBody = new PIXI.Sprite(this.texture)
         this.legsTexture = new PIXI.Texture.from(balancingLegs)
         this.spriteLegs = new PIXI.Sprite(this.legsTexture)

@@ -116,6 +116,13 @@ export default class Engine {
             new PIXI.Texture(sSheet, new PIXI.Rectangle(12*w, 0, w*2, h))
         ]
 
+        // Optional texture sharpen
+        // Object.keys(this.playerSheet).forEach((position) => {
+        //     this.playerSheet[position].forEach((sheet) => {
+        //         sheet.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+        //     })
+        // })
+
         // Girl head sprites
         let headSpriteSheet = new PIXI.BaseTexture.from(this.loader.resources['headSheet'].url)
         let width = 59

@@ -39,11 +39,12 @@ export default class Menu {
         this.createSprites()
         this.createText()
         if (this.backgroundTexture) {
+            this.backgroundTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
             this.backgroundSprite = new PIXI.Sprite(this.backgroundTexture)
             this.container.addChild(this.backgroundSprite)
         }
         if (this.logoTexture) {
-            this.logoTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+            this.logoTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
             this.logoSprite = new PIXI.Sprite(this.logoTexture)
             this.container.addChild(this.logoSprite)
         }
