@@ -1,5 +1,4 @@
 import Man from "./Man"
-import Vector from "../utils/vector"
 import randomNumGen from "../utils/randomNumberGen"
 
 
@@ -17,7 +16,7 @@ export default class MenuMan extends Man {
         this.move()
         this.animation.animationSpeed = this.animationSpeed()
         if (!this.animation.playing) {
-            this.animation.textures = gameEngine.playerSheet["east"]
+            this.animation.textures = gameEngine.menuManSheet["east"]
             this.animation.play()
         }
     }
@@ -28,5 +27,11 @@ export default class MenuMan extends Man {
         this.location.add(this.velocity)
         this.acceleration.multiply(0)
     }
-    
+
+    loadSprites() {
+        this.loader.add('sheet', spriteSheet)
+        this.loader.add('headSheet', headSpriteSheet)
+        this.loader.load(this.setupSpriteSheets())
+    }
+
 }

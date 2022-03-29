@@ -18,7 +18,13 @@ const stateMachine = Machine({
             on: {
                 STARTGAME: 'playing',
                 OPTIONS: 'mainOptions',
-                QUIT: 'quit'
+                HOWTO: 'howTo',
+                QUIT: 'quit',
+            }
+        },
+        howTo: {
+            on: {
+                BACK: 'mainMenu'
             }
         },
         mainOptions: {

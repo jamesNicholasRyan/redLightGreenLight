@@ -8,6 +8,7 @@ import { gameLoop } from './core/loop.js'
 
 import spriteSheet from './assets/man.png'
 import headSpriteSheet from './assets/girl_head.png'
+import menuManSheet from './assets/menu_man.png'
 
 const gameEngine = window.gameEngine
 
@@ -54,6 +55,7 @@ export default class Engine {
         this.playerSheet = {}
         this.headSheet = {}
         this.UIsprite = {}
+        this.menuManSheet= {}
     }
 
     buildRenderer() {
@@ -76,6 +78,7 @@ export default class Engine {
     loadSprites() {
         this.loader.add('sheet', spriteSheet)
         this.loader.add('headSheet', headSpriteSheet)
+        this.loader.add('menuManSheet', menuManSheet)
         this.loader.load(this.setupSpriteSheets())
     }
 
@@ -135,6 +138,17 @@ export default class Engine {
         ]
         this.headSheet["headBackwards"] = [
             new PIXI.Texture(headSpriteSheet, new PIXI.Rectangle(3*width, 0, width, height))
+        ]
+
+        // Menu men
+        let menuSheet = new PIXI.BaseTexture.from(this.loader.resources['menuManSheet'].url)
+        let width2 = 26
+        let height2 = 36
+
+        this.menuManSheet["east"] = [
+            new PIXI.Texture(menuSheet, new PIXI.Rectangle(9*width2, 0, width2, height2)),
+            new PIXI.Texture(menuSheet, new PIXI.Rectangle(10*width2, 0, width2, height2)),
+            new PIXI.Texture(menuSheet, new PIXI.Rectangle(11*width2, 0, width2, height2))
         ]
 
     }

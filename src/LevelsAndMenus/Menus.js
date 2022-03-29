@@ -16,7 +16,9 @@ import increase from '../../engine/assets/increase.png'
 import decrease from '../../engine/assets/decrease.png'
 import logoPNG from '../../engine/assets/game_logo.png'
 import enter from '../../engine/assets/enter.png'
-
+import instructions from '../../engine/assets/instructions.png'
+import instructionsOne from '../../engine/assets/instructions_1.png'
+import instructionsTwo from '../../engine/assets/instructions_2.png'
 
 
 function splashScreen() {
@@ -61,7 +63,17 @@ function mainMenu() {
             'action': mainOptions,
             sprite: optionsSprite,
             x: buttonX,
-            y: 550 *ratio,
+            y: 525 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
+            fill: 0xffffff
+        },
+        {
+            'name': 'howTo',
+            'action': howTo,
+            sprite: instructions,
+            x: buttonX,
+            y: 650 *ratio,
             w: 279 *ratio,
             h: 106 *ratio,
             fill: 0xffffff
@@ -71,6 +83,67 @@ function mainMenu() {
                                0xad0061, false, mainMenuButtonData, 0.1, 1, menuBackground, 
                                false, null, logoPNG, 744, 184, 140, 100)
     gameEngine.createGameObject(mainMenu, world.UIstr)
+}
+
+function howToMenu() {
+    const world = window.world
+    const ratio = world.ratio
+    const buttonX = world.worldWidth*0.5
+    const howToButtonData = [
+        {
+            'name': 'back',
+            'action': back,
+            sprite: backSprite,
+            x: buttonX,
+            y: 200 *ratio,
+            w: 279 *ratio,
+            h: 106 *ratio,
+            fill: 0xffffff
+        },
+        {
+            'name': 'image_one',
+            'action': function() {return null},
+            sprite: instructionsOne,
+            x: 250 * ratio,
+            y: 450 *ratio,
+            w: 379.5 *ratio,
+            h: 315 *ratio,
+            fill: 0xffffff
+        },
+        {
+            'name': 'image_two',
+            'action': function() {return null},
+            sprite: instructionsTwo,
+            x: 750 * ratio,
+            y: 450 *ratio,
+            w: 379.5 *ratio,
+            h: 315 *ratio,
+            fill: 0xffffff
+        }
+    ]
+    const text1 = `MOVE WITH WASD`
+    const text2 = `BALANCE WITH \nARROW KEYS`
+    const textData = [
+        {
+            getText: function() {return text1},
+            'text': text1,
+            fontSize: 28 * ratio,
+            fill: 0x000000,
+            x: 250 * ratio,
+            y: 650 *ratio,
+        },
+        {
+            getText: function() {return text2},
+            'text': text2,
+            fontSize: 28 * ratio,
+            fill: 0x000000,
+            x: 750 * ratio,
+            y: 650 *ratio,
+        }
+    ]
+    const howToMenu = new Menu('howTo', world.worldWidth, world.worldHeight, 
+                                      0x83bd00, false, howToButtonData, 0.1, 1, menuBackground, false, textData)
+    gameEngine.createGameObject(howToMenu, world.UIstr)
 }
 
 function pauseMenu() {
@@ -260,7 +333,8 @@ function soundMenu() {
             y: 350 *ratio,
         },
     ]
-    const soundMenu = new Menu('sound', world.worldWidth, world.worldHeight, 0x93bd32, false, soundButtonData, 0.1, 1, menuBackground, false, textData)
+    const soundMenu = new Menu('sound', world.worldWidth, world.worldHeight, 
+                               0x93bd32, false, soundButtonData, 0.1, 1, menuBackground, false, textData)
     gameEngine.createGameObject(soundMenu, world.UIstr)
 }
 
@@ -293,6 +367,10 @@ function startGame() {
 
 function mainOptions() {
     window.world.stateService.send('OPTIONS')
+}
+
+function howTo() {
+    window.world.stateService.send('HOWTO')
 }
 
 function back() {
@@ -329,6 +407,7 @@ function soundOptions() {
 export {
     splashScreen,
     mainMenu,
+    howToMenu,
     pauseMenu,
     mainOptionsMenu,
     difficultyMenu,

@@ -5,7 +5,7 @@ import randomNumGen from '../engine/utils/randomNumberGen.js'
 
 import Bullet from '../engine/entities/particles/Bullet.js'
 import BloodSplatter from '../engine/entities/particles/BloodSplatter.js'
-import { splashScreen, mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu, soundMenu } from './levelsAndMenus/menus.js'
+import { splashScreen, mainMenu, pauseMenu, mainOptionsMenu, difficultyMenu, soundMenu, howToMenu } from './levelsAndMenus/menus.js'
 import stateService from '../engine/utils/menuStateMachine.js'
 import AudioController from '../engine/inputOuput/audioController.js'
 import cameraShake from '../engine/utils/cameraShake.js'
@@ -146,6 +146,7 @@ export default class World {
         mainOptionsMenu()
         difficultyMenu()
         soundMenu()
+        howToMenu()
     }
 
     startMenuAnimation() {
